@@ -53,7 +53,8 @@ public class DragonCurve {
     }
 
     private Point calculateNextDirection(Point direction, int turn){
-        int remap = turn == 0?1:-1;
+        int remap = (turn == 0)?1:-1;
+        remap = (direction.x != 0)?-remap:remap;
         return new Point(direction.y*remap,direction.x*remap);// turn 90degrees in correct direction
     }
 
