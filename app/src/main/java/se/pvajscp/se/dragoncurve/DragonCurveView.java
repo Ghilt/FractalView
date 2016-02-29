@@ -3,11 +3,13 @@ package se.pvajscp.se.dragoncurve;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -17,13 +19,13 @@ import android.view.animation.Transformation;
  */
 public class DragonCurveView extends View {
     private final Paint paint;
-    private final RectF rect;
     private int currentIteration;
 
-    private int posX = 100;
-    private int posY = 100;
+    private Point maxPos = new Point(1,1);
+    private Point minPos = new Point(-1,-1);
 
-    private int segmentLength = 16;
+    int width, height;
+
     Path path;
 
     private DragonCurve curve = new DragonCurve();
@@ -31,74 +33,72 @@ public class DragonCurveView extends View {
     public DragonCurveView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setBackgroundColor(Color.parseColor("#33FF445F"));
+        setBackgroundColor(Color.parseColor("#330F445F"));
 
-        final int strokeWidth = 1;
+        final int strokeWidth = 2;
         final int dimension = 200;
 
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(10);
+        paint.setStrokeWidth(strokeWidth);
         paint.setColor(Color.BLACK);
 
         path = new Path();
-        path.moveTo(200, 600);
 
-        //size 200x200 example
-        rect = new RectF(strokeWidth, strokeWidth, dimension + strokeWidth, dimension + strokeWidth);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                width = getWidth();
+                height = getHeight();
+                path.moveTo(width / 2, height / 2);
+            }
+        });
 
-        final DragonCurveAnimation animation = new DragonCurveAnimation(this,4);
-        animation.setDuration(50000);
+        final DragonCurveAnimation animation = new DragonCurveAnimation(this);
+        animation.setDuration(9000000);
         startAnimation(animation);
-//        setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("spx", " start anima");
-//                animation.start();
-//            }
-//        });
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawLine(posX, posY, posX + segmentLength, posY + segmentLength, paint);
-//        posX += segmentLength;
-//        posY += segmentLength;
+
         Point newEnd = curve.getDirectionAt(currentIteration);
+        Point newAbsPos = curve.getAbsolutePositionAt(currentIteration);
+        maxPos.x = Math.max(newAbsPos.x, maxPos.x);
+        maxPos.y = Math.max(newAbsPos.y, maxPos.y);
+        minPos.x = Math.min(newAbsPos.x, minPos.x);
+        minPos.y = Math.min(newAbsPos.y, minPos.y);
 
-//        Log.d("spx",currentIteration+ " M: " + newEnd.x + " " +newEnd.y);
-        path.rLineTo(newEnd.x * segmentLength, newEnd.y * segmentLength);
+        path.rLineTo(newEnd.x, -newEnd.y);
 
-        canvas.drawPath(path, paint);
-//        Log.d("spx",currentIteration + " start anima");
-//        canvas.drawArc(rect, 0, 180, false, paint);
+        float xScale = (width/2)/(Math.max(maxPos.x, Math.abs(minPos.x)));
+        float yScale = (height/2)/(Math.max(maxPos.y, Math.abs(minPos.y)));
+        float scale = Math.min(xScale, yScale);
+        Path pathToPaint = new Path(path);
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(scale, scale,canvas.getWidth()/2,canvas.getHeight()/2);
+        pathToPaint.transform(scaleMatrix);
+
+        canvas.drawPath(pathToPaint, paint);
+        currentIteration++;
     }
 
-    public void setCurrentIteration(int currentIteration) {
-        this.currentIteration = currentIteration;
-    }
 
-    public int getCurrentIteration() {
-        return currentIteration;
-    }
 
     public class DragonCurveAnimation extends Animation {
 
         private DragonCurveView dragonCurveView;
 
-        private int maxIterations;
-
-        public DragonCurveAnimation(DragonCurveView dragonCurveView, int maxIterations) {
+        public DragonCurveAnimation(DragonCurveView dragonCurveView) {
             this.dragonCurveView = dragonCurveView;
-            this.maxIterations = maxIterations;
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation transformation) {
-            int iteration = (int) (interpolatedTime * maxIterations);
-            dragonCurveView.setCurrentIteration(dragonCurveView.getCurrentIteration()+1);
             dragonCurveView.requestLayout();
         }
     }

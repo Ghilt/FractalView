@@ -3,6 +3,7 @@ package se.pvajscp.se.dragoncurve;
 import android.graphics.Point;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by ani on 2016-02-25.
@@ -39,7 +40,6 @@ public class DragonCurve {
     private void calculateNextPart() {
         int currentSize = segments.size();
         int positionOfInvert = currentSize/2;
-
         for(int i = 0; i < currentSize; i++){
             int turn = turns.get(i);
             if(i == positionOfInvert){
@@ -66,7 +66,7 @@ public class DragonCurve {
     }
 
 
-    public Point getSegmentAbsolutePosition(int position) {
+    public Point getAbsolutePositionAt(int position) {
         while(segments.size() <= position){
             calculateNextPart();
         }
@@ -86,4 +86,5 @@ public class DragonCurve {
         }
         return turns.get(position);
     }
+
 }
