@@ -9,16 +9,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.Transformation
 
 
 class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     var path = Path()
-
-    internal var width: Int = 0
-    internal var height: Int = 0
 
     private val paint: Paint
     private var scaleFactor = 1f
@@ -27,6 +22,7 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     // if infinity zoom is to be applied I think scaling the path is necessary
     private val scaleGestureDetector = ScaleGestureDetector(getContext(), PinchListener())
+    private val touchData = TouchInteractionHandler(this)
 
     //http://android-developers.blogspot.com/2010/06/making-sense-of-multitouch.html
 
@@ -46,17 +42,10 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 //        path.transform(scaleMatrix)
 
         post {
-            width = getWidth()
-            height = getHeight()
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
             path.moveTo(midPointX, midPointY)
         }
-
-        val animation = DragonCurveAnimation(this)
-        animation.duration = Long.MAX_VALUE
-        startAnimation(animation)
-
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -75,21 +64,10 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         canvas.restore()
     }
 
-    private val touchData = TouchInteractionHandler()
-
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         scaleGestureDetector.onTouchEvent(ev)
         touchData.onTouchEvent(ev, scaleGestureDetector.isInProgress)
-
-//        scaleGestureDetector2.onTouchEvent(event)
         return true
-    }
-
-    inner class DragonCurveAnimation(private val view: FractalView) : Animation() {
-
-        override fun applyTransformation(interpolatedTime: Float, transformation: Transformation) {
-            view.requestLayout()
-        }
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
