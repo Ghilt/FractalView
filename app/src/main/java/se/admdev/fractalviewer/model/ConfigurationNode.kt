@@ -1,4 +1,4 @@
 package se.admdev.fractalviewer.model
 
-class ConfigurationNode {
+class ConfigurationNode(val selectedTiles: List<ConfigTile>) {
 }

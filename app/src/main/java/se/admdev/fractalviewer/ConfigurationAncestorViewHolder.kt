@@ -12,10 +12,10 @@ class ConfigurationAncestorViewHolder(itemView: View) : RecyclerView.ViewHolder(
 
     fun bind(tile: ConfigTile, size: Int, containerSize: Float) {
         configTile = tile
-        itemView.setBackgroundColor(if (tile.x % 2 == 0 && tile.y % 2 == 0 || tile.x % 2 == 1 && tile.y % 2 == 1) 0xFFABCDEF.toInt() else 0xFFFEDCBA.toInt())
+        itemView.setBackgroundColor(if (tile.x % 2 == 0 && tile.y % 2 == 0 || tile.x % 2 == 1 && tile.y % 2 == 1) 0xFF000000.toInt() else 0xFFFFFFFe.toInt())
 
         if (tile.selected) {
-            itemView.setBackgroundColor(0xF7B)
+            itemView.setBackgroundColor(0xFFF07F4F.toInt())
         }
         itemView.layoutParams.height = (containerSize / size).toInt()
         itemView.layoutParams.width = (containerSize / size).toInt()

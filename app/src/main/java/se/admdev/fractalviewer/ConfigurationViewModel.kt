@@ -51,15 +51,16 @@ class ConfigurationViewModel : ViewModel() {
     }
 
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
+    fun getSelectedTiles() = ancestorTiles.value?.flatten()?.filter { it.selected } ?: listOf()
 
 }
 
 fun <T> MutableLiveData<T>.triggerObserver() {
-    triggerObserver()
+    value = value // Needed to trigger observer
 }
 
 fun <T> MutableLiveData<MutableList<T>>.addItem(item: T) {
     val updatedItems = this.value
     updatedItems?.add(item)
-    this.value = updatedItems //Needed to trigger observer,
+    triggerObserver()
 }
