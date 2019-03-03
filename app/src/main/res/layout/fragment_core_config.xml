@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/constrainer"
+        android:layout_width="@dimen/grid_size"
+        android:layout_height="@dimen/grid_size"
+        android:background="@color/light_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ancestor_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/constrainer"
+        app:layout_constraintLeft_toLeftOf="@+id/constrainer"
+        app:layout_constraintRight_toRightOf="@+id/constrainer"
+        app:layout_constraintTop_toTopOf="@+id/constrainer"
+        app:spanCount="3"
+        tools:itemCount="9"
+        android:translationZ="2dp"
+        tools:listitem="@layout/ancestor_configuration_tile"/>
+
+    <Button
+        android:id="@+id/accept_selection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#F6B3"
+        android:text="@string/general_accept"
+        android:translationZ="2dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"/>
+
+
+    <Button
+        android:id="@+id/minus"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#A5F"
+        android:text="@string/ancestor_config_minus"
+        app:layout_constraintEnd_toStartOf="@id/plus"
+        app:layout_constraintStart_toEndOf="@+id/ancestor_grid"
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"/>
+
+    <Button
+        android:id="@+id/plus"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:background="#A5F"
+        android:text="@string/ancestor_config_plus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/node_list"
+        android:background="#FED"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/target"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plus"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_rule_node"/>
+
+    <Button
+        android:id="@+id/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A5F"
+        android:text="@string/ancestor_configuration_target"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:id="@+id/dim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#a555"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

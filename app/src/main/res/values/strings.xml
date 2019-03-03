@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FractalViewer</string>
+
+    <string name="general_accept">Accept</string>
+
+    <string name="ancestor_configuration_target">Target</string>
+    <string name="ancestor_config_plus">+</string>
+    <string name="ancestor_config_minus">-</string>
+    <string name="placeholder_hello">Hello!</string>
 </resources>
