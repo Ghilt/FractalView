@@ -51,7 +51,7 @@ class ConfigurationViewModel : ViewModel() {
     }
 
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
-    fun getSelectedTiles() = ancestorTiles.value?.flatten()?.filter { it.selected } ?: listOf()
+    fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
 
 }
 

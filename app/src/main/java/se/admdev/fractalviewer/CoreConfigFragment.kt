@@ -63,7 +63,7 @@ class CoreConfigFragment : Fragment(), ConfigurationAdapter.AncestorGridClickLis
         }
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(ConfigurationNode(model.getSelectedTiles()))
+            model.configNodes.addItem(ConfigurationNode(model.getTileSnapshot()))
             model.clearAncestorSelection()
         }
 
