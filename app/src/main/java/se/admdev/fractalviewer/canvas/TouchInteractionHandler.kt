@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.canvas
 
 import android.view.MotionEvent
 import android.view.View

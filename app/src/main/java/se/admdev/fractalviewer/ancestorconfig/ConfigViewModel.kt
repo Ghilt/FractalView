@@ -1,32 +1,32 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.ancestorconfig
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import se.admdev.fractalviewer.model.ConfigTile
-import se.admdev.fractalviewer.model.ConfigurationNode
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
+import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
 private const val ANCESTOR_TILE_INITIAL_SIZE = 3
 
-class ConfigurationViewModel : ViewModel() {
+class ConfigViewModel : ViewModel() {
 
-    val configNodes = MutableLiveData<MutableList<ConfigurationNode>>().apply { value = mutableListOf() }
-    val ancestorTiles = MutableLiveData<List<List<ConfigTile>>>().apply {
+    val configNodes = MutableLiveData<MutableList<ConfigNode>>().apply { value = mutableListOf() }
+    val ancestorTiles = MutableLiveData<List<List<AncestorTile>>>().apply {
         value = calculateAncestorTiles(ANCESTOR_TILE_INITIAL_SIZE)
     }
 
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
 
-    private fun calculateAncestorTiles(newSize: Int, oldGrid: List<List<ConfigTile>>? = null): List<List<ConfigTile>> {
-        val temp = mutableListOf<List<ConfigTile>>()
+    private fun calculateAncestorTiles(newSize: Int, oldGrid: List<List<AncestorTile>>? = null): List<List<AncestorTile>> {
+        val temp = mutableListOf<List<AncestorTile>>()
 
         for (y in 0 until newSize) {
-            val row = mutableListOf<ConfigTile>()
+            val row = mutableListOf<AncestorTile>()
             for (x in 0 until newSize) {
                 val tile = oldGrid
                     ?.getOrNull(y)
                     ?.getOrNull(x)
-                row.add(tile ?: ConfigTile(x, y))
+                row.add(tile ?: AncestorTile(x, y))
             }
             temp.add(row.toList())
         }

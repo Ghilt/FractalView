@@ -1,7 +1,8 @@
-package se.admdev.fractalviewer.model
+package se.admdev.fractalviewer.canvas.model
 
 
 import android.util.Log
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import kotlin.math.absoluteValue
 import kotlin.math.max
 

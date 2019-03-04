@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.canvas
 
 import android.content.Context
 import android.graphics.Canvas

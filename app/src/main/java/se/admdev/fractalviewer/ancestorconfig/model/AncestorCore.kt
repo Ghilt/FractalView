@@ -1,4 +1,6 @@
-package se.admdev.fractalviewer.model
+package se.admdev.fractalviewer.ancestorconfig.model
+
+import se.admdev.fractalviewer.canvas.model.Cell
 
 class AncestorCore {
     fun calculateValue(ancestors: List<Cell>): Int {

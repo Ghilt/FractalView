@@ -1,7 +1,8 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.canvas
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import se.admdev.fractalviewer.R
 
 class FractalViewerActivity : AppCompatActivity() {
 

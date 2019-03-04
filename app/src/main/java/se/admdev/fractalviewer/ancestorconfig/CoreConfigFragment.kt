@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.ancestorconfig
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,27 +9,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
-import se.admdev.fractalviewer.model.ConfigTile
-import se.admdev.fractalviewer.model.ConfigurationNode
+import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
+import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
-class CoreConfigFragment : Fragment(), ConfigurationAdapter.AncestorGridClickListener {
+class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
-    private lateinit var model: ConfigurationViewModel
-    private val adapter = ConfigurationAdapter()
+    private lateinit var model: ConfigViewModel
+    private val adapter = AncestorTileAdapter()
     private val listAdapter = ConfigurationListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = activity?.run {
-            ViewModelProviders.of(this).get(ConfigurationViewModel::class.java)
+            ViewModelProviders.of(this).get(ConfigViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        model.configNodes.observe(this, Observer<List<ConfigurationNode>> { items ->
+        model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
             listAdapter.notifyDataSetChanged()
         })
 
-        model.ancestorTiles.observe(this, Observer<List<List<ConfigTile>>> { items ->
+        model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
             (ancestor_grid.layoutManager as GridLayoutManager).spanCount = model.ancestorTileDimension
             adapter.setDataSet(items)
             adapter.notifyDataSetChanged()
@@ -63,7 +64,7 @@ class CoreConfigFragment : Fragment(), ConfigurationAdapter.AncestorGridClickLis
         }
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(ConfigurationNode(model.getTileSnapshot()))
+            model.configNodes.addItem(ConfigNode(model.getTileSnapshot()))
             model.clearAncestorSelection()
         }
 

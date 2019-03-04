@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer.model
+package se.admdev.fractalviewer.canvas.model
 
 import android.graphics.Point
 import java.util.ArrayList

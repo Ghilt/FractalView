@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer
+package se.admdev.fractalviewer.canvas
 
 import androidx.fragment.app.Fragment
 import android.graphics.Path
@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
-import se.admdev.fractalviewer.model.AncestorCore
-import se.admdev.fractalviewer.model.DragonCurve
-import se.admdev.fractalviewer.model.FractalGenerator
+import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
+import se.admdev.fractalviewer.canvas.model.DragonCurve
+import se.admdev.fractalviewer.canvas.model.FractalGenerator
 
 class FractalCanvasFragment : Fragment() {
 
