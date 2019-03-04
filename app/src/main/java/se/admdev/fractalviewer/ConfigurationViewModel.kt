@@ -35,11 +35,11 @@ class ConfigurationViewModel : ViewModel() {
     }
 
     fun increaseAncestorTiles() {
-        ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension + 2)
+        ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension + 2, ancestorTiles.value)
     }
 
     fun decreaseAncestorTiles() {
-        ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2)
+        ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2, ancestorTiles.value)
     }
 
     fun clearAncestorSelection() {
