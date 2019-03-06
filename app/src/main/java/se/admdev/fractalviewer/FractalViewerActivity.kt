@@ -1,8 +1,7 @@
-package se.admdev.fractalviewer.canvas
+package se.admdev.fractalviewer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import se.admdev.fractalviewer.R
 
 class FractalViewerActivity : AppCompatActivity() {
 
@@ -10,5 +9,4 @@ class FractalViewerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fractal_viewer)
     }
-
 }

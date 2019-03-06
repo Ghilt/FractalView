@@ -65,8 +65,9 @@ class FractalGenerator(val core: AncestorCore) {
 
         Log.d("spx", "Size: ${frac.size}")
 
+        //Quick and dirty temp debug logging
         val logPyramid: String =
-            frac.flatMap { (key, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) " " else "▉"}" }} \n".asIterable() }
+            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) " " else "▉"}" }} \n".asIterable() }
                 .fold("") { acc, charList -> acc + charList }
 
         val initialPadding = logPyramid.lines().takeLast(2).first().length / 2

@@ -7,4 +7,9 @@
     <string name="ancestor_config_plus">+</string>
     <string name="ancestor_config_minus">-</string>
     <string name="placeholder_hello">Hello!</string>
+
+    <string name="start_welcome">Welcome!</string>
+    <string name="start_configure_button">Configure</string>
+    <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
+
 </resources>
