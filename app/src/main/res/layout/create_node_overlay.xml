@@ -1,0 +1,43 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream_white"
+    tools:showIn="@layout/fragment_core_config">
+
+    <Spinner
+        android:id="@+id/operator_selection_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:translationZ="2dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Spinner
+        android:id="@+id/operand_selection_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:translationZ="2dp"
+        app:layout_constraintEnd_toEndOf="@id/operator_selection_spinner"
+        app:layout_constraintStart_toStartOf="@id/operator_selection_spinner"
+        app:layout_constraintTop_toBottomOf="@id/operator_selection_spinner"/>
+
+    <Button
+        android:id="@+id/accept_selection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/general_accept"
+        android:textColor="@color/bright_green"
+        android:translationZ="2dp"
+        app:layout_constraintEnd_toEndOf="@id/operand_selection_spinner"
+        app:layout_constraintStart_toStartOf="@id/operand_selection_spinner"
+        app:layout_constraintTop_toBottomOf="@id/operand_selection_spinner"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,4 +12,23 @@
     <string name="start_configure_button">Configure</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
 
+    <string-array name="test_ari">
+        <item>None</item>
+        <item>%</item>
+        <item>+</item>
+        <item>-</item>
+        <item>*</item>
+        <item>\u00F7</item> <!-- Exponent -->
+        <item>\u005E</item> <!-- Division -->
+        <item>==</item>
+        <item>=\=</item>
+        <item>&lt;</item>
+        <item>&gt;</item>
+        <item>\u2264</item>
+        <item>\u2265</item>
+        <item>&amp;&amp;</item>
+        <item>||</item>
+        <item>xor</item>
+    </string-array>
+
 </resources>
