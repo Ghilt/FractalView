@@ -32,12 +32,12 @@ class AncestorTileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             listener: AncestorTileAdapter.AncestorGridClickListener?
         ): AncestorTileViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
-            val holder = AncestorTileViewHolder(view)
-            view.setOnClickListener {
-                holder.configTile?.selected = !(holder.configTile?.selected ?: true)
-                listener?.onTileClicked(holder.adapterPosition)
+            return AncestorTileViewHolder(view).apply {
+                itemView.setOnClickListener {
+                    configTile?.selected = !(configTile?.selected ?: true)
+                    listener?.onTileClicked(adapterPosition)
+                }
             }
-            return holder
         }
     }
 }

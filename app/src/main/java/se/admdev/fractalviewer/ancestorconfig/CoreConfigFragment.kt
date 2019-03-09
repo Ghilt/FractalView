@@ -13,7 +13,9 @@ import kotlinx.android.synthetic.main.create_node_overlay.*
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
+import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import kotlin.collections.ArrayList
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -79,7 +81,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
-                R.array.test_ari,
+                R.array.operand_list,
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -88,13 +90,20 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
             ArrayAdapter.createFromResource(
                 it,
-                R.array.test_ari,
+                R.array.operand_list,
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 operand_selection_spinner.adapter = adapter
             }
         }
+
+        select_operand_button.setOnClickListener {
+            val resource: Array<CharSequence> = resources.getTextArray(R.array.operand_list)
+            val data: ArrayList<CompactPickerItem> = ArrayList(resource.toList().map { CompactPickerItem(it) })
+            CompactPickerFragment.newInstance(data).show(fragmentManager, "PickOperandDialog")
+        }
+
     }
 
     override fun onTileClicked(position: Int) {

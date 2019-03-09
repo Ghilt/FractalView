@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ancestorconfig.CompactPickerFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/options_grid"
+        android:layout_height="400dp"
+        android:layout_width="400dp"
+        android:background="@color/bright_green"
+        android:orientation="horizontal"/>
+
+</FrameLayout>
