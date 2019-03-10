@@ -14,10 +14,7 @@ import kotlinx.android.synthetic.main.create_node_overlay.*
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.CompactPickerFragment.Companion.EXTRA_SELECTED
-import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
-import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
-import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import se.admdev.fractalviewer.ancestorconfig.model.Operator
+import se.admdev.fractalviewer.ancestorconfig.model.*
 
 private const val REQUEST_CODE_OPERATOR_PICKER = 0
 
@@ -103,7 +100,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         select_operand_button.setOnClickListener {
-            val data: ArrayList<CompactPickerItem> = ArrayList(Operator.values().map { CompactPickerItem(it.symbol) })
+            val data = ArrayList(Operator.values().map { CompactPickerItem(it) })
             CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
         }
@@ -112,7 +109,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_CODE_OPERATOR_PICKER -> onOperatorSelected(data?.getStringExtra(EXTRA_SELECTED))
+            REQUEST_CODE_OPERATOR_PICKER -> onOperatorSelected(data?.getParcelableExtra(EXTRA_SELECTED))
         }
     }
 
@@ -124,8 +121,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         adapter.notifyItemChanged(position)
     }
 
-    private fun onOperatorSelected(parcelableExtra: String?) {
-        select_operand_button.text = parcelableExtra
+    private fun onOperatorSelected(op: Operator?) {
+        select_operand_button.text = op?.toString()
     }
 
     private fun toggleNodeCreationMode() {

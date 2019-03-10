@@ -1,8 +1,12 @@
 package se.admdev.fractalviewer.ancestorconfig.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
+import kotlinx.android.parcel.Parcelize
 import kotlin.math.pow
 
-enum class Operator {
+@Parcelize
+enum class Operator : Parcelable{
     NONE,
     ADDITION {
         override val function = { a: Int, b: Int -> a + b }
@@ -65,6 +69,8 @@ enum class Operator {
         override val symbol = "xor"
     };
 
+    @IgnoredOnParcel
     open val function: (Int, Int) -> Int = { _, _ -> 0 }
+    @IgnoredOnParcel
     open val symbol: String = ""
 }
