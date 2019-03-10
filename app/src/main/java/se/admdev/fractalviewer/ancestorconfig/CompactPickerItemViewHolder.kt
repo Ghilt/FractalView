@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.compact_picker_item.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
-import se.admdev.fractalviewer.ancestorconfig.model.Operator
 
 class CompactPickerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun <K : Parcelable> bind(item: CompactPickerItem<K>) {
-        itemView.contentTextView.text = (item.content as Operator).toString()
+    fun <T : Parcelable> bind(item: CompactPickerItem<T>) {
+        itemView.contentTextView.text = item.presentFunction(item.content)
     }
 
     companion object {

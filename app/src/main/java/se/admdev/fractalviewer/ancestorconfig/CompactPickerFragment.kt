@@ -18,16 +18,16 @@ import androidx.fragment.app.Fragment
 private const val ARG_OPTIONS_DATA = "argOptionsData"
 private const val ARG_RETURN_REQUEST_CODE = "argReturnRequestCode"
 
-class CompactPickerFragment<K : Parcelable, T : CompactPickerItem<K>> : DialogFragment(), CompactPickerAdapter.OptionClickListener {
+class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAdapter.OptionClickListener {
 
-    private lateinit var data: List<T>
+    private lateinit var data: List<CompactPickerItem<T>>
     private var returnRequestCode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.apply {
             returnRequestCode = getInt(ARG_RETURN_REQUEST_CODE)
-            val optionsData = getParcelableArrayList<T>(ARG_OPTIONS_DATA)
+            val optionsData = getParcelableArrayList<CompactPickerItem<T>>(ARG_OPTIONS_DATA)
             optionsData?.let {
                 data = it
             }
@@ -71,8 +71,8 @@ class CompactPickerFragment<K : Parcelable, T : CompactPickerItem<K>> : DialogFr
         const val EXTRA_SELECTED = "extraSelectedItem"
 
         @JvmStatic
-        fun <K : Parcelable, T : CompactPickerItem<K>> newInstance(parentFragment: Fragment, dataList: ArrayList<T>, returnRequestCode: Int): CompactPickerFragment<K, T> {
-            return CompactPickerFragment<K, T>().apply {
+        fun <T : Parcelable> newInstance(parentFragment: Fragment, dataList: ArrayList<CompactPickerItem<T>>, returnRequestCode: Int): CompactPickerFragment<T> {
+            return CompactPickerFragment<T>().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ARG_OPTIONS_DATA, dataList)
                     putParcelableArrayList(ARG_RETURN_REQUEST_CODE, dataList)

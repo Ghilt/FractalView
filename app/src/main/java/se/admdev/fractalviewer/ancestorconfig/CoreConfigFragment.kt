@@ -28,7 +28,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         super.onCreate(savedInstanceState)
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
+        } ?: throw Throwable("Invalid Activity")
 
         model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
@@ -100,7 +100,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         select_operand_button.setOnClickListener {
-            val data = ArrayList(Operator.values().map { CompactPickerItem(it) })
+            val data = ArrayList(Operator.values()
+                .map { CompactPickerItem(it) {symbol} })
             CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
         }
@@ -115,14 +116,13 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onTileClicked(position: Int) {
         // going via viewModel into the tile observer works but you lose recycler animation magic
-        //        model.ancestorTiles.triggerObserver()
-
+        // model.ancestorTiles.triggerObserver()
         toggleNodeCreationMode()
         adapter.notifyItemChanged(position)
     }
 
     private fun onOperatorSelected(op: Operator?) {
-        select_operand_button.text = op?.toString()
+        select_operand_button.text = op?.symbol
     }
 
     private fun toggleNodeCreationMode() {
