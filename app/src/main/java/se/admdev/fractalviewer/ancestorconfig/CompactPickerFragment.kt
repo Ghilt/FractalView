@@ -1,7 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,33 +11,23 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import kotlinx.android.synthetic.main.dialog_compact_picker.*
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
-import java.lang.ClassCastException
+import android.content.Intent
+import androidx.fragment.app.Fragment
 
-private const val ARG_OPTIONS_DATA = "ArgOptionsData"
+private const val ARG_OPTIONS_DATA = "argOptionsData"
+private const val ARG_RETURN_REQUEST_CODE = "argReturnRequestCode"
 
 class CompactPickerFragment : DialogFragment(), CompactPickerAdapter.OptionClickListener {
 
-    interface ItemSelectedListener {
-        fun onItemClicked(item: CompactPickerItem)
-    }
-
     private lateinit var data: List<CompactPickerItem>
-    private var listener: ItemSelectedListener? = null
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        try {
-            listener = activity as ItemSelectedListener
-        } catch (e: ClassCastException) {
-            Log.e(TAG, "onAttach: ClassCastException: ${e.message}")
-        }
-    }
+    private var returnRequestCode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.apply {
+            returnRequestCode = getInt(ARG_RETURN_REQUEST_CODE)
             val optionsData = getParcelableArrayList<CompactPickerItem>(ARG_OPTIONS_DATA)
-            optionsData?.let{
+            optionsData?.let {
                 data = it
             }
         }
@@ -67,20 +56,28 @@ class CompactPickerFragment : DialogFragment(), CompactPickerAdapter.OptionClick
     }
 
     override fun onItemClicked(position: Int) {
-        listener?.onItemClicked(data[position])
+        val intent = Intent()
+        intent.putExtra(EXTRA_SELECTED, data[position].content)
+        targetFragment?.onActivityResult(
+            targetRequestCode, returnRequestCode, intent
+        )
         dialog.dismiss()
     }
 
     companion object {
 
         const val TAG = "CompactPickerFragment"
+        const val EXTRA_SELECTED = "extraSelectedItem"
 
         @JvmStatic
-        fun newInstance(dataList: ArrayList<CompactPickerItem>) =
-            CompactPickerFragment().apply {
+        fun newInstance(parentFragment: Fragment, dataList: ArrayList<CompactPickerItem>, returnRequestCode: Int): CompactPickerFragment {
+            return CompactPickerFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ARG_OPTIONS_DATA, dataList)
+                    putParcelableArrayList(ARG_RETURN_REQUEST_CODE, dataList)
                 }
+                setTargetFragment(parentFragment, returnRequestCode)
             }
+        }
     }
 }

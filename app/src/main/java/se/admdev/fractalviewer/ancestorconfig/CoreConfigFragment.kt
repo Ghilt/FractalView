@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.create_node_overlay.*
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.ancestorconfig.CompactPickerFragment.Companion.EXTRA_SELECTED
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import kotlin.collections.ArrayList
+import se.admdev.fractalviewer.ancestorconfig.model.Operator
+
+private const val REQUEST_CODE_OPERATOR_PICKER = 0
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -99,11 +103,17 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         select_operand_button.setOnClickListener {
-            val resource: Array<CharSequence> = resources.getTextArray(R.array.operand_list)
-            val data: ArrayList<CompactPickerItem> = ArrayList(resource.toList().map { CompactPickerItem(it) })
-            CompactPickerFragment.newInstance(data).show(fragmentManager, "PickOperandDialog")
+            val data: ArrayList<CompactPickerItem> = ArrayList(Operator.values().map { CompactPickerItem(it.symbol) })
+            CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
+                .show(fragmentManager, "PickOperatorDialog")
         }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_OPERATOR_PICKER -> onOperatorSelected(data?.getStringExtra(EXTRA_SELECTED))
+        }
     }
 
     override fun onTileClicked(position: Int) {
@@ -114,12 +124,17 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         adapter.notifyItemChanged(position)
     }
 
+    private fun onOperatorSelected(parcelableExtra: String?) {
+        select_operand_button.text = parcelableExtra
+    }
+
     private fun toggleNodeCreationMode() {
         val editMode = if (model.hasSelectedTile()) View.VISIBLE else View.GONE
         node_creation_controls.visibility = editMode
     }
 
     companion object {
+
         @JvmStatic
         fun createInstance(): Fragment {
             return CoreConfigFragment()
