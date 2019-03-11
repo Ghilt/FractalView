@@ -31,7 +31,6 @@ class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return ConfigNodeViewHolder(view).apply {
                 adapter = AncestorTileAdapter()
-                grid.layoutManager = GridLayoutManager(itemView.context, 1)
                 adapter?.containerSize = itemView.resources.getDimension(R.dimen.grid_size_miniature)
                 grid.adapter = adapter
             }

@@ -19,6 +19,7 @@
         app:spanCount="3"
         tools:itemCount="9"
         android:translationZ="2dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/ancestor_configuration_tile"/>
 
     <Button

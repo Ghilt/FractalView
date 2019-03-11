@@ -5,37 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cream_white"
+    android:padding="12dp"
     tools:showIn="@layout/fragment_core_config">
 
-    <Spinner
-        android:id="@+id/operator_selection_spinner"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ancestor_grid_edit_node_creation"
+        android:layout_width="@dimen/grid_size_miniature"
+        android:layout_height="@dimen/grid_size_miniature"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="9"
+        tools:listitem="@layout/ancestor_configuration_tile"/>
+
+    <Button
+        android:id="@+id/select_operator_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:translationZ="2dp"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:text="@string/placeholder_select_operator"
+        app:layout_constraintStart_toEndOf="@id/ancestor_grid_edit_node_creation"
+        app:layout_constraintTop_toTopOf="@id/ancestor_grid_edit_node_creation"
+        app:layout_constraintBottom_toBottomOf="@id/ancestor_grid_edit_node_creation"/>
 
     <Button
         android:id="@+id/select_operand_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_hello"
-        app:layout_constraintEnd_toEndOf="@id/accept_selection_button"
-        app:layout_constraintStart_toStartOf="@id/accept_selection_button"
-        app:layout_constraintTop_toBottomOf="@id/accept_selection_button"/>
-
-    <Spinner
-        android:id="@+id/operand_selection_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:translationZ="2dp"
-        app:layout_constraintEnd_toEndOf="@id/operator_selection_spinner"
-        app:layout_constraintStart_toStartOf="@id/operator_selection_spinner"
-        app:layout_constraintTop_toBottomOf="@id/operator_selection_spinner"/>
+        android:text="@string/placeholder_select_operand"
+        app:layout_constraintStart_toEndOf="@id/select_operator_button"
+        app:layout_constraintTop_toTopOf="@id/ancestor_grid_edit_node_creation"
+        app:layout_constraintBottom_toBottomOf="@id/ancestor_grid_edit_node_creation"/>
 
     <Button
         android:id="@+id/accept_selection_button"
@@ -45,8 +45,9 @@
         android:text="@string/general_accept"
         android:textColor="@color/bright_green"
         android:translationZ="2dp"
-        app:layout_constraintEnd_toEndOf="@id/operand_selection_spinner"
-        app:layout_constraintStart_toStartOf="@id/operand_selection_spinner"
-        app:layout_constraintTop_toBottomOf="@id/operand_selection_spinner"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_operator_button"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

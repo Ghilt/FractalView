@@ -7,27 +7,11 @@
     <string name="ancestor_config_plus">+</string>
     <string name="ancestor_config_minus">-</string>
     <string name="placeholder_hello">Hello!</string>
+    <string name="placeholder_select_operator">Select operator</string>
+    <string name="placeholder_select_operand">Select operand</string>
 
     <string name="start_welcome">Welcome!</string>
     <string name="start_configure_button">Configure</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
 
-    <string-array name="operand_list">
-        <item>None</item>
-        <item>+</item>
-        <item>-</item>
-        <item>*</item>
-        <item>\u00F7</item> <!-- Exponent -->
-        <item>\u005E</item> <!-- Division -->
-        <item>%</item>
-        <item>==</item>
-        <item>=\=</item>
-        <item>&lt;</item>
-        <item>&gt;</item>
-        <item>\u2264</item>
-        <item>\u2265</item>
-        <item>&amp;&amp;</item>
-        <item>||</item>
-        <item>xor</item>
-    </string-array>
 </resources>

@@ -13,6 +13,7 @@
         android:layout_height="@dimen/grid_size_miniature"
         app:spanCount="3"
         tools:itemCount="9"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/ancestor_configuration_tile"/>
 
     <TextView

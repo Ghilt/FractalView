@@ -22,6 +22,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private lateinit var model: ConfigViewModel
     private val adapter = AncestorTileAdapter()
+    private val creationGridAdapter = AncestorTileAdapter()
     private val listAdapter = ConfigurationListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             (ancestor_grid.layoutManager as GridLayoutManager).spanCount = model.ancestorTileDimension
             adapter.setDataSet(items)
             adapter.notifyDataSetChanged()
-            toggleNodeCreationMode()
+            updateNodeCreationMode()
         })
     }
 
@@ -52,19 +53,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         adapter.containerSize = resources.getDimension(R.dimen.grid_size)
         adapter.listener = this
-
         ancestor_grid.adapter = adapter
+
         node_list.adapter = listAdapter
-
-        ancestor_grid.layoutManager = object : GridLayoutManager(this.context, model.ancestorTileDimension) {
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
-
-            override fun canScrollHorizontally(): Boolean {
-                return false
-            }
-        }
 
         accept_selection_button.setOnClickListener {
             model.configNodes.addItem(ConfigNode(model.getTileSnapshot()))
@@ -79,32 +70,15 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             model.decreaseAncestorTiles()
         }
 
-        context?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.operand_list,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                operator_selection_spinner.adapter = adapter
-            }
-
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.operand_list,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                operand_selection_spinner.adapter = adapter
-            }
-        }
-
-        select_operand_button.setOnClickListener {
+        select_operator_button.setOnClickListener {
             val data = ArrayList(Operator.values()
                 .map { CompactPickerItem(it) {symbol} })
             CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
         }
+
+        creationGridAdapter.containerSize = resources.getDimension(R.dimen.grid_size_miniature)
+        ancestor_grid_edit_node_creation.adapter = creationGridAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -117,17 +91,22 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     override fun onTileClicked(position: Int) {
         // going via viewModel into the tile observer works but you lose recycler animation magic
         // model.ancestorTiles.triggerObserver()
-        toggleNodeCreationMode()
+        updateNodeCreationMode()
         adapter.notifyItemChanged(position)
     }
 
     private fun onOperatorSelected(op: Operator?) {
-        select_operand_button.text = op?.symbol
+        select_operator_button.text = op?.symbol
     }
 
-    private fun toggleNodeCreationMode() {
+    private fun updateNodeCreationMode() {
         val editMode = if (model.hasSelectedTile()) View.VISIBLE else View.GONE
         node_creation_controls.visibility = editMode
+
+        val snap = model.getTileSnapshot()
+        (ancestor_grid_edit_node_creation.layoutManager as GridLayoutManager).spanCount = snap.size
+        creationGridAdapter.setDataSet(snap)
+        creationGridAdapter.notifyDataSetChanged()
     }
 
     companion object {
