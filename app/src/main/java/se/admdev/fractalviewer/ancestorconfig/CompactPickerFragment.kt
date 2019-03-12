@@ -75,7 +75,7 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
             return CompactPickerFragment<T>().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ARG_OPTIONS_DATA, dataList)
-                    putParcelableArrayList(ARG_RETURN_REQUEST_CODE, dataList)
+                    putInt(ARG_RETURN_REQUEST_CODE, returnRequestCode)
                 }
                 setTargetFragment(parentFragment, returnRequestCode)
             }
