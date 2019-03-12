@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ancestorconfig.CompactPickerFragment">
+
+    <EditText
+        android:id="@+id/free_form_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/placeholder_select_operand"
+        android:inputType="numberSigned"
+        android:visibility="gone"
+        android:translationZ="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="@string/placeholder_select_operand" />
+
+    <Button
+        android:id="@+id/confirm_pick_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/free_form_edit_text"
+        android:layout_marginTop="10dp"
+        android:translationZ="2dp"
+        android:visibility="gone"
+        android:text="@string/general_accept"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_grid"
-        android:layout_height="400dp"
         android:layout_width="400dp"
+        android:layout_height="400dp"
         android:background="@color/bright_green"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/free_form_edit_text" />
 
-</FrameLayout>
+    <View
+        android:id="@+id/dimming_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/dimming_background"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

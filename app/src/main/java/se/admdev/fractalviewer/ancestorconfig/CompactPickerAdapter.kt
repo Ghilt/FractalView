@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 
-class CompactPickerAdapter<K : Parcelable,T : CompactPickerItem<K>>(
-    private val data: List<T>,
+class CompactPickerAdapter<T : Parcelable>(
+    private val data: List<CompactPickerItem<T>>,
     private val listener: OptionClickListener
 ) : RecyclerView.Adapter<CompactPickerItemViewHolder>() {
 

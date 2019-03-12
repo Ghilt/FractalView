@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
-import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
-import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
-import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import se.admdev.fractalviewer.ancestorconfig.model.Operator
+import se.admdev.fractalviewer.ancestorconfig.model.*
 
 private const val REQUEST_CODE_OPERATOR_PICKER = 0
+private const val REQUEST_CODE_OPERAND_PICKER = 1
 
 class CreateNodeFragment : Fragment() {
 
@@ -61,8 +59,17 @@ class CreateNodeFragment : Fragment() {
 
         select_operator_button.setOnClickListener {
             val data = ArrayList(Operator.values().map { CompactPickerItem(it) { symbol } })
-            CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
+            CompactPickerFragment.newInstance(this, data, false, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
+        }
+
+        select_operand_button.setOnClickListener {
+            val resource: Array<CharSequence> = resources.getTextArray(R.array.temp_operand_set)
+            val data: ArrayList<CompactPickerItem<Operand>> =
+                ArrayList(resource.toList().map { CompactPickerItem(Operand(it.toString())) { this.name } })
+
+            CompactPickerFragment.newInstance(this, data, true, REQUEST_CODE_OPERAND_PICKER)
+                .show(fragmentManager, "PickOperandDialog")
         }
     }
 
@@ -71,12 +78,17 @@ class CreateNodeFragment : Fragment() {
         if (isAdded) {
             when (requestCode) {
                 REQUEST_CODE_OPERATOR_PICKER -> onOperatorSelected(data?.getParcelableExtra(CompactPickerFragment.EXTRA_SELECTED))
+                REQUEST_CODE_OPERAND_PICKER -> onOperandSelected(data?.getParcelableExtra(CompactPickerFragment.EXTRA_SELECTED))
             }
         }
     }
 
     private fun onOperatorSelected(op: Operator?) {
         select_operator_button.text = op?.symbol
+    }
+
+    private fun onOperandSelected(operand: Operand?) {
+        select_operand_button.text = operand?.name
     }
 
     companion object {
