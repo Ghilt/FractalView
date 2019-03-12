@@ -35,7 +35,7 @@ class CreateNodeFragment : Fragment() {
             creationGridAdapter.setDataSet(snap)
             creationGridAdapter.notifyDataSetChanged()
 
-            if (!model.hasSelectedTile()){
+            if (!model.hasSelectedTile()) {
                 fragmentManager?.popBackStack()
             }
         })
@@ -46,11 +46,6 @@ class CreateNodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_create_node, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        model.clearAncestorSelection()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,9 +60,7 @@ class CreateNodeFragment : Fragment() {
         }
 
         select_operator_button.setOnClickListener {
-            val data = ArrayList(
-                Operator.values()
-                    .map { CompactPickerItem(it) { symbol } })
+            val data = ArrayList(Operator.values().map { CompactPickerItem(it) { symbol } })
             CompactPickerFragment.newInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
         }

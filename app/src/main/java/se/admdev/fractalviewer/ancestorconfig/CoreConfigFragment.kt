@@ -58,6 +58,12 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         minus_grid_size_button.setOnClickListener {
             model.decreaseAncestorTiles()
         }
+
+        childFragmentManager.addOnBackStackChangedListener {
+            // Not the best/temp solution. Need to clear selection when user backs out from node creation
+            // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
+            if (childFragmentManager.backStackEntryCount == 0) model.clearAncestorSelection()
+        }
     }
 
     override fun onTileClicked(position: Int) {
@@ -69,16 +75,15 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         dimming_overlay.visibility = editMode
 
         if (model.hasSelectedTile() && !isCreateNodeFragmentShown()) {
-            fragmentManager?.apply {
-                beginTransaction()
-                    .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
-                    .addToBackStack(CreateNodeFragment.TAG)
-                    .commit()
-            }
+            childFragmentManager.beginTransaction()
+                .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
+                .addToBackStack(CreateNodeFragment.TAG)
+                .commit()
+
         }
     }
 
-    private fun isCreateNodeFragmentShown() = fragmentManager?.findFragmentByTag(CreateNodeFragment.TAG) != null
+    private fun isCreateNodeFragmentShown() = childFragmentManager.findFragmentByTag(CreateNodeFragment.TAG) != null
 
     companion object {
 
