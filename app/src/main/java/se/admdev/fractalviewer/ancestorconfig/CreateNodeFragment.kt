@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.*
@@ -66,7 +65,14 @@ class CreateNodeFragment : Fragment() {
         ancestor_grid_edit_node_creation.adapter = creationGridAdapter
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(ConfigNode(model.getTileSnapshot(), model.newNodeOperator.value, model.newNodeOperand.value))
+            model.configNodes.addItem(
+                ConfigNode(
+                    model.getNextConfigNodeLabel(),
+                    model.getTileSnapshot(),
+                    model.newNodeOperator.value,
+                    model.newNodeOperand.value
+                )
+            )
             model.onSaveNewNode()
         }
 
