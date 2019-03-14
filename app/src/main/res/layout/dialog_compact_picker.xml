@@ -11,25 +11,25 @@
         android:id="@+id/free_form_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="@string/placeholder_select_operand"
         android:hint="@string/placeholder_select_operand"
         android:inputType="numberSigned"
-        android:visibility="gone"
         android:translationZ="2dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="@string/placeholder_select_operand" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/confirm_pick_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/free_form_edit_text"
         android:layout_marginTop="10dp"
+        android:text="@string/general_accept"
         android:translationZ="2dp"
         android:visibility="gone"
-        android:text="@string/general_accept"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/free_form_edit_text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_grid"
@@ -44,11 +44,11 @@
         android:id="@+id/dimming_overlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/dimming_background"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -11,15 +10,15 @@
         android:id="@+id/ancestor_grid_miniature"
         android:layout_width="@dimen/grid_size_miniature"
         android:layout_height="@dimen/grid_size_miniature"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         tools:itemCount="9"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/ancestor_configuration_tile"/>
+        tools:listitem="@layout/ancestor_configuration_tile" />
 
     <TextView
+        android:id="@+id/node_origin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/node_origin"
-        android:text="@string/placeholder_hello"/>
+        android:text="@string/placeholder_hello" />
 
 </LinearLayout>
