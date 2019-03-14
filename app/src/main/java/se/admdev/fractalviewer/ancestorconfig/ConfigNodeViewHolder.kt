@@ -4,22 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_rule_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.gridLayoutManager
 
 class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val sumOf: TextView = itemView.node_origin
+    private val operatorText: TextView = itemView.operator_text
     private val grid: RecyclerView = itemView.ancestor_grid_miniature
     private var adapter: AncestorTileAdapter? = null
 
     fun bind(node: ConfigNode) {
-        (grid.layoutManager as GridLayoutManager).spanCount = node.tileSnapshot.size
+        grid.gridLayoutManager.spanCount = node.tileSnapshot.size
         adapter?.setDataSet(node.tileSnapshot)
         adapter?.notifyDataSetChanged()
+
+        operatorText.text =
+            itemView.context.getString(R.string.node_list_operator, node.operator?.symbol, node.operand?.name)
     }
 
     companion object {

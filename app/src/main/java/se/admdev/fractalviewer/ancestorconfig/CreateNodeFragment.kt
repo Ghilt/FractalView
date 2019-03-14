@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.setTextIfNotNull
 
 private const val REQUEST_CODE_OPERATOR_PICKER = 0
@@ -30,7 +31,7 @@ class CreateNodeFragment : Fragment() {
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> {
             val snap = model.getTileSnapshot()
-            (ancestor_grid_edit_node_creation.layoutManager as GridLayoutManager).spanCount = snap.size
+            ancestor_grid_edit_node_creation.gridLayoutManager.spanCount = snap.size
             creationGridAdapter.setDataSet(snap)
             creationGridAdapter.notifyDataSetChanged()
 
@@ -65,7 +66,7 @@ class CreateNodeFragment : Fragment() {
         ancestor_grid_edit_node_creation.adapter = creationGridAdapter
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(ConfigNode(model.getTileSnapshot(), model.newNodeOperator, model.newNodeOperand))
+            model.configNodes.addItem(ConfigNode(model.getTileSnapshot(), model.newNodeOperator.value, model.newNodeOperand.value))
             model.onSaveNewNode()
         }
 

@@ -4,6 +4,6 @@ import androidx.lifecycle.MutableLiveData
 
 class ConfigNode(
     val tileSnapshot: List<List<AncestorTile>>,
-    val operator: MutableLiveData<Operator>,
-    val operand: MutableLiveData<Operand>
+    val operator: Operator?,
+    val operand: Operand?
 )

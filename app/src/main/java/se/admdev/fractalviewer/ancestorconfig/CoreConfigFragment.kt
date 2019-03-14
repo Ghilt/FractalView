@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_core_config.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.viewVisibility
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
@@ -32,7 +33,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
-            (ancestor_grid.layoutManager as GridLayoutManager).spanCount = model.ancestorTileDimension
+            ancestor_grid.gridLayoutManager.spanCount = model.ancestorTileDimension
             adapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
             adapter.notifyDataSetChanged()
             updateNodeCreationMode()

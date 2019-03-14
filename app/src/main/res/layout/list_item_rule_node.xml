@@ -4,21 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:gravity="center"
     android:orientation="horizontal">
+
+    <!--TODO Add options for sumAll, valueOfGreatest, valueOfSmallest-->
+    <TextView
+        android:id="@+id/initial_operator_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/node_list_sum_all"
+        android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ancestor_grid_miniature"
         android:layout_width="@dimen/grid_size_miniature"
         android:layout_height="@dimen/grid_size_miniature"
+        android:layout_margin="5dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         tools:itemCount="9"
         tools:listitem="@layout/ancestor_configuration_tile" />
 
     <TextView
-        android:id="@+id/node_origin"
+        android:id="@+id/operator_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_hello" />
+        android:text="@string/node_list_sum_all"
+        android:textSize="18sp" />
+
 
 </LinearLayout>
