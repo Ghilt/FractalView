@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.setTextIfNotNull
 
 private const val REQUEST_CODE_OPERATOR_PICKER = 0
 private const val REQUEST_CODE_OPERAND_PICKER = 1
@@ -37,6 +38,17 @@ class CreateNodeFragment : Fragment() {
                 fragmentManager?.popBackStack()
             }
         })
+
+        model.newNodeOperator.observe(this, Observer<Operator> {
+            select_operator_button.setTextIfNotNull(it?.symbol)
+            select_operand_button.isEnabled = it != null && it != Operator.NONE
+
+        })
+
+        model.newNodeOperand.observe(this, Observer<Operand> {
+            select_operand_button.setTextIfNotNull(it?.name)
+        })
+
     }
 
     override fun onCreateView(
@@ -53,8 +65,8 @@ class CreateNodeFragment : Fragment() {
         ancestor_grid_edit_node_creation.adapter = creationGridAdapter
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(ConfigNode(model.getTileSnapshot()))
-            model.clearAncestorSelection()
+            model.configNodes.addItem(ConfigNode(model.getTileSnapshot(), model.newNodeOperator, model.newNodeOperand))
+            model.onSaveNewNode()
         }
 
         select_operator_button.setOnClickListener {
@@ -83,12 +95,12 @@ class CreateNodeFragment : Fragment() {
         }
     }
 
-    private fun onOperatorSelected(op: Operator?) {
-        select_operator_button.text = op?.symbol
+    private fun onOperatorSelected(operator: Operator?) {
+        model.newNodeOperator.value = operator
     }
 
     private fun onOperandSelected(operand: Operand?) {
-        select_operand_button.text = operand?.name
+        model.newNodeOperand.value = operand
     }
 
     companion object {

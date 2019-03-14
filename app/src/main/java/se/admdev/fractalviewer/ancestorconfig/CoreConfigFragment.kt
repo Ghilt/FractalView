@@ -63,7 +63,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         childFragmentManager.addOnBackStackChangedListener {
             // Not the best/temp solution. Need to clear selection when user backs out from node creation
             // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
-            if (childFragmentManager.backStackEntryCount == 0) model.clearAncestorSelection()
+            if (childFragmentManager.backStackEntryCount == 0) model.onSaveNewNode()
         }
     }
 

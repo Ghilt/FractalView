@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.ancestorconfig.model.Operand
+import se.admdev.fractalviewer.ancestorconfig.model.Operator
 
 private const val ANCESTOR_TILE_INITIAL_SIZE = 3
 
@@ -13,6 +15,8 @@ class ConfigViewModel : ViewModel() {
     val ancestorTiles = MutableLiveData<List<List<AncestorTile>>>().apply {
         value = calculateAncestorTiles(ANCESTOR_TILE_INITIAL_SIZE)
     }
+    val newNodeOperator = MutableLiveData<Operator>()
+    val newNodeOperand = MutableLiveData<Operand>()
 
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
@@ -42,11 +46,14 @@ class ConfigViewModel : ViewModel() {
         ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2, ancestorTiles.value)
     }
 
-    fun clearAncestorSelection() {
+    fun onSaveNewNode() {
         // OK, lists wont be long
         ancestorTiles.value?.forEach {
             it.forEach { tile -> tile.selected = false }
         }
+
+        newNodeOperator.value = null
+        newNodeOperand.value = null
         ancestorTiles.triggerObserver()
     }
 
