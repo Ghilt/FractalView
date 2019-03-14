@@ -1,6 +1,5 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_rule_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.getLabelColor
 import se.admdev.fractalviewer.gridLayoutManager
-import kotlin.random.Random
 
 class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -24,8 +23,7 @@ class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         adapter?.setDataSet(node.tileSnapshot)
         adapter?.notifyDataSetChanged()
 
-        val ran = Random(node.label.toInt())
-        label.setBackgroundColor(Color.argb(1f, ran.nextFloat(), ran.nextFloat(), ran.nextFloat()))
+        label.setBackgroundColor(node.label.getLabelColor())
         label.text = node.label.toString()
 
         operatorText.text =

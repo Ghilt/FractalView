@@ -17,19 +17,4 @@
     <string name="start_configure_button">Configure</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
 
-    <string-array name="temp_operand_set">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-        <item>D</item>
-        <item>E</item>
-        <item>F</item>
-        <item>G</item>
-        <item>H</item>
-        <item>I</item>
-        <item>J</item>
-        <item>K</item>
-        <item>L</item>
-    </string-array>
-
 </resources>

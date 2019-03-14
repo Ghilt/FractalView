@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Operand(val name: String) : Parcelable
+class Operand(val name: String, val label: Char? = null) : Parcelable

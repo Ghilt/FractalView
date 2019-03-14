@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:padding="4dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:background="@color/colorPrimary"
+        tools:text="A" />
 
     <!--TODO Add options for sumAll, valueOfGreatest, valueOfSmallest-->
     <TextView
@@ -37,7 +40,7 @@
         android:id="@+id/operator_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/node_list_sum_all"
+        android:text="@string/node_list_operator"
         android:textSize="18sp" />
 
 

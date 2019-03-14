@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.getLabelColor
 import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.setTextIfNotNull
 
@@ -77,15 +78,17 @@ class CreateNodeFragment : Fragment() {
         }
 
         select_operator_button.setOnClickListener {
-            val data = ArrayList(Operator.values().map { CompactPickerItem(it) { symbol } })
+            val data = ArrayList(Operator.values().map { CompactPickerItem(it, it.symbol) })
             CompactPickerFragment.newInstance(this, data, false, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, "PickOperatorDialog")
         }
 
         select_operand_button.setOnClickListener {
-            val resource: Array<CharSequence> = resources.getTextArray(R.array.temp_operand_set)
             val data: ArrayList<CompactPickerItem<Operand>> =
-                ArrayList(resource.toList().map { CompactPickerItem(Operand(it.toString())) { this.name } })
+                ArrayList(model.configNodes.value?.map {
+                    val name = it.label.toString()
+                    CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor())}
+                } ?: listOf())
 
             CompactPickerFragment.newInstance(this, data, true, REQUEST_CODE_OPERAND_PICKER)
                 .show(fragmentManager, "PickOperandDialog")

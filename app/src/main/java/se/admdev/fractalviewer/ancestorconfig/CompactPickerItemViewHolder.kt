@@ -12,7 +12,8 @@ import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 class CompactPickerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun <T : Parcelable> bind(item: CompactPickerItem<T>) {
-        itemView.contentTextView.text = item.presentFunction(item.content)
+        itemView.content_text_view.text = item.name
+        item.decorator?.invoke(itemView.content_text_view)
     }
 
     companion object {
