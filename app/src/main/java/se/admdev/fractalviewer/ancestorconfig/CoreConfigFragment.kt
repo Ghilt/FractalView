@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
+import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
@@ -65,6 +69,36 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             // Not the best/temp solution. Need to clear selection when user backs out from node creation
             // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
             if (childFragmentManager.backStackEntryCount == 0) model.onSaveNewNode()
+        }
+
+        setupFabButtons()
+    }
+
+    private fun setupFabButtons() {
+        var set = false
+        val foldedConstraints = ConstraintSet()
+        foldedConstraints.clone(fab_space)
+        val expandedConstraints = ConstraintSet()
+        expandedConstraints.clone(fab_space)
+        expandedConstraints.connect(
+            R.id.add_conditional_config_node_fab, ConstraintSet.BOTTOM,
+            R.id.add_config_node_fab, ConstraintSet.TOP, 16
+        )
+        expandedConstraints.connect(
+            R.id.add_all_config_node_fab, ConstraintSet.BOTTOM,
+            R.id.add_conditional_config_node_fab, ConstraintSet.TOP, 16
+        )
+        expandedConstraints.setRotation(R.id.add_config_node_fab, 45f)
+
+        val transition = ChangeBounds()
+        transition.interpolator = FastOutSlowInInterpolator()
+
+        add_config_node_fab.setOnClickListener {
+            TransitionManager.beginDelayedTransition(fab_space, transition)
+            val constraint = if (set) foldedConstraints else expandedConstraints
+            constraint.applyTo(fab_space)
+            set = !set
+//            it.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.rotate_45_degrees))
         }
     }
 
