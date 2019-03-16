@@ -17,6 +17,7 @@ import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.gridLayoutManager
+import se.admdev.fractalviewer.toDp
 import se.admdev.fractalviewer.viewVisibility
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
@@ -71,6 +72,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             if (childFragmentManager.backStackEntryCount == 0) model.onSaveNewNode()
         }
 
+        dimming_overlay.setOnClickListener {/*Prevent click through*/}
+
         setupFabButtons()
     }
 
@@ -82,11 +85,13 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         expandedConstraints.clone(fab_space)
         expandedConstraints.connect(
             R.id.add_conditional_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_config_node_menu_fab, ConstraintSet.TOP, 16
+            R.id.add_config_node_menu_fab, ConstraintSet.TOP,
+            resources.getDimension(R.dimen.fab_spacing).toInt()
         )
         expandedConstraints.connect(
             R.id.add_all_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_conditional_config_node_fab, ConstraintSet.TOP, 16
+            R.id.add_conditional_config_node_fab, ConstraintSet.TOP,
+            resources.getDimension(R.dimen.fab_spacing).toInt()
         )
         expandedConstraints.setRotation(R.id.add_config_node_menu_fab, 45f)
 
@@ -113,6 +118,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun updateNodeCreationMode() {
         dimming_overlay.visibility = model.hasSelectedTile().viewVisibility
+        dimming_overlay.translationZ = resources.getDimension(R.dimen.view_elevation_none)
 
         if (model.hasSelectedTile() && !isCreateNodeFragmentShown()) {
             childFragmentManager.beginTransaction()
@@ -123,7 +129,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun startCreateConditionalNodeFragment() {
-        dimming_overlay.visibility = model.hasSelectedTile().viewVisibility
+        dimming_overlay.visibility = true.viewVisibility
+        dimming_overlay.translationZ = resources.getDimension(R.dimen.view_elevation_large)
 
         if (!isCreateConditionalNodeFragmentShown()) {
             childFragmentManager.beginTransaction()

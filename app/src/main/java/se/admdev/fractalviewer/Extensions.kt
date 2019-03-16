@@ -1,6 +1,8 @@
 package se.admdev.fractalviewer
 
+import android.content.Context
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,4 +22,8 @@ val RecyclerView.gridLayoutManager
 fun Char.getLabelColor(): Int {
     val ran = Random(this.toInt())
     return Color.argb(1f, ran.nextFloat(), ran.nextFloat(), ran.nextFloat())
+}
+
+fun Int.toDp(context: Context): Float {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics)
 }

@@ -10,7 +10,7 @@
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
         android:background="@color/light_blue"
-        android:translationZ="2dp"
+        android:translationZ="@dimen/view_elevation_mid"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
@@ -80,6 +80,7 @@
         android:id="@+id/create_node_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:translationZ="@dimen/view_elevation_large"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/node_list" />

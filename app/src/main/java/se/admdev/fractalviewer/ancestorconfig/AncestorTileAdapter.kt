@@ -16,11 +16,10 @@ class AncestorTileAdapter : RecyclerView.Adapter<AncestorTileViewHolder>() {
         get() = data.size
     var containerSize: Float = 0f
 
-    override fun onCreateViewHolder(view: ViewGroup, type: Int) =
-        AncestorTileViewHolder.create(view, listener)
+    override fun onCreateViewHolder(view: ViewGroup, type: Int) = AncestorTileViewHolder.create(view, listener)
     override fun getItemCount() = size * size
-    override fun onBindViewHolder(view: AncestorTileViewHolder, pos: Int) =
-        view.bind(getTileFromPos(pos), size, containerSize)
+    override fun onBindViewHolder(view: AncestorTileViewHolder, pos: Int)
+            = view.bind(getTileFromPos(pos), size, containerSize)
 
     fun setDataSet(items: List<List<AncestorTile>>) {
         data = items

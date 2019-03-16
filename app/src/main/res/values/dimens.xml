@@ -2,6 +2,10 @@
 <resources>
     <dimen name="grid_size">200dp</dimen>
     <dimen name="grid_size_miniature">30dp</dimen>
+    <dimen name="view_elevation_none">0dp</dimen>
+    <dimen name="view_elevation_mid">2dp</dimen>
+    <dimen name="view_elevation_large">4dp</dimen>
+    <dimen name="fab_spacing">10dp</dimen>
 
     <integer name="animation_ms">300</integer>
 
