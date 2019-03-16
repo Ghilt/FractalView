@@ -75,32 +75,37 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun setupFabButtons() {
-        var set = false
+        var expanded = false
         val foldedConstraints = ConstraintSet()
         foldedConstraints.clone(fab_space)
         val expandedConstraints = ConstraintSet()
         expandedConstraints.clone(fab_space)
         expandedConstraints.connect(
             R.id.add_conditional_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_config_node_fab, ConstraintSet.TOP, 16
+            R.id.add_config_node_menu_fab, ConstraintSet.TOP, 16
         )
         expandedConstraints.connect(
             R.id.add_all_config_node_fab, ConstraintSet.BOTTOM,
             R.id.add_conditional_config_node_fab, ConstraintSet.TOP, 16
         )
-        expandedConstraints.setRotation(R.id.add_config_node_fab, 45f)
+        expandedConstraints.setRotation(R.id.add_config_node_menu_fab, 45f)
 
         val transition = ChangeBounds()
         transition.interpolator = FastOutSlowInInterpolator()
-
-        add_config_node_fab.setOnClickListener {
+        add_config_node_menu_fab.setOnClickListener {
             TransitionManager.beginDelayedTransition(fab_space, transition)
-            val constraint = if (set) foldedConstraints else expandedConstraints
+            val constraint = if (expanded) foldedConstraints else expandedConstraints
             constraint.applyTo(fab_space)
-            set = !set
+            expanded = !expanded
 //            it.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.rotate_45_degrees))
         }
+
+        add_conditional_config_node_fab.setOnClickListener {
+            startCreateConditionalNodeFragment()
+        }
+
     }
+
 
     override fun onTileClicked(position: Int) {
         model.ancestorTiles.triggerObserver()
@@ -114,11 +119,27 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                 .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
                 .addToBackStack(CreateNodeFragment.TAG)
                 .commit()
+        }
+    }
 
+    private fun startCreateConditionalNodeFragment() {
+        dimming_overlay.visibility = model.hasSelectedTile().viewVisibility
+
+        if (!isCreateConditionalNodeFragmentShown()) {
+            childFragmentManager.beginTransaction()
+                .add(
+                    R.id.create_node_frame,
+                    CreateConditionalNodeFragment.newInstance(),
+                    CreateConditionalNodeFragment.TAG
+                )
+                .addToBackStack(CreateNodeFragment.TAG)
+                .commit()
         }
     }
 
     private fun isCreateNodeFragmentShown() = childFragmentManager.findFragmentByTag(CreateNodeFragment.TAG) != null
+    private fun isCreateConditionalNodeFragmentShown() =
+        childFragmentManager.findFragmentByTag(CreateConditionalNodeFragment.TAG) != null
 
     companion object {
 

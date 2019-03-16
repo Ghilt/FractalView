@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cream_white"
-    android:padding="12dp"
-    tools:showIn="@layout/fragment_core_config">
+    android:padding="12dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ancestor_grid_edit_node_creation"
@@ -32,8 +31,8 @@
         android:id="@+id/select_operand_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_select_operand"
         android:enabled="false"
+        android:text="@string/placeholder_select_operand"
         app:layout_constraintBottom_toBottomOf="@id/ancestor_grid_edit_node_creation"
         app:layout_constraintStart_toEndOf="@id/select_operator_button"
         app:layout_constraintTop_toTopOf="@id/ancestor_grid_edit_node_creation" />

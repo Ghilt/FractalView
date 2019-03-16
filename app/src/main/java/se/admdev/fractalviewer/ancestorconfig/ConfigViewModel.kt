@@ -2,10 +2,8 @@ package se.admdev.fractalviewer.ancestorconfig
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
-import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import se.admdev.fractalviewer.ancestorconfig.model.Operand
-import se.admdev.fractalviewer.ancestorconfig.model.Operator
+import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.getLabelColor
 
 private const val ANCESTOR_TILE_INITIAL_SIZE = 3
 
@@ -15,13 +13,21 @@ class ConfigViewModel : ViewModel() {
     val ancestorTiles = MutableLiveData<List<List<AncestorTile>>>().apply {
         value = calculateAncestorTiles(ANCESTOR_TILE_INITIAL_SIZE)
     }
-    val newNodeOperator = MutableLiveData<Operator>()
-    val newNodeOperand = MutableLiveData<Operand>()
-
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
 
-    private fun calculateAncestorTiles(newSize: Int, oldGrid: List<List<AncestorTile>>? = null): List<List<AncestorTile>> {
+
+    //TODO move these to their own viewmodel
+    val newNodeOperator = MutableLiveData<Operator>()
+    val newNodeOperand = MutableLiveData<Operand>()
+    val newConditionalNodeOperand = MutableLiveData<Operand>()
+    val newConditionalTrueOperand = MutableLiveData<Operand>()
+    val newConditionalFalseOperand = MutableLiveData<Operand>()
+
+    private fun calculateAncestorTiles(
+        newSize: Int,
+        oldGrid: List<List<AncestorTile>>? = null
+    ): List<List<AncestorTile>> {
         val temp = mutableListOf<List<AncestorTile>>()
 
         for (y in 0 until newSize) {
@@ -60,6 +66,12 @@ class ConfigViewModel : ViewModel() {
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
     fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
     fun getNextConfigNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
+
+    fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
+    private fun getAvailableOperands() = configNodes.value?.map {
+        val name = it.label.toString()
+        CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor()) }
+    }
 
 }
 
