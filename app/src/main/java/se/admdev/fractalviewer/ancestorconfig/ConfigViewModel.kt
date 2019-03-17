@@ -52,7 +52,7 @@ class ConfigViewModel : ViewModel() {
         ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2, ancestorTiles.value)
     }
 
-    fun onSaveNewNode() {
+    fun clearNodeCreationData() {
         // OK, lists wont be long
         ancestorTiles.value?.forEach {
             it.forEach { tile -> tile.selected = false }

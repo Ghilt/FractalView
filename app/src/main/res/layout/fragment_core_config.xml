@@ -9,6 +9,7 @@
         android:id="@+id/ancestor_grid"
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
+        android:padding="5dp"
         android:background="@color/light_blue"
         android:translationZ="@dimen/view_elevation_mid"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -30,7 +31,8 @@
         android:text="@string/ancestor_config_minus"
         app:layout_constraintEnd_toStartOf="@id/plus_grid_size_button"
         app:layout_constraintStart_toEndOf="@+id/ancestor_grid"
-        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid" />
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"
+        app:layout_constraintBottom_toTopOf="@id/ancestor_grid"/>
 
     <Button
         android:id="@+id/plus_grid_size_button"
@@ -39,7 +41,7 @@
         android:background="#A5F"
         android:text="@string/ancestor_config_plus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid" />
+        app:layout_constraintTop_toTopOf="@id/minus_grid_size_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/node_list"
@@ -51,7 +53,7 @@
         app:layout_constraintBottom_toTopOf="@+id/target"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plus_grid_size_button"
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"
         tools:itemCount="2"
         tools:listitem="@layout/list_item_rule_node" />
 

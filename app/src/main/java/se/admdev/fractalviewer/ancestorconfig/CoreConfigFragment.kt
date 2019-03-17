@@ -13,12 +13,9 @@ import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
-import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.*
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import se.admdev.fractalviewer.gridLayoutManager
-import se.admdev.fractalviewer.toDp
-import se.admdev.fractalviewer.viewVisibility
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -69,10 +66,16 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         childFragmentManager.addOnBackStackChangedListener {
             // Not the best/temp solution. Need to clear selection when user backs out from node creation
             // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
-            if (childFragmentManager.backStackEntryCount == 0) model.onSaveNewNode()
+            //Might also be fixed by having a separate viewModel
+            if (childFragmentManager.backStackEntryCount == 0) {
+                model.clearNodeCreationData()
+                fab_space.setVisible()
+            } else {
+                fab_space.setGone()
+            }
         }
 
-        dimming_overlay.setOnClickListener {/*Prevent click through*/}
+        dimming_overlay.setOnClickListener { /*Prevent click through*/ }
 
         setupFabButtons()
     }
@@ -108,9 +111,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         add_conditional_config_node_fab.setOnClickListener {
             startCreateConditionalNodeFragment()
         }
-
     }
-
 
     override fun onTileClicked(position: Int) {
         model.ancestorTiles.triggerObserver()

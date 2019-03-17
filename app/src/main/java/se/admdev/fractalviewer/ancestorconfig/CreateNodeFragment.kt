@@ -73,7 +73,7 @@ class CreateNodeFragment : Fragment() {
                     model.newNodeOperand.value
                 )
             )
-            model.onSaveNewNode()
+            model.clearNodeCreationData()
         }
 
         select_operator_button.setOnClickListener {

@@ -27,3 +27,11 @@ fun Char.getLabelColor(): Int {
 fun Int.toDp(context: Context): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics)
 }
+
+fun View.setGone() {
+    visibility = View.GONE
+}
+
+fun View.setVisible() {
+    visibility = View.VISIBLE
+}

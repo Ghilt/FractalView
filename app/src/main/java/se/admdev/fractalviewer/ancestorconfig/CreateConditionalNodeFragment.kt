@@ -76,7 +76,7 @@ class CreateConditionalNodeFragment : Fragment() {
                     model.newNodeOperand.value
                 )
             )
-            model.onSaveNewNode()
+            model.clearNodeCreationData()
             fragmentManager?.popBackStack()
         }
     }
