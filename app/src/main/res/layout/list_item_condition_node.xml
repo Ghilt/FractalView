@@ -28,9 +28,12 @@
         android:id="@+id/operand_condition_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:textSize="18sp"
+        android:padding="4dp"
+
         tools:background="@color/colorPrimary"
-        tools:text="B"/>
+        tools:text="B" />
 
     <TextView
         android:id="@+id/operand_condition_end_bracket"
@@ -43,10 +46,13 @@
         android:id="@+id/operand_true_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/node_list_operator"
+        android:layout_margin="5dp"
+        android:text="@string/node_list_sum_all_end_bracket"
         android:textSize="18sp"
+        android:padding="4dp"
+
         tools:background="@color/colorPrimary"
-        tools:text="C"/>
+        tools:text="C" />
 
     <TextView
         android:id="@+id/operand_else_text"
@@ -59,10 +65,13 @@
         android:id="@+id/operand_false_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/node_list_operator"
+        android:layout_margin="5dp"
+        android:text="@string/node_list_sum_all_end_bracket"
         android:textSize="18sp"
+        android:padding="4dp"
+
         tools:background="@color/colorPrimary"
-        tools:text="D"/>
+        tools:text="D" />
 
 
 </LinearLayout>

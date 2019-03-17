@@ -40,8 +40,17 @@
         android:id="@+id/operator_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/node_list_operator"
+        android:text="@string/node_list_sum_all_end_bracket"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/operand_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="4dp"
+        tools:background="@color/colorAccent"
+        android:layout_margin="5dp"
+        tools:text="C"/>
 
 </LinearLayout>
