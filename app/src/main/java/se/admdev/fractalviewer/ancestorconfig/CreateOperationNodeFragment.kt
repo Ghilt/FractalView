@@ -22,10 +22,10 @@ import se.admdev.fractalviewer.setTextIfNotNull
 private const val REQUEST_CODE_OPERATOR_PICKER = 0
 private const val REQUEST_CODE_OPERAND_PICKER = 1
 
-class CreateNodeFragment : Fragment() {
+class CreateOperationNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
-    private lateinit var model2: CreateNodeViewModel
+    private lateinit var creationData: CreateNodeViewModel
     private val creationGridAdapter = AncestorTileAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class CreateNodeFragment : Fragment() {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
         } ?: throw Throwable("Invalid Activity")
 
-        model2 = ViewModelProviders.of(this).get(CreateNodeViewModel::class.java)
+        creationData = ViewModelProviders.of(this).get(CreateNodeViewModel::class.java)
 
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> {
@@ -48,13 +48,13 @@ class CreateNodeFragment : Fragment() {
             }
         })
 
-        model2.newNodeOperator.observe(this, Observer<Operator> {
+        creationData.newNodeOperator.observe(this, Observer<Operator> {
             select_operator_button.setTextIfNotNull(it?.symbol)
             select_operand_button.isEnabled = it != null && it != Operator.NONE
 
         })
 
-        model2.newNodeOperand.observe(this, Observer<Operand> {
+        creationData.newNodeOperand.observe(this, Observer<Operand> {
             select_operand_button.setTextIfNotNull(it?.name)
         })
 
@@ -86,7 +86,7 @@ class CreateNodeFragment : Fragment() {
         }
 
         accept_selection_button.setOnClickListener {
-            val success = model.saveNewOperationNode(model2.newNodeOperator.value, model2.newNodeOperand.value)
+            val success = model.saveNewOperationNode(creationData.newNodeOperator.value, creationData.newNodeOperand.value)
             if (success) {
                 fragmentManager?.popBackStack()
             } else {
@@ -106,18 +106,18 @@ class CreateNodeFragment : Fragment() {
     }
 
     private fun onOperatorSelected(operator: Operator?) {
-        model2.newNodeOperator.value = operator
+        creationData.newNodeOperator.value = operator
     }
 
     private fun onOperandSelected(operand: Operand?) {
-        model2.newNodeOperand.value = operand
+        creationData.newNodeOperand.value = operand
     }
 
     companion object {
 
-        const val TAG = "CreateNodeFragment"
+        const val TAG = "CreateOperationNodeFragment"
 
         @JvmStatic
-        fun newInstance() = CreateNodeFragment()
+        fun newInstance() = CreateOperationNodeFragment()
     }
 }

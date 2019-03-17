@@ -130,8 +130,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_large)
             if (!isCreateNodeFragmentShown()) {
                 childFragmentManager.beginTransaction()
-                    .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
-                    .addToBackStack(CreateNodeFragment.TAG)
+                    .add(R.id.create_node_frame, CreateOperationNodeFragment.newInstance(), CreateOperationNodeFragment.TAG)
+                    .addToBackStack(CreateOperationNodeFragment.TAG)
                     .commit()
             }
         } else {
@@ -149,12 +149,12 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                     CreateConditionalNodeFragment.newInstance(),
                     CreateConditionalNodeFragment.TAG
                 )
-                .addToBackStack(CreateNodeFragment.TAG)
+                .addToBackStack(CreateOperationNodeFragment.TAG)
                 .commit()
         }
     }
 
-    private fun isCreateNodeFragmentShown() = childFragmentManager.findFragmentByTag(CreateNodeFragment.TAG) != null
+    private fun isCreateNodeFragmentShown() = childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
     private fun isCreateConditionalNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateConditionalNodeFragment.TAG) != null
 
