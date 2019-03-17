@@ -20,9 +20,9 @@ class ConfigViewModel : ViewModel() {
     //TODO move these to their own viewmodel
     val newNodeOperator = MutableLiveData<Operator>()
     val newNodeOperand = MutableLiveData<Operand>()
-    val newConditionalNodeOperand = MutableLiveData<Operand>()
-    val newConditionalTrueOperand = MutableLiveData<Operand>()
-    val newConditionalFalseOperand = MutableLiveData<Operand>()
+    val newConditionNodeOperand = MutableLiveData<Operand>()
+    val newConditionTrueOperand = MutableLiveData<Operand>()
+    val newConditionFalseOperand = MutableLiveData<Operand>()
 
     private fun calculateAncestorTiles(
         newSize: Int,
@@ -72,12 +72,41 @@ class ConfigViewModel : ViewModel() {
 
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
     fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
-    fun getNextConfigNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
+    fun getNextNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
 
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
     private fun getAvailableOperands() = configNodes.value?.map {
         val name = it.label.toString()
         CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor()) }
+    }
+
+
+    fun saveNewOperationNode(): Boolean {
+        return if (newNodeOperator.value != null && newNodeOperand.value == null) {
+            false
+        } else {
+            configNodes.addItem(
+                OperationConfigNode(
+                    getNextNodeLabel(),
+                    getTileSnapshot(),
+                    newNodeOperator.value,
+                    newNodeOperand.value
+                )
+            )
+            true
+        }
+    }
+
+    fun saveNewConditionNode(): Boolean {
+        newConditionNodeOperand.value?.let { c ->
+            newConditionTrueOperand.value?.let { t ->
+                newConditionFalseOperand.value?.let { f ->
+                    configNodes.addItem(ConditionalConfigNode(getNextNodeLabel(), c, t, f))
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }

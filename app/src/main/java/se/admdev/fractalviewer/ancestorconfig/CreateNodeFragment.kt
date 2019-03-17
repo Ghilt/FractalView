@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.*
 import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.setTextIfNotNull
@@ -65,15 +67,12 @@ class CreateNodeFragment : Fragment() {
         ancestor_grid_edit_node_creation.adapter = creationGridAdapter
 
         accept_selection_button.setOnClickListener {
-            model.configNodes.addItem(
-                ConfigNode(
-                    model.getNextConfigNodeLabel(),
-                    model.getTileSnapshot(),
-                    model.newNodeOperator.value,
-                    model.newNodeOperand.value
-                )
-            )
-            model.clearNodeCreationData()
+            val success = model.saveNewOperationNode()
+            if(success) {
+                model.clearNodeCreationData()
+            } else {
+                Toast.makeText(context,R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
+            }
         }
 
         select_operator_button.setOnClickListener {

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.random.Random
@@ -34,4 +35,11 @@ fun View.setGone() {
 
 fun View.setVisible() {
     visibility = View.VISIBLE
+}
+
+fun TextView.showLabel(label: Char?) {
+    label?.let {
+        text = it.toString()
+        setBackgroundColor(it.getLabelColor())
+    }
 }

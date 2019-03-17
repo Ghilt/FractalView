@@ -2,6 +2,7 @@
     <string name="app_name">FractalViewer</string>
 
     <string name="general_accept">Accept</string>
+    <string name="general_not_enough_input_error">Not enough input</string>
 
     <string name="ancestor_configuration_target">Target</string>
     <string name="ancestor_config_plus">+</string>

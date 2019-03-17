@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer.ancestorconfig
+package se.admdev.fractalviewer.ancestorconfig.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +16,8 @@ class AncestorTileAdapter : RecyclerView.Adapter<AncestorTileViewHolder>() {
         get() = data.size
     var containerSize: Float = 0f
 
-    override fun onCreateViewHolder(view: ViewGroup, type: Int) = AncestorTileViewHolder.create(view, listener)
+    override fun onCreateViewHolder(view: ViewGroup, type: Int) =
+        AncestorTileViewHolder.create(view, listener)
     override fun getItemCount() = size * size
     override fun onBindViewHolder(view: AncestorTileViewHolder, pos: Int)
             = view.bind(getTileFromPos(pos), size, containerSize)

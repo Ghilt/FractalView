@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import kotlinx.android.synthetic.main.dialog_compact_picker.*
+import se.admdev.fractalviewer.ancestorconfig.adapter.CompactPickerAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import se.admdev.fractalviewer.viewVisibility

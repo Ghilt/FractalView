@@ -1,4 +1,4 @@
-package se.admdev.fractalviewer.ancestorconfig
+package se.admdev.fractalviewer.ancestorconfig.adapter
 
 import android.os.Parcelable
 import android.view.LayoutInflater

@@ -14,6 +14,8 @@ import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.*
+import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
+import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 

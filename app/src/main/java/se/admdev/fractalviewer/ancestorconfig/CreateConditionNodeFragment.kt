@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_create_conditional_node.*
 import se.admdev.fractalviewer.R
-import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import se.admdev.fractalviewer.setTextIfNotNull
 
@@ -30,15 +30,15 @@ class CreateConditionalNodeFragment : Fragment() {
         } ?: throw Throwable("Invalid Activity")
 
 
-        model.newConditionalNodeOperand.observe(this, Observer<Operand> {
+        model.newConditionNodeOperand.observe(this, Observer<Operand> {
             select_conditional_operand_button.setTextIfNotNull(it?.name)
         })
 
-        model.newConditionalTrueOperand.observe(this, Observer<Operand> {
+        model.newConditionTrueOperand.observe(this, Observer<Operand> {
             select_truth_path_operand_button.setTextIfNotNull(it?.name)
         })
 
-        model.newConditionalFalseOperand.observe(this, Observer<Operand> {
+        model.newConditionFalseOperand.observe(this, Observer<Operand> {
             select_false_path_operand_button.setTextIfNotNull(it?.name)
         })
 
@@ -68,16 +68,14 @@ class CreateConditionalNodeFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.accept_selection_button).setOnClickListener {
-            model.configNodes.addItem(
-                ConfigNode(
-                    model.getNextConfigNodeLabel(),
-                    model.getTileSnapshot(),
-                    model.newNodeOperator.value,
-                    model.newNodeOperand.value
-                )
-            )
-            model.clearNodeCreationData()
-            fragmentManager?.popBackStack()
+
+            val success = model.saveNewConditionNode()
+            if (success) {
+                model.clearNodeCreationData()
+                fragmentManager?.popBackStack()
+            } else {
+                Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -85,9 +83,9 @@ class CreateConditionalNodeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (isAdded) {
             when (requestCode) {
-                REQUEST_CODE_CONDITIONAL_OPERAND -> model.newConditionalNodeOperand.value = data.getPickerChoice()
-                REQUEST_CODE_TRUTH_OPERAND -> model.newConditionalTrueOperand.value = data.getPickerChoice()
-                REQUEST_CODE_FALSE_OPERAND -> model.newConditionalFalseOperand.value = data.getPickerChoice()
+                REQUEST_CODE_CONDITIONAL_OPERAND -> model.newConditionNodeOperand.value = data.getPickerChoice()
+                REQUEST_CODE_TRUTH_OPERAND -> model.newConditionTrueOperand.value = data.getPickerChoice()
+                REQUEST_CODE_FALSE_OPERAND -> model.newConditionFalseOperand.value = data.getPickerChoice()
             }
         }
     }

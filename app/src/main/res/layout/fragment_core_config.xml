@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_rule_node" />
+        tools:listitem="@layout/list_item_operation_node" />
 
     <Button
         android:id="@+id/target"
