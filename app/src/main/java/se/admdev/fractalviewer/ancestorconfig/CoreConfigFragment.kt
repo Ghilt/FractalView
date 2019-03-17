@@ -68,7 +68,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         childFragmentManager.addOnBackStackChangedListener {
             // Not the best/temp solution. Need to clear selection when user backs out from node creation
             // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
-            //Might also be fixed by having a separate viewModel
             if (childFragmentManager.backStackEntryCount == 0) {
                 model.clearNodeCreationData()
                 fab_space.setVisible()
@@ -124,20 +123,24 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun updateNodeCreationMode() {
-        dimming_overlay.visibility = model.hasSelectedTile().viewVisibility
-        dimming_overlay.translationZ = resources.getDimension(R.dimen.view_elevation_none)
+        val selectedTiles = model.hasSelectedTile()
+        dimming_overlay.visibility = selectedTiles.viewVisibility
 
-        if (model.hasSelectedTile() && !isCreateNodeFragmentShown()) {
-            childFragmentManager.beginTransaction()
-                .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
-                .addToBackStack(CreateNodeFragment.TAG)
-                .commit()
+        if (selectedTiles) {
+            ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_large)
+            if (!isCreateNodeFragmentShown()) {
+                childFragmentManager.beginTransaction()
+                    .add(R.id.create_node_frame, CreateNodeFragment.newInstance(), CreateNodeFragment.TAG)
+                    .addToBackStack(CreateNodeFragment.TAG)
+                    .commit()
+            }
+        } else {
+            ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_none)
         }
     }
 
     private fun startCreateConditionalNodeFragment() {
         dimming_overlay.visibility = true.viewVisibility
-        dimming_overlay.translationZ = resources.getDimension(R.dimen.view_elevation_large)
 
         if (!isCreateConditionalNodeFragmentShown()) {
             childFragmentManager.beginTransaction()

@@ -12,7 +12,10 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_create_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
-import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
+import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
+import se.admdev.fractalviewer.ancestorconfig.model.Operand
+import se.admdev.fractalviewer.ancestorconfig.model.Operator
 import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.setTextIfNotNull
 
@@ -22,6 +25,7 @@ private const val REQUEST_CODE_OPERAND_PICKER = 1
 class CreateNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
+    private lateinit var model2: CreateNodeViewModel
     private val creationGridAdapter = AncestorTileAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +33,9 @@ class CreateNodeFragment : Fragment() {
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
         } ?: throw Throwable("Invalid Activity")
+
+        model2 = ViewModelProviders.of(this).get(CreateNodeViewModel::class.java)
+
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> {
             val snap = model.getTileSnapshot()
@@ -41,13 +48,13 @@ class CreateNodeFragment : Fragment() {
             }
         })
 
-        model.newNodeOperator.observe(this, Observer<Operator> {
+        model2.newNodeOperator.observe(this, Observer<Operator> {
             select_operator_button.setTextIfNotNull(it?.symbol)
             select_operand_button.isEnabled = it != null && it != Operator.NONE
 
         })
 
-        model.newNodeOperand.observe(this, Observer<Operand> {
+        model2.newNodeOperand.observe(this, Observer<Operand> {
             select_operand_button.setTextIfNotNull(it?.name)
         })
 
@@ -66,15 +73,6 @@ class CreateNodeFragment : Fragment() {
         creationGridAdapter.containerSize = resources.getDimension(R.dimen.grid_size_miniature)
         ancestor_grid_edit_node_creation.adapter = creationGridAdapter
 
-        accept_selection_button.setOnClickListener {
-            val success = model.saveNewOperationNode()
-            if(success) {
-                model.clearNodeCreationData()
-            } else {
-                Toast.makeText(context,R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         select_operator_button.setOnClickListener {
             val data = ArrayList(Operator.values().map { CompactPickerItem(it, it.symbol) })
             CompactPickerFragment.newInstance(this, data, false, REQUEST_CODE_OPERATOR_PICKER)
@@ -85,6 +83,15 @@ class CreateNodeFragment : Fragment() {
             val data = model.getAvailableOperandsArrayList()
             CompactPickerFragment.newInstance(this, data, true, REQUEST_CODE_OPERAND_PICKER)
                 .show(fragmentManager, CompactPickerFragment.TAG)
+        }
+
+        accept_selection_button.setOnClickListener {
+            val success = model.saveNewOperationNode(model2.newNodeOperator.value, model2.newNodeOperand.value)
+            if (success) {
+                fragmentManager?.popBackStack()
+            } else {
+                Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -99,11 +106,11 @@ class CreateNodeFragment : Fragment() {
     }
 
     private fun onOperatorSelected(operator: Operator?) {
-        model.newNodeOperator.value = operator
+        model2.newNodeOperator.value = operator
     }
 
     private fun onOperandSelected(operand: Operand?) {
-        model.newNodeOperand.value = operand
+        model2.newNodeOperand.value = operand
     }
 
     companion object {

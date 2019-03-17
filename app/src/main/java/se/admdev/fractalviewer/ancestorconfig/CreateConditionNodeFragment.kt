@@ -22,6 +22,7 @@ private const val REQUEST_CODE_FALSE_OPERAND = 2
 class CreateConditionalNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
+    private lateinit var creationData: CreateNodeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +30,17 @@ class CreateConditionalNodeFragment : Fragment() {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
         } ?: throw Throwable("Invalid Activity")
 
+        creationData = ViewModelProviders.of(this).get(CreateNodeViewModel::class.java)
 
-        model.newConditionNodeOperand.observe(this, Observer<Operand> {
+        creationData.newCondition.observe(this, Observer<Operand> {
             select_conditional_operand_button.setTextIfNotNull(it?.name)
         })
 
-        model.newConditionTrueOperand.observe(this, Observer<Operand> {
+        creationData.newConditionTrue.observe(this, Observer<Operand> {
             select_truth_path_operand_button.setTextIfNotNull(it?.name)
         })
 
-        model.newConditionFalseOperand.observe(this, Observer<Operand> {
+        creationData.newConditionFalse.observe(this, Observer<Operand> {
             select_false_path_operand_button.setTextIfNotNull(it?.name)
         })
 
@@ -69,9 +71,12 @@ class CreateConditionalNodeFragment : Fragment() {
 
         view.findViewById<Button>(R.id.accept_selection_button).setOnClickListener {
 
-            val success = model.saveNewConditionNode()
+            val success = model.saveNewConditionNode(
+                creationData.newCondition.value,
+                creationData.newConditionTrue.value,
+                creationData.newConditionFalse.value
+            )
             if (success) {
-                model.clearNodeCreationData()
                 fragmentManager?.popBackStack()
             } else {
                 Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
@@ -83,9 +88,9 @@ class CreateConditionalNodeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (isAdded) {
             when (requestCode) {
-                REQUEST_CODE_CONDITIONAL_OPERAND -> model.newConditionNodeOperand.value = data.getPickerChoice()
-                REQUEST_CODE_TRUTH_OPERAND -> model.newConditionTrueOperand.value = data.getPickerChoice()
-                REQUEST_CODE_FALSE_OPERAND -> model.newConditionFalseOperand.value = data.getPickerChoice()
+                REQUEST_CODE_CONDITIONAL_OPERAND -> creationData.newCondition.value = data.getPickerChoice()
+                REQUEST_CODE_TRUTH_OPERAND -> creationData.newConditionTrue.value = data.getPickerChoice()
+                REQUEST_CODE_FALSE_OPERAND -> creationData.newConditionFalse.value = data.getPickerChoice()
             }
         }
     }

@@ -16,14 +16,6 @@ class ConfigViewModel : ViewModel() {
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
 
-
-    //TODO move these to their own viewmodel
-    val newNodeOperator = MutableLiveData<Operator>()
-    val newNodeOperand = MutableLiveData<Operand>()
-    val newConditionNodeOperand = MutableLiveData<Operand>()
-    val newConditionTrueOperand = MutableLiveData<Operand>()
-    val newConditionFalseOperand = MutableLiveData<Operand>()
-
     private fun calculateAncestorTiles(
         newSize: Int,
         oldGrid: List<List<AncestorTile>>? = null
@@ -57,9 +49,6 @@ class ConfigViewModel : ViewModel() {
         ancestorTiles.value?.forEach {
             it.forEach { tile -> tile.selected = false }
         }
-
-        newNodeOperator.value = null
-        newNodeOperand.value = null
         ancestorTiles.triggerObserver()
     }
 
@@ -81,32 +70,33 @@ class ConfigViewModel : ViewModel() {
     }
 
 
-    fun saveNewOperationNode(): Boolean {
-        return if (newNodeOperator.value != null && newNodeOperand.value == null) {
+    fun saveNewOperationNode(operator: Operator?, operand: Operand?): Boolean {
+        return if (operator != null && operand == null) {
             false
         } else {
             configNodes.addItem(
                 OperationConfigNode(
                     getNextNodeLabel(),
                     getTileSnapshot(),
-                    newNodeOperator.value,
-                    newNodeOperand.value
+                    operator,
+                    operand
                 )
             )
             true
         }
     }
 
-    fun saveNewConditionNode(): Boolean {
-        newConditionNodeOperand.value?.let { c ->
-            newConditionTrueOperand.value?.let { t ->
-                newConditionFalseOperand.value?.let { f ->
-                    configNodes.addItem(ConditionalConfigNode(getNextNodeLabel(), c, t, f))
-                    return true
-                }
-            }
+    fun saveNewConditionNode(
+        condition: Operand?,
+        truePath: Operand?,
+        falsePath: Operand?
+    ): Boolean {
+        return if (condition != null && truePath != null && falsePath != null) {
+            configNodes.addItem(ConditionalConfigNode(getNextNodeLabel(), condition, truePath, falsePath))
+            true
+        } else {
+            false
         }
-        return false
     }
 
 }
