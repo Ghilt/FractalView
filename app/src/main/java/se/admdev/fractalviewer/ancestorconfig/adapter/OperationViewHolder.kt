@@ -13,9 +13,10 @@ import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
     private val label: TextView = itemView.label
+    private val groupOperatorText: TextView = itemView.group_operator_text
+    private val grid: RecyclerView = itemView.ancestor_grid_miniature
     private val operatorText: TextView = itemView.operator_text
     private val operandText: TextView = itemView.operand_text
-    private val grid: RecyclerView = itemView.ancestor_grid_miniature
     private var adapter: AncestorTileAdapter? = null
 
     override fun <T : ConfigNode> bind(node: T) {
@@ -23,6 +24,8 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
         label.setBackgroundColor(n.label.getLabelColor())
         label.text = n.label.toString()
+
+        groupOperatorText.text = itemView.context.getString(R.string.node_list_group_operator, n.groupOperator.symbol)
 
         grid.gridLayoutManager.spanCount = n.tileSnapshot.size
         adapter?.setDataSet(n.tileSnapshot)

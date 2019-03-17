@@ -36,11 +36,19 @@ enum class Operator : Parcelable{
     },
     EQUALS {
         override val function = { a: Int, b: Int -> if (a == b) 1 else 0 }
-        override val symbol = "=="
+        override val symbol = "="
     },
     NOT_EQUALS {
         override val function = { a: Int, b: Int -> if (a != b) 1 else 0 }
-        override val symbol = "=/="
+        override val symbol = "≠"
+    },
+    ALMOST_EQUALS {
+        override val function = { a: Int, b: Int -> if ((a != 0 && b != 0) || a == 0 && b == 0 ) 1 else 0 }
+        override val symbol = "≈"
+    },
+    NOT_ALMOST_EQUALS {
+        override val function = { a: Int, b: Int -> if ((a == 0 && b != 0) || a != 0 && b == 0 ) 1 else 0 }
+        override val symbol = "!≈"
     },
     LESS_THAN {
         override val function = { a: Int, b: Int -> if (a < b) 1 else 0 }

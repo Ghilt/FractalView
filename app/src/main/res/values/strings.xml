@@ -14,7 +14,7 @@
     <string name="node_list_create_conditional_part1">if (</string>
     <string name="node_list_create_conditional_part2">)</string>
     <string name="node_list_create_conditional_part3">else</string>
-    <string name="node_list_sum_all">Sum all (</string>
+    <string name="node_list_group_operator">%1s (</string>
     <string name="node_list_sum_all_end_bracket">) %1s</string>
 
     <string name="start_welcome">Welcome!</string>

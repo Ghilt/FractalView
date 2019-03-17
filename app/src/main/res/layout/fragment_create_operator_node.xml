@@ -7,12 +7,20 @@
     android:background="@color/cream_white"
     android:padding="12dp">
 
+    <Button
+        android:id="@+id/select_group_operator_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/ancestor_grid_edit_node_creation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ancestor_grid_edit_node_creation" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ancestor_grid_edit_node_creation"
         android:layout_width="@dimen/grid_size_miniature"
         android:layout_height="@dimen/grid_size_miniature"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/select_group_operator_button"
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="3"
         tools:itemCount="9"

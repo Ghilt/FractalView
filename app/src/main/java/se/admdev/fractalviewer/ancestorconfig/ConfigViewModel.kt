@@ -61,7 +61,7 @@ class ConfigViewModel : ViewModel() {
 
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
     fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
-    fun getNextNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
+    private fun getNextNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
 
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
     private fun getAvailableOperands() = configNodes.value?.map {
@@ -70,13 +70,14 @@ class ConfigViewModel : ViewModel() {
     }
 
 
-    fun saveNewOperationNode(operator: Operator?, operand: Operand?): Boolean {
+    fun saveNewOperationNode(groupOperator: GroupOperator?, operator: Operator?, operand: Operand?): Boolean {
         return if (operator != null && operand == null) {
             false
         } else {
             configNodes.addItem(
                 OperationConfigNode(
                     getNextNodeLabel(),
+                    groupOperator ?: GroupOperator.SUM,
                     getTileSnapshot(),
                     operator,
                     operand

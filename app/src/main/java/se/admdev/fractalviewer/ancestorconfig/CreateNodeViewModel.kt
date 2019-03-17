@@ -6,6 +6,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.*
 
 class CreateNodeViewModel : ViewModel() {
 
+    val newGroupOperator = MutableLiveData<GroupOperator>(GroupOperator.SUM)
     val newNodeOperator = MutableLiveData<Operator>()
     val newNodeOperand = MutableLiveData<Operand>()
 
