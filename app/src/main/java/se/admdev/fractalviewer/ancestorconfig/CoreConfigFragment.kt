@@ -111,6 +111,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         add_conditional_config_node_fab.setOnClickListener {
             startCreateConditionalNodeFragment()
         }
+
+        add_all_config_node_fab.setOnClickListener {
+            model.selectAll()
+        }
     }
 
     override fun onTileClicked(position: Int) {

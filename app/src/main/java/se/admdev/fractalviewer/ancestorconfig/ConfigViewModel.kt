@@ -63,6 +63,13 @@ class ConfigViewModel : ViewModel() {
         ancestorTiles.triggerObserver()
     }
 
+    fun selectAll() {
+        ancestorTiles.value?.forEach {
+            it.forEach { tile -> tile.selected = true }
+        }
+        ancestorTiles.triggerObserver()
+    }
+
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
     fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
     fun getNextConfigNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
