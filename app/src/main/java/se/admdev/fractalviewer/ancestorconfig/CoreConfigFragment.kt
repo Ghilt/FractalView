@@ -1,10 +1,12 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
@@ -97,7 +99,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             R.id.add_conditional_config_node_fab, ConstraintSet.TOP,
             resources.getDimension(R.dimen.fab_spacing).toInt()
         )
-        expandedConstraints.setRotation(R.id.add_config_node_menu_fab, 45f)
 
         val transition = ChangeBounds()
         transition.interpolator = FastOutSlowInInterpolator()
@@ -106,7 +107,18 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             val constraint = if (expanded) foldedConstraints else expandedConstraints
             constraint.applyTo(fab_space)
             expanded = !expanded
-//            it.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.rotate_45_degrees))
+
+            if (expanded){
+                val d = getDrawable(resources, R.drawable.plus_to_cross_anim, null) as AnimatedVectorDrawable
+                add_config_node_menu_fab.setImageDrawable(d)
+                d.start()
+            } else {
+                val d = getDrawable(resources, R.drawable.cross_to_plus_anim, null) as AnimatedVectorDrawable
+                add_config_node_menu_fab.setImageDrawable(d)
+                d.start()
+            }
+
+
         }
 
         add_conditional_config_node_fab.setOnClickListener {

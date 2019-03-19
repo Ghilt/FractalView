@@ -10,7 +10,6 @@
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
         android:background="@color/light_blue"
-        android:padding="5dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
