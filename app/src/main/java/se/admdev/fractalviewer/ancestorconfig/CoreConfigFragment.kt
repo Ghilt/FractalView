@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
@@ -36,6 +37,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
             listAdapter.notifyDataSetChanged()
+            final_target_text.showLabel(items.lastOrNull()?.label)
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
@@ -81,6 +83,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         dimming_overlay.setOnClickListener { /*Prevent click through*/ }
 
         setupFabButtons()
+
+        confirm_core_button.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_coreConfigFragment_to_fractalCanvasFragment)
+        }
     }
 
     private fun setupFabButtons() {
@@ -108,7 +114,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             constraint.applyTo(fab_space)
             expanded = !expanded
 
-            if (expanded){
+            if (expanded) {
                 val d = getDrawable(resources, R.drawable.plus_to_cross_anim, null) as AnimatedVectorDrawable
                 add_config_node_menu_fab.setImageDrawable(d)
                 d.start()
@@ -142,7 +148,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_large)
             if (!isCreateNodeFragmentShown()) {
                 childFragmentManager.beginTransaction()
-                    .add(R.id.create_node_frame, CreateOperationNodeFragment.newInstance(), CreateOperationNodeFragment.TAG)
+                    .add(
+                        R.id.create_node_frame,
+                        CreateOperationNodeFragment.newInstance(),
+                        CreateOperationNodeFragment.TAG
+                    )
                     .addToBackStack(CreateOperationNodeFragment.TAG)
                     .commit()
             }
@@ -166,7 +176,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
     }
 
-    private fun isCreateNodeFragmentShown() = childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
+    private fun isCreateNodeFragmentShown() =
+        childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
+
     private fun isCreateConditionalNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateConditionalNodeFragment.TAG) != null
 

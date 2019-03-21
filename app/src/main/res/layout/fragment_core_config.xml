@@ -55,15 +55,38 @@
         tools:itemCount="2"
         tools:listitem="@layout/list_item_operation_node" />
 
-    <Button
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/target"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#A5F"
-        android:text="@string/ancestor_configuration_target"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="parent" />
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/final_target_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/node_label_padding"
+            android:text="@string/placeholder_hello"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_target_text"/>
+
+        <Button
+            android:id="@+id/confirm_core_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ancestor_configuration_confirm" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <View
         android:id="@+id/dimming_overlay"
@@ -90,7 +113,7 @@
         layout="@layout/layout_add_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/node_list"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

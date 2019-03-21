@@ -6,16 +6,26 @@
 
     <fragment android:id="@+id/startFragment" android:name="se.admdev.fractalviewer.StartFragment"
               android:label="fragment_start" tools:layout="@layout/fragment_start">
-        <action android:id="@+id/action_startFragment_to_coreConfigFragment" app:destination="@id/coreConfigFragment"
-                app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left" app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_startFragment_to_coreConfigFragment"
+            app:destination="@id/coreConfigFragment"
+            app:exitAnim="@anim/slide_out_left_rotate"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action android:id="@+id/action_startFragment_to_fractalCanvasFragment"
                 app:destination="@id/fractalCanvasFragment" app:enterAnim="@anim/fade_in"
                 app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/fade_in" app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment android:id="@+id/coreConfigFragment"
               android:name="se.admdev.fractalviewer.ancestorconfig.CoreConfigFragment"
-              android:label="CoreConfigFragment"/>
+              android:label="CoreConfigFragment">
+        <action
+            android:id="@+id/action_coreConfigFragment_to_fractalCanvasFragment"
+            app:destination="@id/fractalCanvasFragment"
+            app:exitAnim="@anim/slide_out_left_rotate"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment android:id="@+id/fractalCanvasFragment"
               android:name="se.admdev.fractalviewer.canvas.FractalCanvasFragment"
               android:label="FractalCanvasFragment"/>

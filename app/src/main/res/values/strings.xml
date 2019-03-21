@@ -4,12 +4,13 @@
     <string name="general_accept">Accept</string>
     <string name="general_not_enough_input_error">Not enough input</string>
 
-    <string name="ancestor_configuration_target">Target</string>
+    <string name="ancestor_configuration_confirm">Confirm</string>
     <string name="ancestor_config_plus">+</string>
     <string name="ancestor_config_minus">-</string>
     <string name="placeholder_hello">Hello!</string>
     <string name="placeholder_select_operator">Select operator</string>
     <string name="placeholder_select_operand">Select operand</string>
+    <string name="placeholder_target_text"> The above will determine the next cell</string>
 
     <string name="node_list_create_conditional_part1">if (</string>
     <string name="node_list_create_conditional_part2">)</string>
