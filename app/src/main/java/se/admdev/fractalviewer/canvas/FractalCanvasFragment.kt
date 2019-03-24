@@ -17,6 +17,7 @@ import se.admdev.fractalviewer.canvas.model.FractalGenerator
 class FractalCanvasFragment : Fragment() {
 
     var currentIteration = 0
+    var ancestorCore: AncestorCore? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_fractal_canvas, container, false)
@@ -31,9 +32,11 @@ class FractalCanvasFragment : Fragment() {
         val path = Path()
         testPanView.path = path
 
-        val core = AncestorCore()
+        val core = AncestorCore(listOf())
         val gen = FractalGenerator(core)
-
+        arguments?.let {
+            ancestorCore = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
+        }
 //        val animation = FractalView.DragonCurveAnimation(testPanView)
 //        animation.duration = Long.MAX_VALUE
 //        startAnimation(animation)

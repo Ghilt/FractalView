@@ -25,7 +25,7 @@ class StartFragment : Fragment() {
         }
 
         debug_dragon_curve_button.setOnClickListener { v ->
-            Navigation.findNavController(v).navigate(R.id.action_startFragment_to_fractalCanvasFragment)
+            Navigation.findNavController(v).navigate(R.id.debugShowDragonCurve)
         }
     }
 

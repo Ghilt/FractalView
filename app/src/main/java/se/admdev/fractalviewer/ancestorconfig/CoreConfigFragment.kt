@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.*
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
@@ -85,7 +86,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         setupFabButtons()
 
         confirm_core_button.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_coreConfigFragment_to_fractalCanvasFragment)
+            val action = CoreConfigFragmentDirections.showFractal().apply {
+                ancestorCore = AncestorCore(model.configNodes.value ?: listOf())
+            }
+            Navigation.findNavController(view).navigate(action)
         }
     }
 
