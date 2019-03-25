@@ -4,7 +4,9 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.fragment.app.Fragment
@@ -127,11 +129,22 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                 add_config_node_menu_fab.setImageDrawable(d)
                 d.start()
             }
-
-
         }
 
+        val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
+        val frame = create_node_frame
+
         add_conditional_config_node_fab.setOnClickListener {
+            frame.startAnimation(translateAnim)
+            ViewAnimationUtils.createCircularReveal(
+                frame,
+                frame.width / 2,
+                frame.height / 2,
+                60f,
+                frame.height.toFloat()
+            ).apply {
+                duration = context?.resources?.getInteger(R.integer.animation_ms_long)?.toLong() ?: 0
+            }.start()
             startCreateConditionalNodeFragment()
         }
 

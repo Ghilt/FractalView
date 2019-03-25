@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.ceil
 import kotlin.random.Random
 
 val Boolean?.viewVisibility
@@ -25,8 +26,13 @@ fun Char.getLabelColor(): Int {
     return Color.argb(1f, ran.nextFloat(), ran.nextFloat(), ran.nextFloat())
 }
 
-fun Int.toDp(context: Context): Float {
+fun Int.toPixel(context: Context): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics)
+}
+
+fun Int.toDp(context: Context): Float {
+    val logicalDensity = context.resources.displayMetrics.density
+    return ceil(this / logicalDensity)
 }
 
 fun View.setGone() {

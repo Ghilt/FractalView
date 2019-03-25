@@ -8,6 +8,7 @@
     <dimen name="fab_spacing">10dp</dimen>
     <dimen name="node_label_padding">4dp</dimen>
 
-    <integer name="animation_ms">300</integer>
+    <integer name="animation_ms">250</integer>
+    <integer name="animation_ms_long">400</integer>
 
 </resources>

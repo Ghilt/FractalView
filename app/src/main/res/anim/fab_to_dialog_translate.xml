@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--A vertical and/or horizontal motion. Supports the following attributes in any of the following three formats:
+values from -100 to 100 ending with "%", indicating a percentage relative to itself;
+values from -100 to 100 ending in "%p", indicating a percentage relative to its parent;
+a float value with no suffix, indicating an absolute value. Represents a TranslateAnimation.-->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+android:fromXDelta="40%"
+android:fromYDelta="10%"
+android:toXDelta="0%"
+android:toYDelta="0%"
+android:duration="@integer/animation_ms_long"
+android:fillAfter="true" />

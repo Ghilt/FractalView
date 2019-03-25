@@ -24,31 +24,31 @@
             <set>
                 <objectAnimator
                     android:propertyName="pathData"
-                    android:duration="100"
+                    android:duration="50"
                     android:valueFrom="M 19 6.41 L 17.59 5 L 12 11 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 Z"
                     android:valueTo="M 19 13 L 19 11 L 12 11 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 14.1 13 Z"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/decelerate_interpolator"/>
                 <objectAnimator
                     android:propertyName="pathData"
-                    android:startOffset="100"
-                    android:duration="74"
+                    android:startOffset="50"
+                    android:duration="37"
                     android:valueFrom="M 19 13 L 19 11 L 12 11 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 14.1 13 Z"
                     android:valueTo="M 19 13 L 19 11 L 12 11 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 11 13.91 L 11 19 L 13 19 L 13 13 Z"
                     android:valueType="pathType"
                     android:interpolator="@android:interpolator/fast_out_linear_in"/>
                 <objectAnimator
                     android:propertyName="pathData"
-                    android:startOffset="174"
-                    android:duration="68"
+                    android:startOffset="87"
+                    android:duration="34"
                     android:valueFrom="M 19 13 L 19 11 L 12 11 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 11 13.91 L 11 19 L 13 19 L 13 13 Z"
                     android:valueTo="M 19 13 L 19 11 L 13 11 L 6.41 5 L 5 6.41 L 11 11 L 5 11 L 5 13 L 11 13 L 11 19 L 13 19 L 13 13 Z"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
                     android:propertyName="pathData"
-                    android:startOffset="242"
-                    android:duration="258"
+                    android:startOffset="121"
+                    android:duration="129"
                     android:valueFrom="M 19 13 L 19 11 L 13 11 L 6.41 5 L 5 6.41 L 11 11 L 5 11 L 5 13 L 11 13 L 11 19 L 13 19 L 13 13 L 16 13 L 19 13"
                     android:valueTo="M 19 13 L 19 11 L 13 11 L 13 5 L 11 5 L 11 11 L 5 11 L 5 13 L 11 13 L 11 19 L 13 19 L 13 13 L 19 13 L 19 13"
                     android:valueType="pathType"
@@ -60,7 +60,7 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="rotation"
-                android:duration="500"
+                android:duration="250"
                 android:valueFrom="0"
                 android:valueTo="90"
                 android:valueType="floatType"
