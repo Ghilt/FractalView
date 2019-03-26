@@ -1,6 +1,7 @@
 package se.admdev.fractalviewer
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
@@ -43,9 +44,11 @@ fun View.setVisible() {
     visibility = View.VISIBLE
 }
 
+fun getDarkTintColorStateList(v: View): ColorStateList = v.resources.getColorStateList(R.color.colorPrimaryDark, null)
+
 fun TextView.showLabel(label: Char?) {
     label?.let {
         text = it.toString()
-        setBackgroundColor(it.getLabelColor())
+        backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
     }
 }

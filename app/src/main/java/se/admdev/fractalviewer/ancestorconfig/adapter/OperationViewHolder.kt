@@ -22,8 +22,7 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
     override fun <T : ConfigNode> bind(node: T) {
         val n = node as OperationConfigNode
 
-        label.setBackgroundColor(n.label.getLabelColor())
-        label.text = n.label.toString()
+        label.showLabel(n.label)
 
         groupOperatorText.text = itemView.context.getString(R.string.node_list_group_operator, n.groupOperator.symbol)
 
@@ -34,18 +33,16 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
         if (n.operator != null && n.operand != null) {
             operatorText.text = itemView.context.getString(R.string.node_list_sum_all_end_bracket, n.operator.symbol)
             operandText.setVisible()
-            if(n.operand.label != null){
+            if (n.operand.label != null) {
                 operandText.showLabel(n.operand.label)
             } else {
                 operandText.text = n.operand.name
-                operandText.setBackgroundColor(0)
+                operandText.backgroundTintList = getDarkTintColorStateList(itemView)
             }
         } else {
             operatorText.text = itemView.context.getString(R.string.node_list_sum_all_end_bracket, "")
             operandText.setGone()
         }
-
-
     }
 
     companion object {

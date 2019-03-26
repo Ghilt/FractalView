@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.list_item_condition_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.ConditionalConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.getDarkTintColorStateList
 import se.admdev.fractalviewer.showLabel
 
 class ConditionViewHolder(itemView: View) : BindableViewHolder(itemView) {
@@ -19,21 +20,23 @@ class ConditionViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
     override fun <T : ConfigNode> bind(node: T) {
         val n = node as ConditionalConfigNode
+
         label.showLabel(n.label)
         operandCondition.showLabel(n.operandCondition.label)
-        if(n.operandTrue.label != null){
+
+        if (n.operandTrue.label != null) {
             operandTrue.showLabel(n.operandTrue.label)
         } else {
             operandTrue.text = n.operandTrue.name
-            operandTrue.setBackgroundColor(0)
+            operandTrue.backgroundTintList = getDarkTintColorStateList(itemView)
         }
-        if(n.operandFalse.label != null){
+
+        if (n.operandFalse.label != null) {
             operandFalse.showLabel(n.operandFalse.label)
         } else {
             operandFalse.text = n.operandFalse.name
-            operandFalse.setBackgroundColor(0)
+            operandFalse.backgroundTintList = getDarkTintColorStateList(itemView)
         }
-
     }
 
     companion object {

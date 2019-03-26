@@ -7,4 +7,39 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ConfigNode">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:background">@drawable/rounded_card</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ConfigNodeLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <!--TODO separate label background from text or make height match parent-->
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:background">@drawable/configuration_node_label_background</item>
+    </style>
+
+    <style name="ConfigNodeLabelReference">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">@dimen/node_label_padding</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:background">@drawable/rounded_card</item>
+    </style>
+
 </resources>

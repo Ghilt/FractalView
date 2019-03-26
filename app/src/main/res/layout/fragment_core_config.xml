@@ -9,7 +9,6 @@
         android:id="@+id/ancestor_grid"
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
-        android:background="@color/light_blue"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
@@ -25,7 +24,6 @@
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="#A5F"
         android:text="@string/ancestor_config_minus"
         app:layout_constraintBottom_toTopOf="@id/ancestor_grid"
         app:layout_constraintEnd_toStartOf="@id/plus_grid_size_button"
@@ -36,7 +34,6 @@
         android:id="@+id/plus_grid_size_button"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:background="#A5F"
         android:text="@string/ancestor_config_plus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/minus_grid_size_button" />
@@ -45,7 +42,7 @@
         android:id="@+id/node_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/light_blue"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/target"
@@ -60,11 +57,11 @@
         android:id="@+id/target"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        android:padding="10dp"
-        android:gravity="center_horizontal"
         app:layout_constraintStart_toEndOf="parent">
 
         <TextView
@@ -72,12 +69,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/node_label_padding"
-            android:text="@string/placeholder_hello"/>
+            android:text="@string/placeholder_hello" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder_target_text"/>
+            android:text="@string/placeholder_target_text" />
 
         <Button
             android:id="@+id/confirm_core_button"
@@ -104,10 +101,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:translationZ="@dimen/view_elevation_large"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/node_list"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/node_list" />
 
     <include
         layout="@layout/layout_add_buttons"
