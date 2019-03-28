@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.fragment.app.Fragment
@@ -142,25 +144,25 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
-        val frame = create_node_frame
 
         add_conditional_config_node_fab.setOnClickListener {
-            frame.startAnimation(translateAnim)
-            ViewAnimationUtils.createCircularReveal(
-                frame,
-                frame.width / 2,
-                frame.height / 2,
-                60f,
-                frame.height.toFloat()
-            ).apply {
-                duration = context?.resources?.getInteger(R.integer.animation_ms_long)?.toLong() ?: 0
-            }.start()
-            startCreateConditionalNodeFragment()
+            animateCreateNodeDialog(create_node_frame, translateAnim)
+            startCreateConditionNodeFragment()
         }
 
         add_all_config_node_fab.setOnClickListener {
             model.selectAll()
         }
+    }
+
+    private fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
+        frame.startAnimation(translateAnim)
+        ViewAnimationUtils.createCircularReveal(
+            frame, frame.width / 2, frame.height / 2, 60f,
+            frame.height.toFloat()
+        ).apply {
+            duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
+        }.start()
     }
 
     override fun onTileClicked(position: Int) {
@@ -169,29 +171,39 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun updateNodeCreationMode() {
         val selectedTiles = model.hasSelectedTile()
-        dimming_overlay.visibility = selectedTiles.viewVisibility
 
         if (selectedTiles) {
             ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
-            if (!isCreateNodeFragmentShown()) {
-                childFragmentManager.beginTransaction()
-                    .add(
-                        R.id.create_node_frame,
-                        CreateOperationNodeFragment.newInstance(),
-                        CreateOperationNodeFragment.TAG
-                    )
-                    .addToBackStack(CreateOperationNodeFragment.TAG)
-                    .commit()
-            }
+            val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate) // TODO
+            val started = startCreateOperationNodeFragment()
+            if (started) animateCreateNodeDialog(create_node_frame, translateAnim)
         } else {
+            dimming_overlay.visibility = false.viewVisibility
             ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_small)
         }
     }
 
-    private fun startCreateConditionalNodeFragment() {
+    private fun startCreateOperationNodeFragment(): Boolean {
+
+        if (!isCreateNodeFragmentShown()) {
+            dimming_overlay.visibility = true.viewVisibility
+            childFragmentManager.beginTransaction()
+                .add(
+                    R.id.create_node_frame,
+                    CreateOperationNodeFragment.newInstance(),
+                    CreateOperationNodeFragment.TAG
+                )
+                .addToBackStack(CreateOperationNodeFragment.TAG)
+                .commit()
+            return true
+        }
+        return false
+    }
+
+    private fun startCreateConditionNodeFragment() {
         dimming_overlay.visibility = true.viewVisibility
 
-        if (!isCreateConditionalNodeFragmentShown()) {
+        if (!isCreateConditionNodeFragmentShown()) {
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.create_node_frame,
@@ -206,7 +218,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     private fun isCreateNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
 
-    private fun isCreateConditionalNodeFragmentShown() =
+    private fun isCreateConditionNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateConditionalNodeFragment.TAG) != null
 
     companion object {

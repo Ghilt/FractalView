@@ -4,9 +4,9 @@ values from -100 to 100 ending with "%", indicating a percentage relative to its
 values from -100 to 100 ending in "%p", indicating a percentage relative to its parent;
 a float value with no suffix, indicating an absolute value. Represents a TranslateAnimation.-->
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
-android:fromXDelta="40%"
-android:fromYDelta="10%"
-android:toXDelta="0%"
-android:toYDelta="0%"
-android:duration="@integer/animation_ms_long"
-android:fillAfter="true" />
+    android:duration="@integer/animation_ms"
+    android:fillAfter="true"
+    android:fromXDelta="40%"
+    android:fromYDelta="10%"
+    android:toXDelta="0%"
+    android:toYDelta="0%" />

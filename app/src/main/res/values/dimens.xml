@@ -7,7 +7,7 @@
     <dimen name="node_label_padding">4dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
     <integer name="animation_ms">250</integer>
-    <integer name="animation_ms_long">400</integer>
+    <integer name="animation_ms_long">500</integer>
 
     <!--https://material.io/design/environment/elevation.html-->
     <dimen name="view_elevation_none">0dp</dimen>
