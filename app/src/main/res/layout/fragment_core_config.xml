@@ -38,20 +38,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/minus_grid_size_button" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/node_list"
+    <ViewSwitcher
+        android:id="@+id/list_empty_switcher"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/target"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid"
-        tools:itemCount="2"
-        tools:listitem="@layout/list_item_operation_node" />
+        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/node_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/list_item_operation_node" />
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="25dp"
+            android:text="@string/node_list_empty_text" />
+    </ViewSwitcher>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/target"
@@ -104,13 +117,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/node_list" />
+        app:layout_constraintTop_toTopOf="@+id/list_empty_switcher" />
 
     <include
         layout="@layout/layout_add_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/node_list"
+        app:layout_constraintBottom_toBottomOf="@id/list_empty_switcher"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
@@ -41,6 +42,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             listAdapter.setDataSet(items)
             listAdapter.notifyDataSetChanged()
             final_target_text.showLabel(items.lastOrNull()?.label)
+            showList(items.isNotEmpty())
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
@@ -51,12 +53,20 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         })
     }
 
+    private fun showList(show: Boolean) {
+        val currentlyShowingEmpty = list_empty_switcher.nextView is RecyclerView
+        if (show == currentlyShowingEmpty) list_empty_switcher.showNext()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_core_config, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
 
         adapter.containerSize = resources.getDimension(R.dimen.grid_size)
         adapter.listener = this
