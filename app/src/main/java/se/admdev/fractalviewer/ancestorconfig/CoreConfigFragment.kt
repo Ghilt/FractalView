@@ -172,7 +172,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         dimming_overlay.visibility = selectedTiles.viewVisibility
 
         if (selectedTiles) {
-            ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_large)
+            ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
             if (!isCreateNodeFragmentShown()) {
                 childFragmentManager.beginTransaction()
                     .add(
@@ -184,7 +184,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                     .commit()
             }
         } else {
-            ancestor_grid.translationZ = resources.getDimension(R.dimen.view_elevation_none)
+            ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_small)
         }
     }
 

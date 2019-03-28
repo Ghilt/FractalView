@@ -8,8 +8,8 @@
     <string name="ancestor_config_plus">+</string>
     <string name="ancestor_config_minus">-</string>
     <string name="placeholder_hello">Hello!</string>
-    <string name="placeholder_select_operator">Select operator</string>
-    <string name="placeholder_select_operand">Select operand</string>
+    <string name="placeholder_select_operator">\?</string>
+    <string name="placeholder_select_operand">\?</string>
     <string name="placeholder_target_text"> The above will determine the next cell</string>
 
     <string name="node_list_empty_text">To begin configuring your fractal select one or many tiles in the grid and add a calculation.</string>

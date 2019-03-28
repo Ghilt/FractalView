@@ -9,6 +9,7 @@
         android:id="@+id/ancestor_grid"
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
+        android:background="#fff"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
@@ -21,22 +22,22 @@
 
     <Button
         android:id="@+id/minus_grid_size_button"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:background="#0000"
         android:text="@string/ancestor_config_minus"
-        app:layout_constraintBottom_toTopOf="@id/ancestor_grid"
-        app:layout_constraintEnd_toStartOf="@id/plus_grid_size_button"
-        app:layout_constraintStart_toEndOf="@+id/ancestor_grid"
-        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/plus_grid_size_button"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:background="#0000"
         android:text="@string/ancestor_config_plus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/minus_grid_size_button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ViewSwitcher
         android:id="@+id/list_empty_switcher"
@@ -102,7 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/dimming_background"
-        android:translationZ="@dimen/view_elevation_mid"
+        android:elevation="@dimen/view_elevation_small"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +114,7 @@
         android:id="@+id/create_node_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:translationZ="@dimen/view_elevation_large"
+        android:elevation="@dimen/view_elevation_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

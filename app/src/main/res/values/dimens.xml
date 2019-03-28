@@ -2,14 +2,16 @@
 <resources>
     <dimen name="grid_size">200dp</dimen>
     <dimen name="grid_size_miniature">30dp</dimen>
-    <dimen name="view_elevation_none">0dp</dimen>
-    <dimen name="view_elevation_mid">2dp</dimen>
-    <dimen name="view_elevation_large">4dp</dimen>
+
     <dimen name="fab_spacing">10dp</dimen>
     <dimen name="node_label_padding">4dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
-
     <integer name="animation_ms">250</integer>
     <integer name="animation_ms_long">400</integer>
 
+    <!--https://material.io/design/environment/elevation.html-->
+    <dimen name="view_elevation_none">0dp</dimen>
+    <dimen name="view_elevation_small">2dp</dimen>
+    <dimen name="view_elevation_large">4dp</dimen>
+    <dimen name="view_elevation_dialog">24dp</dimen>
 </resources>
