@@ -1,6 +1,7 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,12 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val animDrawable = grid_container.background as AnimationDrawable
+        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
+        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
+        animDrawable.start()
+
 
         list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
@@ -174,12 +181,14 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         if (selectedTiles) {
             ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
+            grid_container.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
             val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate) // TODO
             val started = startCreateOperationNodeFragment()
             if (started) animateCreateNodeDialog(create_node_frame, translateAnim)
         } else {
             dimming_overlay.visibility = false.viewVisibility
             ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_small)
+            grid_container.elevation = resources.getDimension(R.dimen.view_elevation_small)
         }
     }
 

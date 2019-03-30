@@ -5,20 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ancestor_grid"
-        android:layout_width="@dimen/grid_size"
-        android:layout_height="@dimen/grid_size"
-        android:background="#fff"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constrainedHeight="true"
-        app:layout_constrainedWidth="true"
+    <FrameLayout
+        android:id="@+id/grid_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/ancestor_gradient_anim"
+        android:padding="10dp"
+        android:elevation="@dimen/view_elevation_small"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:spanCount="3"
-        tools:itemCount="9"
-        tools:listitem="@layout/ancestor_configuration_tile" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ancestor_grid"
+            android:layout_width="@dimen/grid_size"
+            android:layout_height="@dimen/grid_size"
+            android:background="#fff"
+            android:layout_gravity="center"
+            android:elevation="@dimen/view_elevation_small"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:spanCount="3"
+            tools:itemCount="9"
+            tools:listitem="@layout/ancestor_configuration_tile" />
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/minus_grid_size_button"
@@ -46,13 +58,12 @@
         app:layout_constraintBottom_toTopOf="@+id/target"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ancestor_grid">
+        app:layout_constraintTop_toBottomOf="@+id/grid_container">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/node_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"

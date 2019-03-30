@@ -9,5 +9,9 @@
     <color name="cream_white">#FFFDE0</color>
     <color name="bright_green">#67BA34</color>
 
+    <color name="colorGradientStart">#016994</color>
+    <color name="colorGradientCenter">#0293cf</color>
+    <color name="colorGradientEnd">#32c3ff</color>
+
     <color name="dimming_background">#a555</color>
 </resources>
