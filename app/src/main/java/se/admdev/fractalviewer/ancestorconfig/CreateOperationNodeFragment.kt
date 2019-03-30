@@ -41,7 +41,7 @@ class CreateOperationNodeFragment : Fragment() {
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> {
             val snap = model.getTileSnapshot()
             ancestor_grid_edit_node_creation.gridLayoutManager.spanCount = snap.size
-            creationGridAdapter.setDataSet(snap)
+            creationGridAdapter.updateGrid(snap)
             creationGridAdapter.notifyDataSetChanged()
 
             if (!model.hasSelectedTile()) {

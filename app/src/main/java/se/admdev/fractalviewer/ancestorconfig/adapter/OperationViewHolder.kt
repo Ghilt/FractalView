@@ -27,7 +27,7 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
         groupOperatorText.text = itemView.context.getString(R.string.node_list_group_operator, n.groupOperator.symbol)
 
         grid.gridLayoutManager.spanCount = n.tileSnapshot.size
-        adapter?.setDataSet(n.tileSnapshot)
+        adapter?.updateGrid(n.tileSnapshot)
         adapter?.notifyDataSetChanged()
 
         if (n.operator != null && n.operand != null) {

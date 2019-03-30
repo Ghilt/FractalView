@@ -45,22 +45,21 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun clearNodeCreationData() {
-        // OK, lists wont be long
-        ancestorTiles.value?.forEach {
-            it.forEach { tile -> tile.selected = false }
-        }
-        ancestorTiles.triggerObserver()
+        ancestorTiles.value = copyTiles(false)
+    }
+
+    fun toggleTile(tile: AncestorTile?) = tile?.let {
+        ancestorTiles.value = toggleTile(tile)
     }
 
     fun selectAll() {
-        ancestorTiles.value?.forEach {
-            it.forEach { tile -> tile.selected = true }
-        }
-        ancestorTiles.triggerObserver()
+        ancestorTiles.value = copyTiles(true)
     }
 
     fun hasSelectedTile() = ancestorTiles.value?.flatten()?.any { it.selected } ?: false
     fun getTileSnapshot() = ancestorTiles.value?.map { list -> list.map { tile -> tile.copy() } } ?: listOf()
+    private fun copyTiles(selected: Boolean) = ancestorTiles.value?.map { list -> list.map { tile -> AncestorTile(tile.x, tile.y, selected) } } ?: listOf()
+    private fun toggleTile(target: AncestorTile) = ancestorTiles.value?.map { list -> list.map { tile -> if(tile.samePos(target)) AncestorTile(tile.x, tile.y, !tile.selected) else tile.copy() } } ?: listOf()
     private fun getNextNodeLabel(): Char = 'A' + (configNodes.value?.size ?: 0)
 
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
@@ -99,7 +98,6 @@ class ConfigViewModel : ViewModel() {
             false
         }
     }
-
 }
 
 fun <T> MutableLiveData<T>.triggerObserver() {
