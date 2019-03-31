@@ -31,12 +31,15 @@ import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
+    private lateinit var uiState: ConfigUiState
     private lateinit var model: ConfigViewModel
     private val adapter = AncestorTileAdapter()
     private val listAdapter = ConfigurationListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        uiState = ConfigUiState(this, false)
+
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
         } ?: throw Throwable("Invalid Activity")
@@ -68,11 +71,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val animDrawable = grid_container.background as AnimationDrawable
+        val animDrawable = grid_background.background as AnimationDrawable
         animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
         animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
         animDrawable.start()
-
 
         list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
@@ -115,6 +117,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun setupFabButtons() {
+        //TODO make fabspace its own compound component
         var expanded = false
         val foldedConstraints = ConstraintSet()
         foldedConstraints.clone(fab_space)
@@ -162,7 +165,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
     }
 
-    private fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
+    internal fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
         frame.startAnimation(translateAnim)
         ViewAnimationUtils.createCircularReveal(
             frame, frame.width / 2, frame.height / 2, 60f,
@@ -178,21 +181,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun updateNodeCreationMode() {
         val selectedTiles = model.hasSelectedTile()
-
-        if (selectedTiles) {
-            ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
-            grid_container.elevation = resources.getDimension(R.dimen.view_elevation_dialog)
-            val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate) // TODO
-            val started = startCreateOperationNodeFragment()
-            if (started) animateCreateNodeDialog(create_node_frame, translateAnim)
-        } else {
-            dimming_overlay.visibility = false.viewVisibility
-            ancestor_grid.elevation = resources.getDimension(R.dimen.view_elevation_small)
-            grid_container.elevation = resources.getDimension(R.dimen.view_elevation_small)
-        }
+        uiState.updateNodeCreationMode(selectedTiles)
     }
 
-    private fun startCreateOperationNodeFragment(): Boolean {
+    fun startCreateOperationNodeFragment(): Boolean {
 
         if (!isCreateNodeFragmentShown()) {
             dimming_overlay.visibility = true.viewVisibility

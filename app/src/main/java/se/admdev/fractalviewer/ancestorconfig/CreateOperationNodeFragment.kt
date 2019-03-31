@@ -15,6 +15,9 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.*
 import se.admdev.fractalviewer.gridLayoutManager
 import se.admdev.fractalviewer.setTextIfNotNull
+import android.util.TypedValue
+import android.widget.FrameLayout
+
 
 private const val REQUEST_CODE_GROUP_OPERATOR_PICKER = 0
 private const val REQUEST_CODE_OPERATOR_PICKER = 1
@@ -69,6 +72,8 @@ class CreateOperationNodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adjustForAncestorGridAnimation(view)
+
         select_group_operator_button.setOnClickListener {
             val data = ArrayList(GroupOperator.values().map { CompactPickerItem(it, it.symbol) })
             CompactPickerFragment.newInstance(this, data, false, REQUEST_CODE_GROUP_OPERATOR_PICKER)
@@ -98,6 +103,17 @@ class CreateOperationNodeFragment : Fragment() {
                 Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun adjustForAncestorGridAnimation(root: View) {
+        val typedValue = TypedValue()
+        resources.getValue(R.dimen.ancestor_grid_focus_scaling_target, typedValue, true)
+        val gridScale = typedValue.float
+        val gridSize = resources.getDimension(R.dimen.grid_size)
+        val gridTranslation = resources.getDimension(R.dimen.ancestor_grid_focus_translation_target)
+        val extraMargin = gridSize * (gridScale - 1) + gridTranslation
+        val params = root.layoutParams as FrameLayout.LayoutParams
+        params.topMargin += extraMargin.toInt()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

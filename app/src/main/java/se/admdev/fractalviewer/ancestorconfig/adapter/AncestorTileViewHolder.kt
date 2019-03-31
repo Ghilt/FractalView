@@ -37,6 +37,7 @@ class AncestorTileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                     configTile?.selected = !(configTile?.selected ?: true)
                     listener?.onTileClicked(adapterPosition)
                 }
+                setIsRecyclable(false) // Fixes animation glitch, and all items are on screen at all times anyway
             }
         }
     }

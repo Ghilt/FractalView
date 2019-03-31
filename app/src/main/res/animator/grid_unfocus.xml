@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+
+    <objectAnimator
+        android:duration="@integer/animation_ms_long"
+        android:interpolator="@android:interpolator/decelerate_cubic"
+        android:propertyName="scaleX"
+        android:repeatCount="0"
+        android:valueFrom="@dimen/ancestor_grid_focus_scaling_target"
+        android:valueTo="1.0"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="@integer/animation_ms_long"
+        android:interpolator="@android:interpolator/decelerate_cubic"
+        android:propertyName="scaleY"
+        android:repeatCount="0"
+        android:valueFrom="@dimen/ancestor_grid_focus_scaling_target"
+        android:valueTo="1.0"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="@integer/animation_ms_long"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translationY"
+        android:valueFrom="@dimen/ancestor_grid_focus_translation_target"
+        android:valueTo="0"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="@integer/animation_ms_long"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="elevation"
+        android:valueFrom="@dimen/view_elevation_dialog"
+        android:valueTo="@dimen/view_elevation_small"
+        android:valueType="floatType" />
+</set>
