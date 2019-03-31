@@ -1,25 +1,17 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.fragment.app.Fragment
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.*
@@ -38,7 +30,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        uiState = ConfigUiState(this, false)
+        uiState = ConfigUiState(this)
 
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
@@ -98,10 +90,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
             if (childFragmentManager.backStackEntryCount == 0) {
                 model.clearNodeCreationData()
-                fab_space.setVisible()
                 uiState.hideDim()
+                uiState.showFab(true)
             } else {
-                fab_space.setGone()
+                uiState.closeFabMenu()
+                uiState.showFab(false)
             }
         }
 
@@ -118,62 +111,18 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun setupFabButtons() {
-        //TODO make fabspace its own compound component
-        var expanded = false
-        val foldedConstraints = ConstraintSet()
-        foldedConstraints.clone(fab_space)
-        val expandedConstraints = ConstraintSet()
-        expandedConstraints.clone(fab_space)
-        expandedConstraints.connect(
-            R.id.add_conditional_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_config_node_menu_fab, ConstraintSet.TOP,
-            resources.getDimension(R.dimen.fab_spacing).toInt()
-        )
-        expandedConstraints.connect(
-            R.id.add_all_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_conditional_config_node_fab, ConstraintSet.TOP,
-            resources.getDimension(R.dimen.fab_spacing).toInt()
-        )
-
-        val transition = ChangeBounds()
-        transition.interpolator = FastOutSlowInInterpolator()
         add_config_node_menu_fab.setOnClickListener {
-            TransitionManager.beginDelayedTransition(fab_space, transition)
-            val constraint = if (expanded) foldedConstraints else expandedConstraints
-            constraint.applyTo(fab_space)
-            expanded = !expanded
-
-            if (expanded) {
-                val d = getDrawable(resources, R.drawable.plus_to_cross_anim, null) as AnimatedVectorDrawable
-                add_config_node_menu_fab.setImageDrawable(d)
-                d.start()
-            } else {
-                val d = getDrawable(resources, R.drawable.cross_to_plus_anim, null) as AnimatedVectorDrawable
-                add_config_node_menu_fab.setImageDrawable(d)
-                d.start()
-            }
+            uiState.toggleFabMenu()
         }
 
-        val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
-
         add_conditional_config_node_fab.setOnClickListener {
-            animateCreateNodeDialog(create_node_frame, translateAnim)
+            uiState.showRevealAnimationCreationFragment()
             startCreateConditionNodeFragment()
         }
 
         add_all_config_node_fab.setOnClickListener {
             model.selectAll()
         }
-    }
-
-    internal fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
-        frame.startAnimation(translateAnim)
-        ViewAnimationUtils.createCircularReveal(
-            frame, frame.width / 2, frame.height / 2, 60f,
-            frame.height.toFloat()
-        ).apply {
-            duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
-        }.start()
     }
 
     override fun onTileClicked(position: Int) {
