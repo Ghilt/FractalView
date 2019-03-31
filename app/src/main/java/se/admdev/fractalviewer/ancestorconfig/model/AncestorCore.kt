@@ -3,16 +3,24 @@ package se.admdev.fractalviewer.ancestorconfig.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import se.admdev.fractalviewer.canvas.model.Cell
+import se.admdev.fractalviewer.canvas.model.Coord
 
 @Parcelize
-class AncestorCore(val configNodes: List<ConfigNode> ) : Parcelable {
+class AncestorCore( val configNodes: List<ConfigNode>) : Parcelable {
 
-    fun calculateValue(ancestors: List<Cell>): Int {
-        return ancestors.fold(0) { acc, cell -> (acc + cell.value) % 2 }
+    var function: ((Coord, List<Cell>) -> Int)? = null
+
+    init {
+        function = configNodes.last().compile(configNodes)
     }
 
-    //TODO debugg
-    val width: Int = 7
-    val height: Int = 7
+    fun calculateValue(currentCell: Coord, ancestors: List<Cell>): Int {
+//        return ancestors.fold(0) { acc, cell -> (acc + cell.value) % 2 }
+        return function?.invoke(currentCell, ancestors) ?: 0
+    }
+
+    //TODO only supports square ancestor areas atm // TODO remove this calculation and specify it explicitly
+    val width: Int = configNodes.firstOrNull()?.gridSize() ?: 0
+    val height: Int = width
     val midX = width / 2
 }

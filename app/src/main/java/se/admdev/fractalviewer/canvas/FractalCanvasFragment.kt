@@ -13,11 +13,13 @@ import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.canvas.model.DragonCurve
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
+import java.lang.Exception
 
 class FractalCanvasFragment : Fragment() {
 
     var currentIteration = 0
     var ancestorCore: AncestorCore? = null
+    lateinit var generator: FractalGenerator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_fractal_canvas, container, false)
@@ -32,11 +34,21 @@ class FractalCanvasFragment : Fragment() {
         val path = Path()
         testPanView.path = path
 
-        val core = AncestorCore(listOf())
-        val gen = FractalGenerator(core)
         arguments?.let {
-            ancestorCore = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
+            val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
+
+            generator = if (core == null){
+                throw Exception("Error: No ancestor core for FractalCanvasFragment")
+            } else {
+                FractalGenerator(core)
+            }
+            ancestorCore = core
         }
+
+
+
+
+
 //        val animation = FractalView.DragonCurveAnimation(testPanView)
 //        animation.duration = Long.MAX_VALUE
 //        startAnimation(animation)
@@ -46,7 +58,7 @@ class FractalCanvasFragment : Fragment() {
             val newEnd = curve.getDirectionAt(currentIteration)
             path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
             currentIteration++
-            gen.generateNextIteration()
+            generator.generateNextIteration()
             testPanView.invalidate()
         }
     }

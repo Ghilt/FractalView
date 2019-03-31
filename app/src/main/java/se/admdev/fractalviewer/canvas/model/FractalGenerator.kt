@@ -67,7 +67,7 @@ class FractalGenerator(val core: AncestorCore) {
 
         //Quick and dirty temp debug logging
         val logPyramid: String =
-            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) " " else "▉"}" }} \n".asIterable() }
+            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) "_" else "▉"}" }} \n".asIterable() }
                 .fold("") { acc, charList -> acc + charList }
 
         val initialPadding = logPyramid.lines().takeLast(2).first().length / 2
@@ -89,8 +89,13 @@ class FractalGenerator(val core: AncestorCore) {
             val nearest = w[nearestNeighbourIndex(neighbours.size, w.size, i)]
             val ancestors = translateAncestors(w, nearest)
 
-            Cell(core.calculateValue(ancestors), iterationsCompleted, nearest.position, ancestors)
+            Cell(core.calculateValue(tempGetCoord(nearest.position, iterationsCompleted),ancestors), iterationsCompleted, nearest.position, ancestors)
         }
+    }
+
+    private fun tempGetCoord(x: Int, y: Int): Coord {
+        // TODO It's late and I need to sleep but I want it running
+        return Coord(x, y)
     }
 
     private fun calculateLeftEdgeCell(lastItr: List<Cell>): Cell {
@@ -100,7 +105,7 @@ class FractalGenerator(val core: AncestorCore) {
             .filter { (oldEdge.position - it.position).absoluteValue < core.midX }
             .plus(lastItr.take(core.midX))
 
-        return Cell(core.calculateValue(ancestors), iterationsCompleted, -iterationsCompleted, ancestors)
+        return Cell(core.calculateValue(tempGetCoord(-iterationsCompleted, iterationsCompleted),ancestors), iterationsCompleted, -iterationsCompleted, ancestors)
     }
 
     private fun calculateRightEdgeCell(lastItr: List<Cell>): Cell {
@@ -110,7 +115,7 @@ class FractalGenerator(val core: AncestorCore) {
             .filter { oldEdge.position - it.position < core.midX }
             .plus(lastItr.takeLast(core.midX))
 
-        return Cell(core.calculateValue(ancestors), iterationsCompleted, iterationsCompleted, ancestors)
+        return Cell(core.calculateValue(tempGetCoord(iterationsCompleted, iterationsCompleted), ancestors), iterationsCompleted, iterationsCompleted, ancestors)
     }
 
     private fun translateAncestors(neighbours: List<Cell>, nearest: Cell): List<Cell> {
