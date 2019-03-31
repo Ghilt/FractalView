@@ -1,6 +1,9 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.animation.Animator
 import android.animation.AnimatorInflater
+import android.animation.ObjectAnimator
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -51,11 +54,33 @@ class ConfigUiState(
             transition.interpolator = FastOutSlowInInterpolator()
             TransitionManager.beginDelayedTransition(fragment_layout, transition)
             originalState.applyTo(fragment_layout)
-        } else if (!hasSelectedTile) {
-            dimming_overlay.visibility = false.viewVisibility // TODO animate
         }
 
         isAddOperationState = hasSelectedTile
+    }
+
+    fun showDim() = fragment.apply {
+        dimming_overlay.visibility = true.viewVisibility
+        dimming_overlay.animate().alpha(1f).start()
+    }
+
+    fun hideDim() = fragment.apply {
+        ObjectAnimator.ofFloat(dimming_overlay, "alpha", 0.0f).apply {
+            interpolator = AccelerateDecelerateInterpolator()
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {}
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    dimming_overlay.visibility = false.viewVisibility
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                    dimming_overlay.visibility = false.viewVisibility
+                }
+
+                override fun onAnimationStart(animation: Animator?) {}
+            })
+        }.start()
     }
 
 }

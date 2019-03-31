@@ -99,6 +99,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             if (childFragmentManager.backStackEntryCount == 0) {
                 model.clearNodeCreationData()
                 fab_space.setVisible()
+                uiState.hideDim()
             } else {
                 fab_space.setGone()
             }
@@ -187,7 +188,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     fun startCreateOperationNodeFragment(): Boolean {
 
         if (!isCreateNodeFragmentShown()) {
-            dimming_overlay.visibility = true.viewVisibility
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.create_node_frame,
@@ -202,8 +202,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun startCreateConditionNodeFragment() {
-        dimming_overlay.visibility = true.viewVisibility
-
+        uiState.showDim()
         if (!isCreateConditionNodeFragmentShown()) {
             childFragmentManager.beginTransaction()
                 .add(
