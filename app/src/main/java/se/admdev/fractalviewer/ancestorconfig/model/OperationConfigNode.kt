@@ -11,31 +11,44 @@ class OperationConfigNode(
     val operand: Operand?
 ) : ConfigNode(label) {
 
-    override fun gridSize(): Int {
-        return tileSnapshot.size
-    }
+    internal val gridSize = tileSnapshot.size
+    private val targets = tileSnapshot.flatten().filter { it.selected }
 
     override fun compile(nodes: List<ConfigNode>): ((Coord, List<Cell>) -> Int) {
-        val targets = tileSnapshot.flatten().filter { it.selected }
-        // TODO Possibly needs to optimize here
+        // TODO Possibly need to optimize here
         // Current data structures should be thrown out and redone asap ^^'
-        return { c, cells ->
-            val lowestColumn = c.x - (gridSize() / 2)
-            val lowestIteration = c.y - gridSize()
-            val targetCells = cells.filter { cell -> targets.any { t -> cell.position == lowestColumn + t.x && cell.iteration == lowestIteration + t.y } }
-            val gridCalculation = groupOperator.function.invoke(targetCells.map { it.value })
-            if (operator == null) {
-                gridCalculation
-            } else {
-                if (operand?.label == null) {
-                    operator.function.invoke(gridCalculation, operand?.name?.toInt() ?: 0)
+        // also nodes are calculated multiple times if they're used in many nodes: once is enough obviously
 
-                } else {
-                    val preReq = getNodeWithLabel(nodes, operand.label).compile(nodes)
-                    operator.function.invoke(gridCalculation, preReq.invoke(c, cells))
-                }
-            }
+        return if (operand?.label == null) {
+            val value = operand?.name?.toInt() ?: 0
+            functionValueOperand(value)
+        } else {
+            val operandRef = getNodeWithLabel(nodes, operand.label).compile(nodes)
+            functionReferenceOperand(operandRef)
         }
+    }
+
+    private fun functionReferenceOperand(operand: ((Coord, List<Cell>) -> Int)): ((Coord, List<Cell>) -> Int) {
+        return { c, cells ->
+            val targetCells = cells.filter { inTargetList(c, it) }
+            val gridCalculation = groupOperator.function.invoke(targetCells.map { it.value })
+            operator?.function?.invoke(gridCalculation, operand.invoke(c, cells)) ?: gridCalculation
+        }
+    }
+
+    private fun functionValueOperand(value: Int): ((Coord, List<Cell>) -> Int) {
+        return { c, cells ->
+            val targetCells = cells.filter { inTargetList(c, it) }
+            val gridCalculation = groupOperator.function.invoke(targetCells.map { it.value })
+            operator?.function?.invoke(gridCalculation, value) ?: gridCalculation
+        }
+    }
+
+    private fun inTargetList(coord: Coord, c: Cell): Boolean {
+        // Messy, fix 'some time'
+        val lowestColumn = coord.x - (gridSize / 2)
+        val lowestIteration = coord.y - gridSize
+        return targets.any { t -> c.position.x == lowestColumn + t.x && c.position.y == lowestIteration + t.y }
     }
 }
 

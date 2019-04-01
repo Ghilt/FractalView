@@ -10,7 +10,6 @@ open class ConfigNode(
     val label: Char
 ) : Parcelable {
 
-    open fun gridSize() = 0
     open fun compile(nodes: List<ConfigNode>): ((Coord, List<Cell>) -> Int) = { _, _ -> 0}
 
     fun getNodeWithLabel(nodes: List<ConfigNode>, label: Char): ConfigNode = nodes.first { it.label == label }

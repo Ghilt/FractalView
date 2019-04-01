@@ -6,7 +6,7 @@ import se.admdev.fractalviewer.canvas.model.Cell
 import se.admdev.fractalviewer.canvas.model.Coord
 
 @Parcelize
-class AncestorCore( val configNodes: List<ConfigNode>) : Parcelable {
+class AncestorCore(val configNodes: List<ConfigNode>) : Parcelable {
 
     var function: ((Coord, List<Cell>) -> Int)? = null
 
@@ -20,7 +20,7 @@ class AncestorCore( val configNodes: List<ConfigNode>) : Parcelable {
     }
 
     //TODO only supports square ancestor areas atm // TODO remove this calculation and specify it explicitly
-    val width: Int = configNodes.firstOrNull()?.gridSize() ?: 0
+    val width: Int = (configNodes.firstOrNull() as? OperationConfigNode)?.gridSize ?: 0
     val height: Int = width
     val midX = width / 2
 }

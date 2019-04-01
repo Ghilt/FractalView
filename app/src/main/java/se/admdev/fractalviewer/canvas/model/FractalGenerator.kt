@@ -12,7 +12,7 @@ class FractalGenerator(val core: AncestorCore) {
 
     init {
         //todo, get starting seed from core?
-        frac[0] = listOf(Cell(1, 0, 0, listOf()))
+        frac[0] = listOf(Cell(1, Coord(0,0), listOf()))
     }
 
     val iterationsCompleted
@@ -67,7 +67,7 @@ class FractalGenerator(val core: AncestorCore) {
 
         //Quick and dirty temp debug logging
         val logPyramid: String =
-            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) "_" else "▉"}" }} \n".asIterable() }
+            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) "_" else "${cell.value}"}" }} \n".asIterable() }
                 .fold("") { acc, charList -> acc + charList }
 
         val initialPadding = logPyramid.lines().takeLast(2).first().length / 2
@@ -89,33 +89,34 @@ class FractalGenerator(val core: AncestorCore) {
             val nearest = w[nearestNeighbourIndex(neighbours.size, w.size, i)]
             val ancestors = translateAncestors(w, nearest)
 
-            Cell(core.calculateValue(tempGetCoord(nearest.position, iterationsCompleted),ancestors), iterationsCompleted, nearest.position, ancestors)
-        }
-    }
+            val coord = Coord(nearest.position.x, iterationsCompleted)
 
-    private fun tempGetCoord(x: Int, y: Int): Coord {
-        // TODO It's late and I need to sleep but I want it running
-        return Coord(x, y)
+            Cell(core.calculateValue(coord, ancestors), coord, ancestors)
+        }
     }
 
     private fun calculateLeftEdgeCell(lastItr: List<Cell>): Cell {
         val oldEdge = lastItr.first()
         val ancestors = oldEdge.ancestors
-            .filter { oldEdge.iteration - it.iteration < core.height }
-            .filter { (oldEdge.position - it.position).absoluteValue < core.midX }
+            .filter { oldEdge.position.y - it.position.y < core.height }
+            .filter { (oldEdge.position.x - it.position.x).absoluteValue < core.midX }
             .plus(lastItr.take(core.midX))
 
-        return Cell(core.calculateValue(tempGetCoord(-iterationsCompleted, iterationsCompleted),ancestors), iterationsCompleted, -iterationsCompleted, ancestors)
+        val coord = Coord(-iterationsCompleted, iterationsCompleted)
+
+        return Cell(core.calculateValue(coord, ancestors), coord, ancestors)
     }
 
     private fun calculateRightEdgeCell(lastItr: List<Cell>): Cell {
         val oldEdge = lastItr.last()
         val ancestors = oldEdge.ancestors
-            .filter { oldEdge.iteration - it.iteration < core.height }
-            .filter { oldEdge.position - it.position < core.midX }
+            .filter { oldEdge.position.y - it.position.y < core.height }
+            .filter { oldEdge.position.x - it.position.x < core.midX }
             .plus(lastItr.takeLast(core.midX))
 
-        return Cell(core.calculateValue(tempGetCoord(iterationsCompleted, iterationsCompleted), ancestors), iterationsCompleted, iterationsCompleted, ancestors)
+        val coord = Coord(iterationsCompleted, iterationsCompleted)
+
+        return Cell(core.calculateValue(coord, ancestors), coord, ancestors)
     }
 
     private fun translateAncestors(neighbours: List<Cell>, nearest: Cell): List<Cell> {
@@ -130,7 +131,7 @@ class FractalGenerator(val core: AncestorCore) {
             // Todo possible need to do something more clever if this is to slow
          */
         return nearest.ancestors
-            .filter { nearest.iteration - it.iteration < core.height }
+            .filter { nearest.position.y - it.position.y < core.height }
             .plus(neighbours)
     }
 }
