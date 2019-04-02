@@ -25,12 +25,14 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private lateinit var uiState: ConfigUiState
     private lateinit var model: ConfigViewModel
-    private val adapter = AncestorTileAdapter()
-    private val listAdapter = ConfigurationListAdapter()
+    private lateinit var ancestorAdapter: AncestorTileAdapter
+    private lateinit var listAdapter: ConfigurationListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         uiState = ConfigUiState(this)
+        ancestorAdapter = AncestorTileAdapter()
+        listAdapter = ConfigurationListAdapter()
 
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
@@ -45,8 +47,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
             ancestor_grid.gridLayoutManager.spanCount = model.ancestorTileDimension
-            adapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
-            adapter.notifyDataSetChanged()
+            ancestorAdapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
+            ancestorAdapter.notifyDataSetChanged()
             updateNodeCreationMode()
         })
     }
@@ -71,9 +73,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
 
-        adapter.containerSize = resources.getDimension(R.dimen.grid_size)
-        adapter.listener = this
-        ancestor_grid.adapter = adapter
+        ancestorAdapter.containerSize = resources.getDimension(R.dimen.grid_size)
+        ancestorAdapter.listener = this
+        ancestor_grid.adapter = ancestorAdapter
+        model.ancestorTiles.triggerObserver()
 
         node_list.adapter = listAdapter
 
@@ -99,6 +102,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         dimming_overlay.setOnClickListener { /*Prevent click through*/ }
+        grid_background.setOnClickListener { /*Prevent click through*/ }
 
         setupFabButtons()
 
