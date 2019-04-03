@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ConfigNode">
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/ConfigNodeLabel"
+        tools:backgroundTint="@color/colorPrimaryDark"
+        tools:text="A" />
+
+    <TextView
+        android:id="@+id/group_operator_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/node_list_group_operator"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ancestor_grid_miniature"
+        android:layout_width="@dimen/grid_size_miniature"
+        android:layout_height="@dimen/grid_size_miniature"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="9"
+        tools:listitem="@layout/ancestor_configuration_tile" />
+
+    <TextView
+        android:id="@+id/operator_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/node_list_sum_all_end_bracket"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/operand_text"
+        style="@style/ConfigNodeLabelReference"
+        tools:background="@color/colorAccent"
+        tools:text="C" />
+
+</LinearLayout>

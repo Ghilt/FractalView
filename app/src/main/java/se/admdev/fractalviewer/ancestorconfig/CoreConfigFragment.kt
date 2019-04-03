@@ -13,12 +13,14 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
-import se.admdev.fractalviewer.*
+import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.gridLayoutManager
+import se.admdev.fractalviewer.showLabel
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -126,6 +128,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         add_all_config_node_fab.setOnClickListener {
             model.selectAll()
         }
+
+        add_operation_config_node_fab.setOnClickListener {
+            uiState.showRevealAnimationCreationFragment()
+            startCreateOperationNodeFragment()
+        }
     }
 
     override fun onTileClicked(position: Int) {
@@ -153,6 +160,22 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         return false
     }
 
+    private fun startCreateOperationNodeFragment(): Boolean {
+
+        if (!isCreateNodeFragmentShown()) {
+            childFragmentManager.beginTransaction()
+                .add(
+                    R.id.create_node_frame,
+                    CreateOperationNodeFragment.newInstance(),
+                    CreateOperationNodeFragment.TAG
+                )
+                .addToBackStack(CreateOperationNodeFragment.TAG)
+                .commit()
+            return true
+        }
+        return false
+    }
+
     private fun startCreateConditionNodeFragment() {
         uiState.showDim()
         if (!isCreateConditionNodeFragmentShown()) {
@@ -166,6 +189,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                 .commit()
         }
     }
+
+    private fun isCreateNodeFragmentShown() =
+        childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
 
     private fun isCreateGroupNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateGroupOperationNodeFragment.TAG) != null

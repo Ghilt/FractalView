@@ -12,7 +12,7 @@ class AncestorCore(@Suppress("CanBeParameter") private val configNodes: List<Con
 
     //TODO only supports square ancestor areas/single size(probably for the better) atm
     @IgnoredOnParcel
-    val width: Int = (configNodes.firstOrNull() as? OperationConfigNode)?.gridSize ?: 0
+    val width: Int = (configNodes.firstOrNull() as? GroupOperationConfigNode)?.gridSize ?: 0
     @IgnoredOnParcel
     val height: Int = width
     @IgnoredOnParcel
@@ -24,6 +24,4 @@ class AncestorCore(@Suppress("CanBeParameter") private val configNodes: List<Con
     fun calculateValue(currentCell: Coord, ancestors: List<Cell>): Int {
         return function?.invoke(currentCell, ancestors) ?: 0
     }
-
-
 }

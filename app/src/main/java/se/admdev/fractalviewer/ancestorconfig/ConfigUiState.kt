@@ -53,7 +53,11 @@ class ConfigUiState(val fragment: CoreConfigFragment) {
             R.id.add_conditional_config_node_fab, ConstraintSet.TOP,
             fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
         )
-
+        connect(
+            R.id.add_operation_config_node_fab, ConstraintSet.BOTTOM,
+            R.id.add_all_config_node_fab, ConstraintSet.TOP,
+            fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
+        )
     }
 
     fun updateNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {

@@ -3,6 +3,7 @@ package se.admdev.fractalviewer.ancestorconfig.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 
 class ConfigurationListAdapter : RecyclerView.Adapter<BindableViewHolder>() {
@@ -12,6 +13,7 @@ class ConfigurationListAdapter : RecyclerView.Adapter<BindableViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return when (data[position]) {
             is OperationConfigNode -> VIEW_TYPE_OPERATION
+            is GroupOperationConfigNode -> VIEW_TYPE_GROUP_OPERATION
             else -> VIEW_TYPE_CONDITION
         }
     }
@@ -28,5 +30,6 @@ class ConfigurationListAdapter : RecyclerView.Adapter<BindableViewHolder>() {
     companion object {
         const val VIEW_TYPE_OPERATION = 0
         const val VIEW_TYPE_CONDITION = 1
+        const val VIEW_TYPE_GROUP_OPERATION = 2
     }
 }

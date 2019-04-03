@@ -69,13 +69,28 @@ class ConfigViewModel : ViewModel() {
         CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor()) }
     }
 
+    fun saveNewOperationNode(firstOperand: Operand?, operator: Operator?, secondOperand: Operand?): Boolean {
+        return if (firstOperand != null && operator != null && secondOperand != null) {
+            configNodes.addItem(
+                OperationConfigNode(
+                    getNextNodeLabel(),
+                    firstOperand,
+                    operator,
+                    secondOperand
+                )
+            )
+            true
+        } else {
+            false
+        }
+    }
 
-    fun saveNewOperationNode(groupOperator: GroupOperator?, operator: Operator?, operand: Operand?): Boolean {
+    fun saveNewGroupOperationNode(groupOperator: GroupOperator?, operator: Operator?, operand: Operand?): Boolean {
         return if (operator != null && operand == null) {
             false
         } else {
             configNodes.addItem(
-                OperationConfigNode(
+                GroupOperationConfigNode(
                     getNextNodeLabel(),
                     groupOperator ?: GroupOperator.SUM,
                     getTileSnapshot(),

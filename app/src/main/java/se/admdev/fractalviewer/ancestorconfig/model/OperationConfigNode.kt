@@ -5,50 +5,76 @@ import se.admdev.fractalviewer.canvas.model.Coord
 
 class OperationConfigNode(
     label: Char,
-    val groupOperator: GroupOperator,
-    val tileSnapshot: List<List<AncestorTile>>,
-    val operator: Operator?,
-    val operand: Operand?
+    val firstOperand: Operand,
+    val operator: Operator,
+    val secondOperand: Operand
 ) : ConfigNode(label) {
-
-    internal val gridSize = tileSnapshot.size
-    private val targets = tileSnapshot.flatten().filter { it.selected }
 
     override fun compile(nodes: List<ConfigNode>): ((Coord, List<Cell>) -> Int) {
         // TODO Possibly need to optimize here
         // Current data structures should be thrown out and redone asap ^^'
         // also nodes are calculated multiple times if they're used in many nodes: once is enough obviously
 
-        return if (operand?.label == null) {
-            val value = operand?.name?.toInt() ?: 0
-            functionValueOperand(value)
+        var firstOperandRef: ((Coord, List<Cell>) -> Int)? = null
+        var secondOperandRef: ((Coord, List<Cell>) -> Int)? = null
+        var firstOperandVal: Int? = null
+        var secondOperandVal: Int? = null
+
+        if (firstOperand.label != null) {
+            firstOperandRef = getNodeWithLabel(nodes, firstOperand.label).compile(nodes)
         } else {
-            val operandRef = getNodeWithLabel(nodes, operand.label).compile(nodes)
-            functionReferenceOperand(operandRef)
+            firstOperandVal = firstOperand.name.toInt()
+        }
+
+        if (secondOperand.label != null) {
+            secondOperandRef = getNodeWithLabel(nodes, secondOperand.label).compile(nodes)
+        } else {
+            secondOperandVal = secondOperand.name.toInt()
+        }
+
+        //TODO extract this structure an keep in common with condition node
+
+        return if (firstOperandRef != null && secondOperandRef != null) {
+            functionBothReference(firstOperandRef, secondOperandRef)
+        } else if (firstOperandVal != null && secondOperandRef != null) {
+            functionSecondReference(firstOperandVal, secondOperandRef)
+        } else if (firstOperandRef != null && secondOperandVal != null) {
+            functionFirstReference(firstOperandRef, secondOperandVal)
+        } else if (firstOperandVal != null && secondOperandVal != null) {
+            functionNoReference(firstOperandVal, secondOperandVal)
+        } else {
+            throw Exception("Error - ConditionalConfigNode.compile failed: $firstOperand, $operator, $secondOperand")
         }
     }
 
-    private fun functionReferenceOperand(operand: ((Coord, List<Cell>) -> Int)): ((Coord, List<Cell>) -> Int) {
-        return { c, cells ->
-            val targetCells = cells.filter { inTargetList(c, it) }
-            val gridCalculation = groupOperator.function.invoke(targetCells.map { it.value })
-            operator?.function?.invoke(gridCalculation, operand.invoke(c, cells)) ?: gridCalculation
-        }
+    private fun functionBothReference(
+        opRef1: ((Coord, List<Cell>) -> Int),
+        opRef2: ((Coord, List<Cell>) -> Int)
+    ): ((Coord, List<Cell>) -> Int) {
+        return { c, cells -> operator.function(opRef1.invoke(c, cells), opRef2.invoke(c, cells)) }
     }
 
-    private fun functionValueOperand(value: Int): ((Coord, List<Cell>) -> Int) {
-        return { c, cells ->
-            val targetCells = cells.filter { inTargetList(c, it) }
-            val gridCalculation = groupOperator.function.invoke(targetCells.map { it.value })
-            operator?.function?.invoke(gridCalculation, value) ?: gridCalculation
-        }
+    private fun functionSecondReference(
+        opVal1: Int,
+        opRef2: ((Coord, List<Cell>) -> Int)
+    ): ((Coord, List<Cell>) -> Int) {
+        return { c, cells -> operator.function(opVal1, opRef2.invoke(c, cells)) }
     }
 
-    private fun inTargetList(coord: Coord, c: Cell): Boolean {
-        // Messy, fix 'some time'
-        val lowestColumn = coord.x - (gridSize / 2)
-        val lowestIteration = coord.y - gridSize
-        return targets.any { t -> c.position.x == lowestColumn + t.x && c.position.y == lowestIteration + t.y }
+    private fun functionFirstReference(
+        opRef1: ((Coord, List<Cell>) -> Int),
+        opVal2: Int
+    ): ((Coord, List<Cell>) -> Int) {
+        return { c, cells -> operator.function(opRef1.invoke(c, cells), opVal2) }
     }
+
+
+    private fun functionNoReference(
+        opVal1: Int,
+        opVal2: Int
+    ): ((Coord, List<Cell>) -> Int) {
+        return { _, _ -> operator.function(opVal1, opVal2) }
+    }
+
 }
 

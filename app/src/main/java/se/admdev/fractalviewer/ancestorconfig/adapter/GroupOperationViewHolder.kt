@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_operation_node.view.*
+import kotlinx.android.synthetic.main.list_item_group_operation_node.view.*
 import se.admdev.fractalviewer.*
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
-import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
+import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 
 class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
@@ -20,7 +20,7 @@ class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
     private var adapter: AncestorTileAdapter? = null
 
     override fun <T : ConfigNode> bind(node: T) {
-        val n = node as OperationConfigNode
+        val n = node as GroupOperationConfigNode
 
         label.showLabel(n.label)
 
@@ -47,7 +47,7 @@ class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
     companion object {
 
-        private const val LAYOUT = R.layout.list_item_operation_node
+        private const val LAYOUT = R.layout.list_item_group_operation_node
 
         @JvmStatic
         fun create(parent: ViewGroup): BindableViewHolder {
