@@ -55,6 +55,8 @@ class FractalCanvasFragment : Fragment() {
 
         val button = button_itr
         button.setOnClickListener {
+            testPanView.addRectTemp(CellularFractalArtist().getIterationAsRectangles(generator.iterationsCompleted, generator.getLastIteration()))
+
             val newEnd = curve.getDirectionAt(currentIteration)
             path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
             currentIteration++

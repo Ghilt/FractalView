@@ -16,7 +16,7 @@
 
     <!--Animation-->
     <integer name="animation_ms">250</integer>
-    <integer name="animation_ms_long">500</integer>
+    <integer name="animation_ms_long">400</integer>
     <integer name="animation_ms_gradient_enter_fade">10</integer>
     <integer name="animation_ms_gradient_exit_fade">4000</integer>
 

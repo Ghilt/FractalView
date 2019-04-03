@@ -1,10 +1,7 @@
 package se.admdev.fractalviewer.canvas
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -12,6 +9,8 @@ import android.view.View
 
 
 class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
+    val list: MutableList<RectF> = mutableListOf()
 
     var path = Path()
 
@@ -32,12 +31,13 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         val strokeWidth = 2
 
         paint = Paint()
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
+        paint.isAntiAlias = false // still get blurry when zooming
+        paint.style = Paint.Style.FILL
+        paint.alpha = 255
         paint.strokeWidth = strokeWidth.toFloat()
         paint.color = Color.BLACK
 
-        path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
+
 //        scaleMatrix.setScale(5f, 5f)
 //        path.transform(scaleMatrix)
 
@@ -45,6 +45,7 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
             path.moveTo(midPointX, midPointY)
+//            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
         }
     }
 
@@ -61,6 +62,8 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         ) // scale translation inversely to maintain reasonable panning distance
         canvas.drawPath(path, paint)
 
+        list.forEach { canvas.drawRect(it, paint) }
+
         canvas.restore()
     }
 
@@ -68,6 +71,10 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         scaleGestureDetector.onTouchEvent(ev)
         touchData.onTouchEvent(ev, scaleGestureDetector.isInProgress)
         return true
+    }
+
+    fun addRectTemp(iterationAsRectangles: List<RectF>) {
+        list.addAll(iterationAsRectangles)
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {

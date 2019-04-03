@@ -12,7 +12,7 @@ class FractalGenerator(val core: AncestorCore) {
 
     init {
         //todo, get starting seed from core?
-        frac[0] = listOf(Cell(1, Coord(0,0), listOf()))
+        frac[0] = listOf(Cell(1, Coord(0, 0), listOf()))
     }
 
     val iterationsCompleted
@@ -133,5 +133,9 @@ class FractalGenerator(val core: AncestorCore) {
         return nearest.ancestors
             .filter { nearest.position.y - it.position.y < core.height }
             .plus(neighbours)
+    }
+
+    fun getLastIteration(): List<Cell> {
+        return frac[iterationsCompleted - 1] ?: listOf()
     }
 }
