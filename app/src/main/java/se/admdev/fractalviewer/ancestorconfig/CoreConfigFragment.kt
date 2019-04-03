@@ -2,7 +2,6 @@ package se.admdev.fractalviewer.ancestorconfig
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,16 +137,16 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         uiState.updateNodeCreationMode(selectedTiles)
     }
 
-    fun startCreateOperationNodeFragment(): Boolean {
+    fun startCreateGroupOperationNodeFragment(): Boolean {
 
-        if (!isCreateNodeFragmentShown()) {
+        if (!isCreateGroupNodeFragmentShown()) {
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.create_node_frame,
-                    CreateOperationNodeFragment.newInstance(),
-                    CreateOperationNodeFragment.TAG
+                    CreateGroupOperationNodeFragment.newInstance(),
+                    CreateGroupOperationNodeFragment.TAG
                 )
-                .addToBackStack(CreateOperationNodeFragment.TAG)
+                .addToBackStack(CreateGroupOperationNodeFragment.TAG)
                 .commit()
             return true
         }
@@ -160,19 +159,19 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.create_node_frame,
-                    CreateConditionalNodeFragment.newInstance(),
-                    CreateConditionalNodeFragment.TAG
+                    CreateConditionNodeFragment.newInstance(),
+                    CreateConditionNodeFragment.TAG
                 )
-                .addToBackStack(CreateOperationNodeFragment.TAG)
+                .addToBackStack(CreateGroupOperationNodeFragment.TAG)
                 .commit()
         }
     }
 
-    private fun isCreateNodeFragmentShown() =
-        childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
+    private fun isCreateGroupNodeFragmentShown() =
+        childFragmentManager.findFragmentByTag(CreateGroupOperationNodeFragment.TAG) != null
 
     private fun isCreateConditionNodeFragmentShown() =
-        childFragmentManager.findFragmentByTag(CreateConditionalNodeFragment.TAG) != null
+        childFragmentManager.findFragmentByTag(CreateConditionNodeFragment.TAG) != null
 
     companion object {
 

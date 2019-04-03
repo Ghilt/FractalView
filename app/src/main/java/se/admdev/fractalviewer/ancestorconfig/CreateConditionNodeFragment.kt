@@ -19,7 +19,7 @@ private const val REQUEST_CODE_CONDITIONAL_OPERAND = 0
 private const val REQUEST_CODE_TRUTH_OPERAND = 1
 private const val REQUEST_CODE_FALSE_OPERAND = 2
 
-class CreateConditionalNodeFragment : Fragment() {
+class CreateConditionNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
     private lateinit var creationData: CreateNodeViewModel
@@ -103,10 +103,10 @@ class CreateConditionalNodeFragment : Fragment() {
 
     companion object {
 
-        const val TAG = "CreateConditionalNodeFragment"
+        const val TAG = "CreateConditionNodeFragment"
 
         @JvmStatic
-        fun newInstance(): CreateConditionalNodeFragment = CreateConditionalNodeFragment()
+        fun newInstance(): CreateConditionNodeFragment = CreateConditionNodeFragment()
     }
 }
 

@@ -14,7 +14,7 @@ abstract class BindableViewHolder(itemView: View) : RecyclerView.ViewHolder(item
     companion object {
         fun create(itemView: ViewGroup, type: Int): BindableViewHolder {
             return when (type) {
-                VIEW_TYPE_OPERATION -> OperationViewHolder.create(itemView)
+                VIEW_TYPE_OPERATION -> GroupOperationViewHolder.create(itemView)
                 VIEW_TYPE_CONDITION -> ConditionViewHolder.create(itemView)
                 else -> object : BindableViewHolder(itemView) {
                     override fun <T : ConfigNode> bind(node: T) {}

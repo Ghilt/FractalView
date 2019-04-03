@@ -62,7 +62,7 @@ class ConfigUiState(val fragment: CoreConfigFragment) {
 
         if (hasSelectedTile && !isAddOperationState) {
             val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
-            val started = startCreateOperationNodeFragment()
+            val started = startCreateGroupOperationNodeFragment()
             if (started) animateCreateNodeDialog(create_node_frame, translateAnim) // TODO, fix
 
             AnimatorInflater.loadAnimator(context, R.animator.grid_focus).apply { setTarget(ancestor_grid) }.start()

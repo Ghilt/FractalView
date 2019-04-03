@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_create_operator_node.*
+import kotlinx.android.synthetic.main.fragment_create_group_operator_node.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.*
@@ -23,7 +23,7 @@ private const val REQUEST_CODE_GROUP_OPERATOR_PICKER = 0
 private const val REQUEST_CODE_OPERATOR_PICKER = 1
 private const val REQUEST_CODE_OPERAND_PICKER = 2
 
-class CreateOperationNodeFragment : Fragment() {
+class CreateGroupOperationNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
     private lateinit var creationData: CreateNodeViewModel
@@ -66,7 +66,7 @@ class CreateOperationNodeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_create_operator_node, container, false)
+        return inflater.inflate(R.layout.fragment_create_group_operator_node, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -141,9 +141,9 @@ class CreateOperationNodeFragment : Fragment() {
 
     companion object {
 
-        const val TAG = "CreateOperationNodeFragment"
+        const val TAG = "CreateGroupOperationNodeFragment"
 
         @JvmStatic
-        fun newInstance() = CreateOperationNodeFragment()
+        fun newInstance() = CreateGroupOperationNodeFragment()
     }
 }
