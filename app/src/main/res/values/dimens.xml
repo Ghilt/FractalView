@@ -12,6 +12,7 @@
     <dimen name="view_elevation_none">0dp</dimen>
     <dimen name="view_elevation_small">2dp</dimen>
     <dimen name="view_elevation_large">4dp</dimen>
+    <dimen name="view_elevation_pressed">8dp</dimen>
     <dimen name="view_elevation_dialog">24dp</dimen>
 
     <!--Animation-->
