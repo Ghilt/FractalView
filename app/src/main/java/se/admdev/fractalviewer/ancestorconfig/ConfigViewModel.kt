@@ -6,6 +6,8 @@ import se.admdev.fractalviewer.ancestorconfig.model.*
 import se.admdev.fractalviewer.getLabelColor
 
 private const val ANCESTOR_TILE_INITIAL_SIZE = 3
+private const val ANCESTOR_TILE_MIN_SIZE = 3
+private const val ANCESTOR_TILE_MAX_SIZE = 7
 
 class ConfigViewModel : ViewModel() {
 
@@ -41,8 +43,13 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun decreaseAncestorTiles() {
-        ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2, ancestorTiles.value)
+        if (!isAncestorGridMinSize()) {
+            ancestorTiles.value = calculateAncestorTiles(ancestorTileDimension - 2, ancestorTiles.value)
+        }
     }
+
+    fun isAncestorGridMinSize() = ancestorTileDimension == ANCESTOR_TILE_MIN_SIZE
+    fun isAncestorGridMaxSize() = ancestorTileDimension == ANCESTOR_TILE_MAX_SIZE
 
     fun clearNodeCreationData() {
         // OK, lists wont be long
@@ -114,6 +121,8 @@ class ConfigViewModel : ViewModel() {
             false
         }
     }
+
+    fun isChangeGridSizeEnabled(): Boolean = configNodes.value.isNullOrEmpty()
 
 }
 

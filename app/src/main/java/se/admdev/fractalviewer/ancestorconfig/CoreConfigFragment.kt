@@ -44,9 +44,13 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             listAdapter.notifyDataSetChanged()
             final_target_text.showLabel(items.lastOrNull()?.label)
             showList(items.isNotEmpty())
+            minus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
+            plus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
+            minus_grid_size_button.isEnabled = !model.isAncestorGridMinSize() && model.isChangeGridSizeEnabled()
+            minus_grid_size_button.isEnabled = !model.isAncestorGridMaxSize() && model.isChangeGridSizeEnabled()
             ancestor_grid.gridLayoutManager.spanCount = model.ancestorTileDimension
             ancestorAdapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
             ancestorAdapter.notifyDataSetChanged()
