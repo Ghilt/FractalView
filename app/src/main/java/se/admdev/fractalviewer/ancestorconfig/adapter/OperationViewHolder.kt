@@ -17,10 +17,11 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
     private val firstOperandText: TextView = itemView.first_operand_text
     private val operatorText: TextView = itemView.operator_text
     private val secondOperandText: TextView = itemView.second_operand_text
-    private var adapter: AncestorTileAdapter? = null
+
 
     override fun <T : ConfigNode> bind(node: T) {
         val n = node as OperationConfigNode
+        boundNode = n
 
         label.showLabel(n.label)
         operatorText.text = n.operator.symbol

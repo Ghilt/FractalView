@@ -21,6 +21,7 @@ class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
     override fun <T : ConfigNode> bind(node: T) {
         val n = node as GroupOperationConfigNode
+        boundNode = n
 
         label.showLabel(n.label)
 

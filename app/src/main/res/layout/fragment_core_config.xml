@@ -10,21 +10,21 @@
         android:id="@+id/grid_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/ancestor_gradient_anim"
-        android:padding="10dp"
         android:elevation="@dimen/view_elevation_small"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ancestor_grid"
         android:layout_width="@dimen/grid_size"
         android:layout_height="@dimen/grid_size"
-        android:background="#fff"
-        android:layout_marginTop="10dp"
         android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
         android:elevation="@dimen/view_elevation_small"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
@@ -37,11 +37,11 @@
         tools:listitem="@layout/ancestor_configuration_tile" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline"
-        app:layout_constraintGuide_begin="@dimen/grid_background_size"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/grid_background_size" />
 
     <Button
         android:id="@+id/minus_grid_size_button"
@@ -66,7 +66,7 @@
         android:id="@+id/list_empty_switcher"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/target"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline">
@@ -88,37 +88,6 @@
             android:padding="25dp"
             android:text="@string/node_list_empty_text" />
     </ViewSwitcher>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/target"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/final_target_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/node_label_padding"
-            android:text="@string/placeholder_hello" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder_target_text" />
-
-        <Button
-            android:id="@+id/confirm_core_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ancestor_configuration_confirm" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
         android:id="@+id/dimming_overlay"

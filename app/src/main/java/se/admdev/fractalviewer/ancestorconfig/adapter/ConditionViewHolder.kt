@@ -20,6 +20,7 @@ class ConditionViewHolder(itemView: View) : BindableViewHolder(itemView) {
 
     override fun <T : ConfigNode> bind(node: T) {
         val n = node as ConditionalConfigNode
+        boundNode = n
 
         label.showLabel(n.label)
         operandCondition.showLabel(n.operandCondition.label)

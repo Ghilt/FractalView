@@ -20,7 +20,6 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.gridLayoutManager
-import se.admdev.fractalviewer.showLabel
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -33,7 +32,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         super.onCreate(savedInstanceState)
         uiState = ConfigUiState(this)
         ancestorAdapter = AncestorTileAdapter()
-        listAdapter = ConfigurationListAdapter()
+        listAdapter = ConfigurationListAdapter(this::onConfigNodeClicked)
 
         model = activity?.run {
             ViewModelProviders.of(this).get(ConfigViewModel::class.java)
@@ -42,7 +41,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
             listAdapter.notifyDataSetChanged()
-            final_target_text.showLabel(items.lastOrNull()?.label)
             showList(items.isNotEmpty())
             minus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             plus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
@@ -110,13 +108,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         grid_background.setOnClickListener { /*Prevent click through*/ }
 
         setupFabButtons()
-
-        confirm_core_button.setOnClickListener {
-            val action = CoreConfigFragmentDirections.showFractal().apply {
-                ancestorCore = AncestorCore(model.configNodes.value ?: listOf())
-            }
-            Navigation.findNavController(view).navigate(action)
-        }
     }
 
     private fun setupFabButtons() {
@@ -141,6 +132,13 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onTileClicked(position: Int) {
         model.ancestorTiles.triggerObserver()
+    }
+
+    private fun onConfigNodeClicked(node: ConfigNode) {
+        val action = CoreConfigFragmentDirections.showFractal().apply {
+            ancestorCore = AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+        }
+        view?.let { Navigation.findNavController(it).navigate(action) }
     }
 
     private fun updateNodeCreationMode() {
