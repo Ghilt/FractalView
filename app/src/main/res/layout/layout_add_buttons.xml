@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/icon_split"
+        android:src="@drawable/icon_wrench"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_all_config_node_fab"
@@ -23,7 +23,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/icon_add_many"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -34,7 +34,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/icon_split"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
