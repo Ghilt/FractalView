@@ -1,14 +1,15 @@
 package se.admdev.fractalviewer.canvas.model
 
 
-import android.util.Log
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import kotlin.math.absoluteValue
-import kotlin.math.max
 
-class FractalGenerator(val core: AncestorCore) {
+
+class FractalGenerator(val core: AncestorCore, val listener: (Int, List<Cell>) -> Unit) {
 
     private val frac = mutableMapOf<Int, List<Cell>>()
+    private var threadActive = false
+    private var currentThread: Thread? = null
 
     init {
         //todo, get starting seed from core?
@@ -29,7 +30,7 @@ class FractalGenerator(val core: AncestorCore) {
         if (largestWindow - smallestWindow + 1 >= lastItr.size) {
 
             // Special case encountered in the beginning of the fractal when the iteration is smaller than the input to the the next iteration
-            Log.d("spx", "Special special ${largestWindow - smallestWindow + 1} >= ${lastItr.size}")
+//            Log.d("spx", "Special special ${largestWindow - smallestWindow + 1} >= ${lastItr.size}")
             startNeighbours = MutableList(iterationsCompleted) { lastItr }
             endNeighbours = MutableList(iterationsCompleted) { lastItr }
         } else {
@@ -53,7 +54,7 @@ class FractalGenerator(val core: AncestorCore) {
             // Could possibly be cool to extract 'ancestor finding' logic entirely to core, and get rid of the rigid square-ancestor-area
             windowSize - (windowCount - index)
         }
-        Log.d("spx", "neigh s.${startNeighbours.size} m.${midNeighbours.size} e.${endNeighbours.size}")
+//        Log.d("spx", "neigh s.${startNeighbours.size} m.${midNeighbours.size} e.${endNeighbours.size}")
 
         val leftEdgeCell = calculateLeftEdgeCell(lastItr)
         val newItrStart = calculateChunkFromNeighbours(startNeighbours) { _, _, index -> index }
@@ -63,20 +64,20 @@ class FractalGenerator(val core: AncestorCore) {
 
         frac[iterationsCompleted] = listOf(leftEdgeCell) + newItrStart + newItrMid + newItEnd + listOf(rightEdgeCell)
 
-        Log.d("spx", "Size: ${frac.size}")
+//        Log.d("spx", "Size: ${frac.size}")
 
         //Quick and dirty temp debug logging
-        val logPyramid: String =
-            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) "_" else "${cell.value}"}" }} \n".asIterable() }
-                .fold("") { acc, charList -> acc + charList }
-
-        val initialPadding = logPyramid.lines().takeLast(2).first().length / 2
-        val lp = logPyramid
-            .lines()
-            .mapIndexed { i, s -> " ".repeat(max(0, initialPadding - i)) + s }
-            .fold("") { acc, charList -> "$acc\n$charList" }
-
-        Log.d("spx", "pyramid \n$lp")
+//        val logPyramid: String =
+//            frac.flatMap { (_, value) -> "${value.fold("") { acc, cell -> "$acc${if (cell.value == 0) "_" else "${cell.value}"}" }} \n".asIterable() }
+//                .fold("") { acc, charList -> acc + charList }
+//
+//        val initialPadding = logPyramid.lines().takeLast(2).first().length / 2
+//        val lp = logPyramid
+//            .lines()
+//            .mapIndexed { i, s -> " ".repeat(max(0, initialPadding - i)) + s }
+//            .fold("") { acc, charList -> "$acc\n$charList" }
+//
+//        Log.d("spx", "pyramid \n$lp")
 
         return true
     }
@@ -137,5 +138,31 @@ class FractalGenerator(val core: AncestorCore) {
 
     fun getLastIteration(): List<Cell> {
         return frac[iterationsCompleted - 1] ?: listOf()
+    }
+
+    fun toggleGenerationThread() {
+        threadActive = !threadActive
+        if (threadActive && currentThread == null) {
+            startThreadForNextIteration()
+        }
+
+    }
+
+    private fun startThreadForNextIteration() {
+        if (currentThread == null) {
+            currentThread = createWorkThread().apply { start() }
+        }
+    }
+
+    private fun createWorkThread(): Thread {
+        return Thread {
+            generateNextIteration()
+            listener.invoke(iterationsCompleted - 1, getLastIteration())
+            currentThread = null
+
+            if (threadActive) {
+                startThreadForNextIteration()
+            }
+        }
     }
 }

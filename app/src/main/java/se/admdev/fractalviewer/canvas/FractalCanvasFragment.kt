@@ -11,6 +11,7 @@ import android.view.animation.Transformation
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
+import se.admdev.fractalviewer.canvas.model.Cell
 import se.admdev.fractalviewer.canvas.model.DragonCurve
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import java.lang.Exception
@@ -40,14 +41,10 @@ class FractalCanvasFragment : Fragment() {
             generator = if (core == null){
                 throw Exception("Error: No ancestor core for FractalCanvasFragment")
             } else {
-                FractalGenerator(core)
+                FractalGenerator(core, ::onGeneratedIteration)
             }
             ancestorCore = core
         }
-
-
-
-
 
 //        val animation = FractalView.DragonCurveAnimation(testPanView)
 //        animation.duration = Long.MAX_VALUE
@@ -55,13 +52,28 @@ class FractalCanvasFragment : Fragment() {
 
         val button = button_itr
         button.setOnClickListener {
-            testPanView.addRectTemp(CellularFractalArtist().getIterationAsRectangles(generator.iterationsCompleted, generator.getLastIteration()))
+            // TODO experimentation area
+//            testPanView.addRectTemp(CellularFractalArtist().getIterationAsRectangles(generator.iterationsCompleted, generator.getLastIteration()))
+//
+//            val newEnd = curve.getDirectionAt(currentIteration)
+//            path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
+//            currentIteration++
+            generator.toggleGenerationThread()
+//            generator.generateNextIteration()
+//            testPanView.invalidate()
+//
+//            Thread {
+//                Thread.sleep(1000)
+//                println("test")
+//            }.start()
 
-            val newEnd = curve.getDirectionAt(currentIteration)
-            path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
-            currentIteration++
-            generator.generateNextIteration()
-            testPanView.invalidate()
+        }
+    }
+
+    private fun onGeneratedIteration(iteration: Int, list: List<Cell>) {
+        activity?.runOnUiThread {
+            shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
+            shape_view?.invalidate()
         }
     }
 
