@@ -20,8 +20,8 @@ class OperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
 
 
     override fun <T : ConfigNode> bind(node: T) {
+        super.bind(node)
         val n = node as OperationConfigNode
-        boundNode = n
 
         label.showLabel(n.label)
         operatorText.text = n.operator.symbol

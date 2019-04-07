@@ -20,21 +20,53 @@ import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.viewVisibility
 
-class ConfigUiState(val fragment: CoreConfigFragment) {
+class ConfigUiState(
+    val fragment: CoreConfigFragment,
+    private var isCreateGroupOperationState: Boolean = false,
+    private var isCreateOperationState: Boolean = false
+) {
 
     private var isFabMenuExpanded = false
-    private var isAddOperationState = false
 
     private val constraintOriginalState = ConstraintSet().apply {
         clone(fragment.context, R.layout.fragment_core_config)
     }
 
-    private val constraintEditOperation = ConstraintSet().apply {
+    private val constraintCreateGroupOperation = ConstraintSet().apply {
         clone(fragment.context, R.layout.fragment_core_config)
         connect(
             R.id.grid_background, ConstraintSet.BOTTOM,
             ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM
         )
+    }
+
+    private val constraintCreateConfigNode = ConstraintSet().apply {
+        clone(fragment.context, R.layout.fragment_core_config)
+        connect(
+            R.id.grid_background, ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID, ConstraintSet.TOP
+        )
+        connect(
+            R.id.list_empty_switcher, ConstraintSet.TOP,
+            ConstraintSet.PARENT_ID, ConstraintSet.TOP
+        )
+        connect(
+            R.id.list_empty_switcher, ConstraintSet.BOTTOM,
+            R.id.inline_create_operator_controls, ConstraintSet.TOP
+        )
+
+        connect(
+            R.id.ancestor_grid, ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID, ConstraintSet.TOP, 10
+        )
+        clear(R.id.ancestor_grid, ConstraintSet.TOP)
+
+        connect(
+            R.id.inline_create_operator_controls, ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM
+        )
+
+        clear(R.id.inline_create_operator_controls, ConstraintSet.TOP)
     }
 
     private val constraintFabCollapsed = ConstraintSet().apply {
@@ -76,11 +108,11 @@ class ConfigUiState(val fragment: CoreConfigFragment) {
         )
     }
 
-    fun updateNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
+    fun updateGroupNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
 
         val duration = resources.getInteger(R.integer.animation_ms_long).toLong()
 
-        if (hasSelectedTile && !isAddOperationState) {
+        if (hasSelectedTile && !isCreateGroupOperationState) {
             val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
             val started = startCreateGroupOperationNodeFragment()
             if (started) animateCreateNodeDialog(create_node_frame, translateAnim) // TODO, fix
@@ -90,19 +122,42 @@ class ConfigUiState(val fragment: CoreConfigFragment) {
             transition.interpolator = FastOutSlowInInterpolator()
             transition.duration = duration
             TransitionManager.beginDelayedTransition(fragment_layout, transition)
-            constraintEditOperation.applyTo(fragment_layout)
+            constraintCreateGroupOperation.applyTo(fragment_layout)
 
-        } else if (!hasSelectedTile && isAddOperationState) {
+        } else if (!hasSelectedTile && isCreateGroupOperationState) {
 
             AnimatorInflater.loadAnimator(context, R.animator.grid_unfocus).apply { setTarget(ancestor_grid) }.start()
-            val transition = ChangeBounds()
-            transition.duration = duration
-            transition.interpolator = FastOutSlowInInterpolator()
-            TransitionManager.beginDelayedTransition(fragment_layout, transition)
-            constraintOriginalState.applyTo(fragment_layout)
+            returnToOriginalState(duration)
         }
 
-        isAddOperationState = hasSelectedTile
+        isCreateGroupOperationState = hasSelectedTile
+    }
+
+    fun updateNodeCreationMode(hasSelectedNode: Boolean) = fragment.apply {
+
+        val duration = resources.getInteger(R.integer.animation_ms_long).toLong()
+
+        if (hasSelectedNode && !isCreateOperationState) {
+
+            val transition = ChangeBounds()
+            transition.interpolator = FastOutSlowInInterpolator()
+            transition.duration = duration
+            TransitionManager.beginDelayedTransition(fragment_layout, transition)
+            constraintCreateConfigNode.applyTo(fragment_layout)
+
+        } else if (!hasSelectedNode && isCreateOperationState) {
+            returnToOriginalState(duration)
+        }
+
+        isCreateOperationState = hasSelectedNode
+    }
+
+    private fun CoreConfigFragment.returnToOriginalState(duration: Long) {
+        val transition = ChangeBounds()
+        transition.duration = duration
+        transition.interpolator = FastOutSlowInInterpolator()
+        TransitionManager.beginDelayedTransition(fragment_layout, transition)
+        constraintOriginalState.applyTo(fragment_layout)
     }
 
     fun showDim() = fragment.apply { fadeComponent(dimming_overlay, true) }

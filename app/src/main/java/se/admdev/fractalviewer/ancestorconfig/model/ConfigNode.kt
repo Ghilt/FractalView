@@ -7,7 +7,8 @@ import se.admdev.fractalviewer.canvas.model.Coord
 
 @Parcelize
 open class ConfigNode(
-    val label: Char
+    val label: Char,
+    var selected: Boolean = false
 ) : Parcelable {
 
     open fun compile(nodes: List<ConfigNode>): ((Coord, List<Cell>) -> Int) = { _, _ -> 0}

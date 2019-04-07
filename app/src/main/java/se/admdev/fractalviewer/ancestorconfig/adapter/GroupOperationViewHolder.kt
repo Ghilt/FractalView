@@ -20,8 +20,8 @@ class GroupOperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) 
     private var adapter: AncestorTileAdapter? = null
 
     override fun <T : ConfigNode> bind(node: T) {
+        super.bind(node)
         val n = node as GroupOperationConfigNode
-        boundNode = n
 
         label.showLabel(n.label)
 

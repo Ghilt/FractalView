@@ -9,6 +9,10 @@ import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 class ConfigurationListAdapter(private val listener: ((ConfigNode, Boolean) -> Unit)) :
     RecyclerView.Adapter<ConfigNodeViewHolder>() {
 
+    init {
+        setHasStableIds(true)
+    }
+
     private var data = listOf<ConfigNode>()
 
     override fun getItemViewType(position: Int): Int {
@@ -25,6 +29,10 @@ class ConfigurationListAdapter(private val listener: ((ConfigNode, Boolean) -> U
     override fun getItemCount() = data.size
     override fun onBindViewHolder(view: ConfigNodeViewHolder, pos: Int) {
         view.bind(data[pos])
+    }
+
+    override fun getItemId(position: Int): Long {
+        return data[position].label.toLong()
     }
 
     fun setDataSet(items: List<ConfigNode>) {

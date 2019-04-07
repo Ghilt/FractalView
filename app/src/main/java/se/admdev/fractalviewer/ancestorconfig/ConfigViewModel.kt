@@ -76,6 +76,8 @@ class ConfigViewModel : ViewModel() {
         CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor()) }
     }
 
+    fun hasSelectedConfigNode() = configNodes.value?.any { it.selected } ?: false
+
     fun saveNewOperationNode(firstOperand: Operand?, operator: Operator?, secondOperand: Operand?): Boolean {
         return if (firstOperand != null && operator != null && secondOperand != null) {
             configNodes.addItem(

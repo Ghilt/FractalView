@@ -13,7 +13,10 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     var boundNode: ConfigNode? = null
 
     //Trying out this pattern to get rid of 'when' structure with view type in adapter bind
-    abstract fun <T : ConfigNode> bind(node: T)
+    open fun <T : ConfigNode> bind(node: T) {
+        boundNode = node
+        itemView.isSelected = node.selected
+    }
 
     companion object {
         fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean) -> Unit)): ConfigNodeViewHolder {
@@ -29,7 +32,10 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
                     boundNode?.let { listener.invoke(it, false) }
                 }
                 itemView.setOnLongClickListener {
-                    boundNode?.let { listener.invoke(it, true) }
+                    boundNode?.let {
+                        it.selected = !it.selected
+                        listener.invoke(it, true)
+                    }
                     itemView.isSelected = !itemView.isSelected
                     true
                 }

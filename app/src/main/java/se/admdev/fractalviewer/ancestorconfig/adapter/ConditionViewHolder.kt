@@ -19,8 +19,8 @@ class ConditionViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
     private val operandFalse: TextView = itemView.operand_false_text
 
     override fun <T : ConfigNode> bind(node: T) {
+        super.bind(node)
         val n = node as ConditionalConfigNode
-        boundNode = n
 
         label.showLabel(n.label)
         operandCondition.showLabel(n.operandCondition.label)

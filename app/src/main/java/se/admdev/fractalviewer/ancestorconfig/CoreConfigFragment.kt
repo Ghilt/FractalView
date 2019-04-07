@@ -30,7 +30,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        uiState = ConfigUiState(this)
         ancestorAdapter = AncestorTileAdapter()
         listAdapter = ConfigurationListAdapter(this::onConfigNodeClicked)
 
@@ -44,6 +43,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             showList(items.isNotEmpty())
             minus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             plus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
+            uiState.updateNodeCreationMode(model.hasSelectedConfigNode())
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
@@ -52,7 +52,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             ancestor_grid.gridLayoutManager.spanCount = model.ancestorTileDimension
             ancestorAdapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
             ancestorAdapter.notifyDataSetChanged()
-            updateNodeCreationMode()
+            uiState.updateGroupNodeCreationMode(model.hasSelectedTile())
         })
     }
 
@@ -82,6 +82,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.ancestorTiles.triggerObserver()
 
         node_list.adapter = listAdapter
+        model.configNodes.triggerObserver()
+
 
         plus_grid_size_button.setOnClickListener {
             model.increaseAncestorTiles()
@@ -108,6 +110,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         grid_background.setOnClickListener { /*Prevent click through*/ }
 
         setupFabButtons()
+
+        uiState = ConfigUiState(this)
+
     }
 
     private fun setupFabButtons() {
@@ -136,18 +141,14 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean) {
         if (longClick) {
-            // TODO
+            model.configNodes.triggerObserver()
         } else {
             val action = CoreConfigFragmentDirections.showFractal().apply {
-                ancestorCore = AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+                ancestorCore =
+                    AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
             }
             view?.let { Navigation.findNavController(it).navigate(action) }
         }
-    }
-
-    private fun updateNodeCreationMode() {
-        val selectedTiles = model.hasSelectedTile()
-        uiState.updateNodeCreationMode(selectedTiles)
     }
 
     fun startCreateGroupOperationNodeFragment(): Boolean {
