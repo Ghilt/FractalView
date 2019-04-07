@@ -73,7 +73,7 @@ class ConfigViewModel : ViewModel() {
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
     private fun getAvailableOperands() = configNodes.value?.map {
         val name = it.label.toString()
-        CompactPickerItem(Operand(name, it.label), name) { this.setBackgroundColor(it.label.getLabelColor()) }
+        CompactPickerItem(Operand(it), name) { this.setBackgroundColor(it.label.getLabelColor()) }
     }
 
     fun hasSelectedConfigNode() = configNodes.value?.any { it.selected } ?: false

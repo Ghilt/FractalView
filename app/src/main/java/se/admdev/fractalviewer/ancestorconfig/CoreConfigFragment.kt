@@ -19,6 +19,7 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
+import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import se.admdev.fractalviewer.gridLayoutManager
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
@@ -142,6 +143,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean) {
         if (longClick) {
             model.configNodes.triggerObserver()
+            inline_create_operator_controls.addOperand(Operand(node))
         } else {
             val action = CoreConfigFragmentDirections.showFractal().apply {
                 ancestorCore =

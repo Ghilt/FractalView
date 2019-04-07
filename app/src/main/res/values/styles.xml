@@ -43,4 +43,11 @@
         <item name="android:background">@drawable/rounded_card</item>
     </style>
 
+    <style name="InlineCreateConfigNodeView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/ancestor_gradient_anim</item>
+    </style>
+
 </resources>
