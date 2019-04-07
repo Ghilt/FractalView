@@ -134,11 +134,15 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.ancestorTiles.triggerObserver()
     }
 
-    private fun onConfigNodeClicked(node: ConfigNode) {
-        val action = CoreConfigFragmentDirections.showFractal().apply {
-            ancestorCore = AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+    private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean) {
+        if (longClick) {
+            // TODO
+        } else {
+            val action = CoreConfigFragmentDirections.showFractal().apply {
+                ancestorCore = AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+            }
+            view?.let { Navigation.findNavController(it).navigate(action) }
         }
-        view?.let { Navigation.findNavController(it).navigate(action) }
     }
 
     private fun updateNodeCreationMode() {

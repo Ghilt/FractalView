@@ -6,7 +6,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 
-class ConfigurationListAdapter(private val listener: ((ConfigNode) -> Unit)) :
+class ConfigurationListAdapter(private val listener: ((ConfigNode, Boolean) -> Unit)) :
     RecyclerView.Adapter<BindableViewHolder>() {
 
     private var data = listOf<ConfigNode>()
