@@ -7,7 +7,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 
 class ConfigurationListAdapter(private val listener: ((ConfigNode, Boolean) -> Unit)) :
-    RecyclerView.Adapter<BindableViewHolder>() {
+    RecyclerView.Adapter<ConfigNodeViewHolder>() {
 
     private var data = listOf<ConfigNode>()
 
@@ -19,11 +19,11 @@ class ConfigurationListAdapter(private val listener: ((ConfigNode, Boolean) -> U
         }
     }
 
-    override fun onCreateViewHolder(view: ViewGroup, type: Int): BindableViewHolder =
-        BindableViewHolder.create(view, type, listener)
+    override fun onCreateViewHolder(view: ViewGroup, type: Int): ConfigNodeViewHolder =
+        ConfigNodeViewHolder.create(view, type, listener)
 
     override fun getItemCount() = data.size
-    override fun onBindViewHolder(view: BindableViewHolder, pos: Int) {
+    override fun onBindViewHolder(view: ConfigNodeViewHolder, pos: Int) {
         view.bind(data[pos])
     }
 

@@ -11,7 +11,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.getDarkTintColorStateList
 import se.admdev.fractalviewer.showLabel
 
-class ConditionViewHolder(itemView: View) : BindableViewHolder(itemView) {
+class ConditionViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
 
     private val label: TextView = itemView.label
     private val operandCondition: TextView = itemView.operand_condition_text
@@ -45,7 +45,7 @@ class ConditionViewHolder(itemView: View) : BindableViewHolder(itemView) {
         private const val LAYOUT = R.layout.list_item_condition_node
 
         @JvmStatic
-        fun create(parent: ViewGroup): BindableViewHolder {
+        fun create(parent: ViewGroup): ConfigNodeViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return ConditionViewHolder(view)
         }

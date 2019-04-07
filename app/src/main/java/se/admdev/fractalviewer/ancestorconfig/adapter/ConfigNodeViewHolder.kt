@@ -8,7 +8,7 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter.C
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter.Companion.VIEW_TYPE_OPERATION
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
-abstract class BindableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var boundNode: ConfigNode? = null
 
@@ -16,12 +16,12 @@ abstract class BindableViewHolder(itemView: View) : RecyclerView.ViewHolder(item
     abstract fun <T : ConfigNode> bind(node: T)
 
     companion object {
-        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean) -> Unit)): BindableViewHolder {
+        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean) -> Unit)): ConfigNodeViewHolder {
             return when (type) {
                 VIEW_TYPE_OPERATION -> OperationViewHolder.create(parent)
                 VIEW_TYPE_GROUP_OPERATION -> GroupOperationViewHolder.create(parent)
                 VIEW_TYPE_CONDITION -> ConditionViewHolder.create(parent)
-                else -> object : BindableViewHolder(parent) {
+                else -> object : ConfigNodeViewHolder(parent) {
                     override fun <T : ConfigNode> bind(node: T) {}
                 }
             }.apply {

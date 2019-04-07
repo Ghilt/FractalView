@@ -10,7 +10,7 @@ import se.admdev.fractalviewer.*
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 
-class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
+class GroupOperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
 
     private val label: TextView = itemView.label
     private val groupOperatorText: TextView = itemView.group_operator_text
@@ -51,7 +51,7 @@ class GroupOperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
         private const val LAYOUT = R.layout.list_item_group_operation_node
 
         @JvmStatic
-        fun create(parent: ViewGroup): BindableViewHolder {
+        fun create(parent: ViewGroup): ConfigNodeViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return GroupOperationViewHolder(view).apply {
                 adapter = AncestorTileAdapter()

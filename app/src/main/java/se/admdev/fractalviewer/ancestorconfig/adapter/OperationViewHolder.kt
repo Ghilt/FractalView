@@ -11,7 +11,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.OperationConfigNode
 import se.admdev.fractalviewer.getDarkTintColorStateList
 import se.admdev.fractalviewer.showLabel
 
-class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
+class OperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
 
     private val label: TextView = itemView.label
     private val firstOperandText: TextView = itemView.first_operand_text
@@ -46,7 +46,7 @@ class OperationViewHolder(itemView: View) : BindableViewHolder(itemView) {
         private const val LAYOUT = R.layout.list_item_operation_node
 
         @JvmStatic
-        fun create(parent: ViewGroup): BindableViewHolder {
+        fun create(parent: ViewGroup): ConfigNodeViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return OperationViewHolder(view)
         }
