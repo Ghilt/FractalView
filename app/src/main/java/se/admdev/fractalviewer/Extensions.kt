@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import kotlin.math.ceil
 import kotlin.random.Random
 
@@ -48,6 +49,13 @@ fun getDarkTintColorStateList(v: View): ColorStateList = v.resources.getColorSta
 
 fun TextView.showLabel(label: Char?) {
     label?.let {
+        text = it.toString()
+        backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
+    }
+}
+
+fun Button.showLabel(op: Operand?) {
+    op?.label?.let {
         text = it.toString()
         backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
     }

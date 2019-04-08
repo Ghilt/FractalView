@@ -18,6 +18,22 @@ class ConfigViewModel : ViewModel() {
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
 
+    init {
+
+        //TODO TEMP DEBUG data initiation
+        repeat(7) {
+            configNodes.addItem(
+                GroupOperationConfigNode(
+                    getNextNodeLabel(),
+                    GroupOperator.SUM,
+                    getTileSnapshot(),
+                    null,
+                    null
+                )
+            )
+        }
+    }
+
     private fun calculateAncestorTiles(
         newSize: Int,
         oldGrid: List<List<AncestorTile>>? = null
@@ -125,6 +141,11 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun isChangeGridSizeEnabled(): Boolean = configNodes.value.isNullOrEmpty()
+
+    fun clearConfigNodeSelection() {
+        configNodes.value?.forEach { it.selected = false }
+        configNodes.triggerObserver()
+    }
 
 }
 

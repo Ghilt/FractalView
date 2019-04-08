@@ -1,26 +1,26 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 import android.content.Context
-import android.os.Bundle
-import android.os.Parcelable
+import android.content.Intent
 import android.util.AttributeSet
+import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.layout_inline_create_config_node.view.*
 import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
-import se.admdev.fractalviewer.setTextIfNotNull
+import se.admdev.fractalviewer.showLabel
 
-
-private const val STATE_SUPER = "super"
-private const val STATE_OP_1 = "op1"
-private const val STATE_OP_2 = "op2"
-private const val STATE_OP_3 = "op3"
+private const val REQUEST_CODE_OPERAND_1 = 0
+private const val REQUEST_CODE_OPERAND_2 = 1
+private const val REQUEST_CODE_OPERAND_3 = 2
 
 class CreateConfigNodeView : ConstraintLayout {
 
-    private var operand1: Operand? = null
-    private var operand2: Operand? = null
-    private var operand3: Operand? = null
+    var parent: CoreConfigFragment? = null
+    private lateinit var operandButtonMap: Map<Int, Button>
+
+    var availableOperands: ArrayList<CompactPickerItem<Operand>> = ArrayList()
 
     constructor(context: Context) : super(context) {
         loadLayout()
@@ -36,54 +36,41 @@ class CreateConfigNodeView : ConstraintLayout {
 
     private fun loadLayout() {
         inflate(context, R.layout.layout_inline_create_config_node, this)
+
+        operandButtonMap = mapOf(
+            REQUEST_CODE_OPERAND_1 to select_operand_1_button,
+            REQUEST_CODE_OPERAND_2 to select_operand_2_button,
+            REQUEST_CODE_OPERAND_3 to select_operand_3_button
+        )
+
+        operandButtonMap.forEach { code, button -> button.setOnClickListener { showPicker(code, true) } }
     }
 
-    fun addOperand(op: Operand) {
-        when (null) {
-            operand1 -> addFirstOperand(op)
-            operand2 -> addSecondOperand(op)
-            operand3 -> addThirdOperand(op)
+    fun updateOperand(op: Operand, add: Boolean) {
+        if (add) {
+            operandButtonMap.values.firstOrNull { it.text.isEmpty() }?.showLabel(op)
+        } else {
+            operandButtonMap.values.firstOrNull { it.text == op.name }?.clearText()
         }
     }
 
-
-    private fun addFirstOperand(op: Operand) {
-        operand1 = op
-        select_operand_1_button.setTextIfNotNull(op.name)
+    private fun showPicker(requestCode: Int, allowFreeFormInput: Boolean = true) = parent?.apply {
+        CompactPickerFragment.newInstance(this, availableOperands, allowFreeFormInput, requestCode)
+            .show(fragmentManager, CompactPickerFragment.TAG)
     }
 
-    private fun addSecondOperand(op: Operand) {
-        operand2 = op
-        select_operand_2_button.setTextIfNotNull(op.name)
+    fun onPickerCompleted(requestCode: Int, data: Intent?) {
+        operandButtonMap[requestCode]?.showLabel(data.getPickerChoice())
     }
 
-    private fun addThirdOperand(op: Operand) {
-        operand3 = op
-        select_operand_3_button.setTextIfNotNull(op.name)
-
-    }
-
-
-    override fun onSaveInstanceState(): Parcelable? {
-        val bundle = Bundle()
-        // TODO No idea why the buttons don't manage to restore their state on their own
-        bundle.putParcelable(STATE_SUPER,super.onSaveInstanceState())
-        bundle.putParcelable(STATE_OP_1, operand1)
-        bundle.putParcelable(STATE_OP_2, operand2)
-        bundle.putParcelable(STATE_OP_3, operand3)
-        return bundle
-    }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state is Bundle) {
-            super.onRestoreInstanceState(state.getParcelable(STATE_SUPER))
-            val op1: Operand? = state.getParcelable(STATE_OP_1)
-            val op2: Operand? = state.getParcelable(STATE_OP_2)
-            val op3: Operand? = state.getParcelable(STATE_OP_3)
-            op1?.let {addFirstOperand(it)}
-            op2?.let {addSecondOperand(it)}
-            op3?.let {addThirdOperand(it)}
-
+    fun setOnCloseClickListener(function: () -> Unit) {
+        clear_button.setOnClickListener {
+            operandButtonMap.values.forEach { it.clearText() }
+            function.invoke()
         }
     }
+}
+
+private fun Button.clearText() {
+    text = ""
 }

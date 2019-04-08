@@ -84,16 +84,6 @@ class CreateConditionNodeFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (isAdded) {
-            when (requestCode) {
-                REQUEST_CODE_CONDITIONAL_OPERAND -> creationData.newCondition.value = data.getPickerChoice()
-                REQUEST_CODE_TRUTH_OPERAND -> creationData.newConditionTrue.value = data.getPickerChoice()
-                REQUEST_CODE_FALSE_OPERAND -> creationData.newConditionFalse.value = data.getPickerChoice()
-            }
-        }
-    }
 
     private fun showPicker(requestCode: Int, allowFreeFormInput: Boolean = true) {
         val data = model.getAvailableOperandsArrayList()

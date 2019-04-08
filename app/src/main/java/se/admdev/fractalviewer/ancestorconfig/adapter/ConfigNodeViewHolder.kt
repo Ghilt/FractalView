@@ -19,7 +19,7 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     }
 
     companion object {
-        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean) -> Unit)): ConfigNodeViewHolder {
+        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean, Boolean) -> Unit)): ConfigNodeViewHolder {
             return when (type) {
                 VIEW_TYPE_OPERATION -> OperationViewHolder.create(parent)
                 VIEW_TYPE_GROUP_OPERATION -> GroupOperationViewHolder.create(parent)
@@ -29,14 +29,14 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
                 }
             }.apply {
                 itemView.setOnClickListener {
-                    boundNode?.let { listener.invoke(it, false) }
+                    boundNode?.let { listener.invoke(it, false, false) }
                 }
                 itemView.setOnLongClickListener {
-                    boundNode?.let {
-                        it.selected = !it.selected
-                        listener.invoke(it, true)
-                    }
                     itemView.isSelected = !itemView.isSelected
+                    boundNode?.let {
+                        it.selected = itemView.isSelected
+                        listener.invoke(it, true, itemView.isSelected)
+                    }
                     true
                 }
             }

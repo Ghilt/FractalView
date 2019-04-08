@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,6 +46,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             minus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             plus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             uiState.updateNodeCreationMode(model.hasSelectedConfigNode())
+            inline_create_operator_controls.availableOperands = model.getAvailableOperandsArrayList()
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
@@ -114,6 +116,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         uiState = ConfigUiState(this)
 
+        inline_create_operator_controls.parent = this
+        inline_create_operator_controls.setOnCloseClickListener{
+            model.clearConfigNodeSelection()
+        }
     }
 
     private fun setupFabButtons() {
@@ -140,10 +146,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.ancestorTiles.triggerObserver()
     }
 
-    private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean) {
+    private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean, selected: Boolean) {
         if (longClick) {
             model.configNodes.triggerObserver()
-            inline_create_operator_controls.addOperand(Operand(node))
+            inline_create_operator_controls.updateOperand(Operand(node), selected)
         } else {
             val action = CoreConfigFragmentDirections.showFractal().apply {
                 ancestorCore =
@@ -207,6 +213,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun isCreateConditionNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateConditionNodeFragment.TAG) != null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (isAdded ) inline_create_operator_controls?.onPickerCompleted(requestCode, data)
+    }
 
     companion object {
 
