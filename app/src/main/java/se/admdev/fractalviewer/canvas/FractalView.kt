@@ -45,7 +45,7 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
             path.moveTo(midPointX, midPointY)
-//            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
+            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
         }
     }
 
@@ -60,11 +60,17 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             touchData.posX * 1 / scaleFactor,
             touchData.posY * 1 / scaleFactor
         ) // scale translation inversely to maintain reasonable panning distance
+
+        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
+
+
         canvas.drawPath(path, paint)
 
         list.forEach { canvas.drawRect(it, paint) }
 
         canvas.restore()
+        path.addRect(300f, 300f, 450f, 400f, Path.Direction.CCW)
+
     }
 
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
@@ -75,6 +81,14 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     fun addRectTemp(iterationAsRectangles: List<RectF>) {
         list.addAll(iterationAsRectangles)
+    }
+
+    fun addRectTemp2() {
+        path.addRect(500f, 500f, 700f, 700f, Path.Direction.CCW)
+    }
+
+    fun addPathUpdate(pathUpdate: (Path) -> Unit) {
+        pathUpdate.invoke(path)
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {

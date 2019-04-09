@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.canvas.model
 
+import se.admdev.fractalviewer.canvas.CellularFractalArtist
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.ScheduledThreadPoolExecutor
@@ -9,6 +10,7 @@ class ThreadManager(
     private val generator: FractalGenerator,
     listener: (Int, List<Cell>) -> Unit
 ) {
+//    private val artist = CellularFractalArtist()
     private val threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
 
     private val periodicTask = Runnable {
@@ -36,5 +38,4 @@ class ThreadManager(
         future = null
         threadPool.shutdown()
     }
-
 }

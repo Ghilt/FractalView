@@ -83,10 +83,9 @@ class FractalCanvasFragment : Fragment() {
     }
 
     private fun onGeneratedIteration(iteration: Int, list: List<Cell>) {
-        Log.d("spx", "$iteration genned ${list.size}")
-
         activity?.runOnUiThread {
-            shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
+//            shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
+            shape_view?.addPathUpdate(CellularFractalArtist().getIterationAsPathUpdate(iteration, list))
             shape_view?.invalidate()
         }
     }
