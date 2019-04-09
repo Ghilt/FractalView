@@ -3,6 +3,7 @@ package se.admdev.fractalviewer.canvas
 import androidx.fragment.app.Fragment
 import android.graphics.Path
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,16 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.canvas.model.Cell
 import se.admdev.fractalviewer.canvas.model.DragonCurve
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
+import se.admdev.fractalviewer.canvas.model.ThreadManager
 import java.lang.Exception
+
 
 class FractalCanvasFragment : Fragment() {
 
     var currentIteration = 0
     var ancestorCore: AncestorCore? = null
     lateinit var generator: FractalGenerator
+    private lateinit var workManager: ThreadManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_fractal_canvas, container, false)
@@ -41,8 +45,9 @@ class FractalCanvasFragment : Fragment() {
             generator = if (core == null){
                 throw Exception("Error: No ancestor core for FractalCanvasFragment")
             } else {
-                FractalGenerator(core, ::onGeneratedIteration)
+                FractalGenerator(core)
             }
+            workManager = ThreadManager(generator, ::onGeneratedIteration)
             ancestorCore = core
         }
 
@@ -58,7 +63,9 @@ class FractalCanvasFragment : Fragment() {
 //            val newEnd = curve.getDirectionAt(currentIteration)
 //            path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
 //            currentIteration++
-            generator.toggleGenerationThread()
+            workManager.toggleGenerationThread()
+
+//            generator.toggleGenerationThread()
 //            generator.generateNextIteration()
 //            testPanView.invalidate()
 //
@@ -70,7 +77,14 @@ class FractalCanvasFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        workManager.stopWork()
+    }
+
     private fun onGeneratedIteration(iteration: Int, list: List<Cell>) {
+        Log.d("spx", "$iteration genned ${list.size}")
+
         activity?.runOnUiThread {
             shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
             shape_view?.invalidate()

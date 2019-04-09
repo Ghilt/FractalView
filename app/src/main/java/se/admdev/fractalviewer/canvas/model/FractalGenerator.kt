@@ -5,11 +5,8 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import kotlin.math.absoluteValue
 
 
-class FractalGenerator(val core: AncestorCore, val listener: (Int, List<Cell>) -> Unit) {
-
+class FractalGenerator(private val core: AncestorCore) {
     private val frac = mutableMapOf<Int, List<Cell>>()
-    private var threadActive = false
-    private var currentThread: Thread? = null
 
     init {
         //todo, get starting seed from core?
@@ -138,31 +135,5 @@ class FractalGenerator(val core: AncestorCore, val listener: (Int, List<Cell>) -
 
     fun getLastIteration(): List<Cell> {
         return frac[iterationsCompleted - 1] ?: listOf()
-    }
-
-    fun toggleGenerationThread() {
-        threadActive = !threadActive
-        if (threadActive && currentThread == null) {
-            startThreadForNextIteration()
-        }
-
-    }
-
-    private fun startThreadForNextIteration() {
-        if (currentThread == null) {
-            currentThread = createWorkThread().apply { start() }
-        }
-    }
-
-    private fun createWorkThread(): Thread {
-        return Thread {
-            generateNextIteration()
-            listener.invoke(iterationsCompleted - 1, getLastIteration())
-            currentThread = null
-
-            if (threadActive) {
-                startThreadForNextIteration()
-            }
-        }
     }
 }
