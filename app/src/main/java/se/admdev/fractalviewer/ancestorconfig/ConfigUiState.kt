@@ -113,9 +113,13 @@ class ConfigUiState(
         val duration = resources.getInteger(R.integer.animation_ms_long).toLong()
 
         if (hasSelectedTile && !isCreateGroupOperationState) {
-            val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
+
+            val translateAnim = AnimationUtils.loadAnimation(context, R.anim.group_operator_dialog_reveal)
+            translateAnim.interpolator = FastOutSlowInInterpolator()
             val started = startCreateGroupOperationNodeFragment()
-            if (started) animateCreateNodeDialog(create_node_frame, translateAnim) // TODO, fix
+
+            childFragmentManager.executePendingTransactions() // without this line the fragment is not animated with the line bellow
+            if (started) animateGroupNodeDialog(create_node_frame, translateAnim)
 
             AnimatorInflater.loadAnimator(context, R.animator.grid_focus).apply { setTarget(ancestor_grid) }.start()
             val transition = ChangeBounds()
@@ -125,7 +129,6 @@ class ConfigUiState(
             constraintCreateGroupOperation.applyTo(fragment_layout)
 
         } else if (!hasSelectedTile && isCreateGroupOperationState) {
-
             AnimatorInflater.loadAnimator(context, R.animator.grid_unfocus).apply { setTarget(ancestor_grid) }.start()
             returnToOriginalState(duration)
         }
@@ -188,7 +191,18 @@ class ConfigUiState(
 
     fun showRevealAnimationCreationFragment() = fragment.apply {
         val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
+        translateAnim.interpolator = FastOutSlowInInterpolator()
         animateCreateNodeDialog(create_node_frame, translateAnim)
+    }
+
+    private fun animateGroupNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
+        frame.startAnimation(translateAnim)
+        ViewAnimationUtils.createCircularReveal(
+            frame, frame.width / 2, frame.height / 3, 60f,
+            frame.height.toFloat()
+        ).apply {
+            duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
+        }.start()
     }
 
     private fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
