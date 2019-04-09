@@ -1,22 +1,19 @@
 package se.admdev.fractalviewer.canvas
 
-import androidx.fragment.app.Fragment
 import android.graphics.Path
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
-import se.admdev.fractalviewer.canvas.model.Cell
 import se.admdev.fractalviewer.canvas.model.DragonCurve
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
-import java.lang.Exception
 
 
 class FractalCanvasFragment : Fragment() {
@@ -42,7 +39,7 @@ class FractalCanvasFragment : Fragment() {
         arguments?.let {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
 
-            generator = if (core == null){
+            generator = if (core == null) {
                 throw Exception("Error: No ancestor core for FractalCanvasFragment")
             } else {
                 FractalGenerator(core)
@@ -82,10 +79,10 @@ class FractalCanvasFragment : Fragment() {
         workManager.stopWork()
     }
 
-    private fun onGeneratedIteration(iteration: Int, list: List<Cell>) {
+    private fun onGeneratedIteration(pathUpdate: (Path) -> Unit) {
         activity?.runOnUiThread {
-//            shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
-            shape_view?.addPathUpdate(CellularFractalArtist().getIterationAsPathUpdate(iteration, list))
+            // shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
+            shape_view?.addPathUpdate(pathUpdate)
             shape_view?.invalidate()
         }
     }
