@@ -33,8 +33,8 @@ class FractalCanvasFragment : Fragment() {
         val curve = DragonCurve()
 
         val testPanView: FractalView = shape_view
-        val path = Path()
-        testPanView.path = path
+//        val path = Path()
+//        testPanView.path = path
 
         arguments?.let {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
@@ -79,7 +79,7 @@ class FractalCanvasFragment : Fragment() {
         workManager.stopWork()
     }
 
-    private fun onGeneratedIteration(pathUpdate: (Path) -> Unit) {
+    private fun onGeneratedIteration(pathUpdate: (List<Path>) -> Unit) {
         activity?.runOnUiThread {
             // shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
             shape_view?.addPathUpdate(pathUpdate)

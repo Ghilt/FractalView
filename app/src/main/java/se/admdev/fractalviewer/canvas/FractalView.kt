@@ -7,12 +7,23 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 
-
+// TODO experimental drawing class
 class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     val list: MutableList<RectF> = mutableListOf()
 
-    var path = Path()
+    val tempSize = 5
+
+    var paths: List<Path> = List(tempSize) { Path() }
+    var paints: List<Paint> = List(tempSize) { i ->
+        Paint().apply {
+            isAntiAlias = false // still get blurry when zooming
+            style = Paint.Style.FILL
+            alpha = 255
+            strokeWidth = 2.toFloat()
+            color = Color.argb(1f, i/tempSize.toFloat() , i/tempSize.toFloat(), i/tempSize.toFloat())
+        }
+    }
 
     private val paint: Paint
     private var scaleFactor = 1f
@@ -44,8 +55,8 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         post {
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
-            path.moveTo(midPointX, midPointY)
-            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
+//            path.moveTo(midPointX, midPointY)
+//            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
         }
     }
 
@@ -61,15 +72,15 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             touchData.posY * 1 / scaleFactor
         ) // scale translation inversely to maintain reasonable panning distance
 
-        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
+//        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
 
-
-        canvas.drawPath(path, paint)
+        paths.forEachIndexed { i, path -> canvas.drawPath(path, paints[i])}
+//        canvas.drawPath(path, paint)
 
         list.forEach { canvas.drawRect(it, paint) }
 
         canvas.restore()
-        path.addRect(300f, 300f, 450f, 400f, Path.Direction.CCW)
+//        path.addRect(300f, 300f, 450f, 400f, Path.Direction.CCW)
 
     }
 
@@ -83,12 +94,8 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         list.addAll(iterationAsRectangles)
     }
 
-    fun addRectTemp2() {
-        path.addRect(500f, 500f, 700f, 700f, Path.Direction.CCW)
-    }
-
-    fun addPathUpdate(pathUpdate: (Path) -> Unit) {
-        pathUpdate.invoke(path)
+    fun addPathUpdate(pathUpdate: (List<Path>) -> Unit) {
+        pathUpdate.invoke(paths)
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {

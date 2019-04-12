@@ -15,10 +15,16 @@ class CellularFractalArtist {
             .map { i -> RectF(i.position.x * cellSize, top, (i.position.x + 1) * cellSize, bottom) }
     }
 
-    fun getIterationAsPathUpdate(iteration: Int, cells: List<Cell>): (Path) -> Unit {
-        val rectangles = getIterationAsRectangles(iteration, cells)
-        return { path ->
-            rectangles.forEach { path.addRect(it, Path.Direction.CCW) }
+    fun getIterationAsPathUpdate(iteration: Int, cells: List<Cell>): (List<Path>) -> Unit {
+        val top = cellSize * iteration
+        val bottom = cellSize * (iteration + 1)
+        val cellsSplit = (1..5).map { i -> cells.filter { it.value == i } }
+        return { paths ->
+            paths.forEachIndexed { i, path ->
+                cellsSplit[i].forEach { c ->
+                    path.addRect(c.position.x * cellSize, top, (c.position.x + 1) * cellSize, bottom, Path.Direction.CCW)
+                }
+            }
         }
     }
 }
