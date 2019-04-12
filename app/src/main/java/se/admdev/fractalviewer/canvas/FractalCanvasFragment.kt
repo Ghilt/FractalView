@@ -79,10 +79,10 @@ class FractalCanvasFragment : Fragment() {
         workManager.stopWork()
     }
 
-    private fun onGeneratedIteration(pathUpdate: (List<Path>) -> Unit) {
+    private fun onGeneratedIteration(pathUpdate: List<Path>) {
         activity?.runOnUiThread {
             // shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
-            shape_view?.addPathUpdate(pathUpdate)
+            shape_view?.addPaths(pathUpdate)
             shape_view?.invalidate()
         }
     }

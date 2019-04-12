@@ -14,14 +14,14 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     val tempSize = 5
 
-    var paths: List<Path> = List(tempSize) { Path() }
+    var paths: MutableList<List<Path>> = mutableListOf()
     var paints: List<Paint> = List(tempSize) { i ->
         Paint().apply {
             isAntiAlias = false // still get blurry when zooming
             style = Paint.Style.FILL
             alpha = 255
             strokeWidth = 2.toFloat()
-            color = Color.argb(1f, i/tempSize.toFloat() , i/tempSize.toFloat(), i/tempSize.toFloat())
+            color = Color.argb(1f, i / tempSize.toFloat(), i / tempSize.toFloat(), i / tempSize.toFloat())
         }
     }
 
@@ -74,7 +74,7 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
 //        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
 
-        paths.forEachIndexed { i, path -> canvas.drawPath(path, paints[i])}
+        paths.forEach { it.forEachIndexed { i, path -> canvas.drawPath(path, paints[i]) } }
 //        canvas.drawPath(path, paint)
 
         list.forEach { canvas.drawRect(it, paint) }
@@ -94,8 +94,13 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         list.addAll(iterationAsRectangles)
     }
 
-    fun addPathUpdate(pathUpdate: (List<Path>) -> Unit) {
-        pathUpdate.invoke(paths)
+// When I had one giant path for entire fractal which lagged more than splitting it to one path per iteration
+//    fun addPathUpdate(pathUpdate: (List<Path>) -> Unit) {
+//        pathUpdate.invoke(paths)
+//    }
+
+    fun addPaths(newIterationPaths: List<Path>) {
+        paths.add(newIterationPaths)
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {

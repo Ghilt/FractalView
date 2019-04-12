@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class ThreadManager(
     private val generator: FractalGenerator,
-    listener: ((List<Path>) -> Unit) -> Unit
+    listener: (List<Path>) -> Unit
 ) {
     private val artist = CellularFractalArtist()
     private val threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
@@ -17,7 +17,7 @@ class ThreadManager(
     private val periodicTask = Runnable {
         try {
             generator.generateNextIteration()
-            val update = artist.getIterationAsPathUpdate(generator.iterationsCompleted - 1, generator.getLastIteration())
+            val update = artist.getIterationAsPaths(generator.iterationsCompleted - 1, generator.getLastIteration())
             listener(update)
         } catch (e: Exception) {
 
