@@ -1,12 +1,10 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -71,14 +69,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val animDrawable = grid_background.background as AnimationDrawable
-        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
-        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
-        animDrawable.start()
-
-        list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-        list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-
         ancestorAdapter.containerSize = resources.getDimension(R.dimen.grid_size)
         ancestorAdapter.listener = this
         ancestor_grid.adapter = ancestorAdapter
@@ -114,12 +104,13 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         setupFabButtons()
 
-        uiState = ConfigUiState(this)
-
         inline_create_operator_controls.parent = this
-        inline_create_operator_controls.setOnCloseClickListener{
+        inline_create_operator_controls.setOnCloseClickListener {
             model.clearConfigNodeSelection()
         }
+
+        uiState = ConfigUiState(this)
+        uiState.onViewCreated()
     }
 
     private fun setupFabButtons() {
@@ -217,7 +208,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (isAdded ){
+        if (isAdded) {
             inline_create_operator_controls?.onPickerCompleted(requestCode, data)?.let {
                 model.changeConfigNodeSelection(it)
             }

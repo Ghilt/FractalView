@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.AnimationDrawable
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -187,6 +188,22 @@ class ConfigUiState(
             d.start()
         }
 
+    }
+
+    fun onViewCreated() = fragment.apply {
+        val gridBackground = grid_background.background as AnimationDrawable
+        startBackgroundAnimation(gridBackground)
+        val inlineNodeCreationBackground = inline_create_operator_controls.background as AnimationDrawable
+        startBackgroundAnimation(inlineNodeCreationBackground)
+
+        list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+    }
+
+    private fun CoreConfigFragment.startBackgroundAnimation(animDrawable: AnimationDrawable) {
+        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
+        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
+        animDrawable.start()
     }
 
     fun showRevealAnimationCreationFragment() = fragment.apply {
