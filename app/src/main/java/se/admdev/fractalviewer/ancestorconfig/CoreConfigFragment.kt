@@ -148,8 +148,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean, selected: Boolean) {
         if (longClick) {
-            model.configNodes.triggerObserver()
-            inline_create_operator_controls.updateOperand(Operand(node), selected)
+            val operandToToggle = inline_create_operator_controls.updateOperand(Operand(node), selected)
+            model.changeConfigNodeSelection(operandToToggle)
+
         } else {
             val action = CoreConfigFragmentDirections.showFractal().apply {
                 ancestorCore =
@@ -216,14 +217,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (isAdded ) inline_create_operator_controls?.onPickerCompleted(requestCode, data)
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun createInstance(): Fragment {
-            return CoreConfigFragment()
+        if (isAdded ){
+            inline_create_operator_controls?.onPickerCompleted(requestCode, data)?.let {
+                model.changeConfigNodeSelection(it)
+            }
         }
     }
 }

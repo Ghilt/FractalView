@@ -147,6 +147,11 @@ class ConfigViewModel : ViewModel() {
         configNodes.triggerObserver()
     }
 
+    fun changeConfigNodeSelection(deselectFirstAndSelectSecond: Pair<Operand?, Operand?>) {
+        configNodes.value?.firstOrNull { it.label == deselectFirstAndSelectSecond.first?.label }?.selected = false
+        configNodes.value?.firstOrNull { it.label == deselectFirstAndSelectSecond.second?.label }?.selected = true
+        configNodes.triggerObserver()
+    }
 }
 
 fun <T> MutableLiveData<T>.triggerObserver() {

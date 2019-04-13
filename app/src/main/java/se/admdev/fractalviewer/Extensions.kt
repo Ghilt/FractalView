@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
+import se.admdev.fractalviewer.ancestorconfig.model.isReferenceOperand
 import kotlin.math.ceil
 import kotlin.random.Random
 
@@ -54,9 +55,17 @@ fun TextView.showLabel(label: Char?) {
     }
 }
 
-fun Button.showLabel(op: Operand?) {
-    op?.label?.let {
-        text = it.toString()
-        backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
+fun Button.showOperand(op: Operand?) {
+    if (op.isReferenceOperand()) {
+        op?.label?.let {
+            text = it.toString()
+            backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
+        }
+    } else if (op != null) {
+        text = op.name
+        backgroundTintList = null
+    } else {
+        text = ""
+        backgroundTintList = null
     }
 }

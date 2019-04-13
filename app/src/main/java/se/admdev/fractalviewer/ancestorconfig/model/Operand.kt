@@ -7,3 +7,5 @@ import kotlinx.android.parcel.Parcelize
 class Operand(val name: String, val label: Char? = null) : Parcelable {
     constructor(node: ConfigNode) : this(node.label.toString(), node.label)
 }
+
+fun Operand?.isReferenceOperand(): Boolean = this?.label != null
