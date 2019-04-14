@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.layout_inline_create_config_node.view.*
 import se.admdev.fractalviewer.R
-import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
+import se.admdev.fractalviewer.ancestorconfig.model.Operand
+import se.admdev.fractalviewer.ancestorconfig.model.Operator
 import se.admdev.fractalviewer.isNotEmpty
 import se.admdev.fractalviewer.setTextIfNotNull
 import se.admdev.fractalviewer.showOperand
@@ -53,14 +55,14 @@ class CreateConfigNodeView : ConstraintLayout {
 
     /* Return value represents first: Operand which no longer are selected, Second: Operand which now are selected*/
     fun updateOperand(op: Operand, add: Boolean): Pair<Operand?, Operand?> {
-        val button = if (add) {
-            operandButtonMap.values.firstOrNull { it.text.isEmpty() }
+        return if (add) {
+            val button = operandButtonMap.values.firstOrNull { it.text.isEmpty() }
                 ?: run { operandButtonMap.values.last() }
+            updateOperandButton(button, op)
         } else {
-            operandButtonMap.values.firstOrNull { it.text == op.name }
+            operandButtonMap.values.filter { it.text == op.name }.forEach { updateOperandButton(it, null) }
+            Pair(op, null)
         }
-
-        return updateOperandButton(button, if (add) op else null)
     }
 
     private fun updateOperandButton(button: Button?, op: Operand?): Pair<Operand?, Operand?> {
@@ -80,7 +82,7 @@ class CreateConfigNodeView : ConstraintLayout {
             .show(fragmentManager, CompactPickerFragment.TAG)
     }
 
-    private fun updateOperatorButton(op: Operator?){
+    private fun updateOperatorButton(op: Operator?) {
         select_operator_button.setTextIfNotNull(op?.symbol)
     }
 
@@ -118,7 +120,7 @@ class CreateConfigNodeView : ConstraintLayout {
             val op3 = operandButtonMap[REQUEST_CODE_OPERAND_3]?.createOperand()
 
             val enoughDataToCreateNode = op1 != null && op2 != null
-            if (enoughDataToCreateNode){
+            if (enoughDataToCreateNode) {
                 function.invoke(op1, operator, op2, op3)
                 operandButtonMap.values.forEach { it.clearText() }
             } else {
@@ -133,7 +135,7 @@ private fun Button?.hasOperand(op: Operand?): Boolean = this?.text?.let {
 } ?: false
 
 private fun Button.createOperand(): Operand? = if (isNotEmpty()) Operand(this.text.toString()) else null
-private fun Button.createOperator(): Operator = Operator.values().first{this.text.toString() == it.symbol}
+private fun Button.createOperator(): Operator = Operator.values().first { this.text.toString() == it.symbol }
 
 private fun ArrayList<CompactPickerItem<Operand>>.findOperand(text: String?): Operand? {
     return this.firstOrNull { it.content.name == text }?.content
