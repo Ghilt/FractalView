@@ -152,6 +152,18 @@ class ConfigViewModel : ViewModel() {
         configNodes.value?.firstOrNull { it.label == deselectFirstAndSelectSecond.second?.label }?.selected = true
         configNodes.triggerObserver()
     }
+
+    fun createNodeClearSelection(op1: Operand?, operator: Operator, op2: Operand?, op3: Operand?): Boolean {
+        return if (op1 != null && op2 != null && op3 != null) {
+            configNodes.addItem(ConditionalConfigNode(getNextNodeLabel(), op1, op2, op3))
+            true
+        } else if (op1 != null && op2 != null) {
+            configNodes.addItem(OperationConfigNode(getNextNodeLabel(), op1, operator, op2))
+            true
+        } else {
+            false
+        }
+    }
 }
 
 fun <T> MutableLiveData<T>.triggerObserver() {

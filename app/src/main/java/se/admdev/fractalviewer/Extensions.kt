@@ -69,3 +69,5 @@ fun Button.showOperand(op: Operand?) {
         backgroundTintList = null
     }
 }
+
+fun Button.isNotEmpty(): Boolean = text.isNotEmpty()

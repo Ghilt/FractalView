@@ -99,5 +99,3 @@ class CreateConditionNodeFragment : Fragment() {
         fun newInstance(): CreateConditionNodeFragment = CreateConditionNodeFragment()
     }
 }
-
-fun Intent?.getPickerChoice(): Operand? = this?.getParcelableExtra(CompactPickerFragment.EXTRA_SELECTED)

@@ -30,9 +30,9 @@ class FractalCanvasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val curve = DragonCurve()
+//        val curve = DragonCurve()
 
-        val testPanView: FractalView = shape_view
+//        val testPanView: FractalView = shape_view
 //        val path = Path()
 //        testPanView.path = path
 

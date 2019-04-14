@@ -8,6 +8,7 @@
     <string name="ancestor_config_plus">+</string>
     <string name="ancestor_config_minus">-</string>
     <string name="placeholder_hello">Hello!</string>
+    <string name="placeholder_default_operator">\%</string>
     <string name="placeholder_select_operator">\?</string>
     <string name="placeholder_select_operand">\?</string>
     <string name="placeholder_target_text"> The above will determine the next cell</string>
