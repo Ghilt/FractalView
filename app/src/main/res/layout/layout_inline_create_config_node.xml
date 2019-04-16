@@ -5,8 +5,19 @@
     android:id="@+id/inline_create_operator_controls"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
+    <TextView
+        android:id="@+id/inline_if"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_node_inline_if"
+        app:layout_constraintTop_toTopOf="@id/select_operand_1_button"
+        app:layout_constraintBottom_toBottomOf="@id/select_operand_1_button"
+        app:layout_constraintStart_toStartOf="@id/select_operand_1_button"
+        app:layout_constraintEnd_toEndOf="@id/select_operand_1_button"/>
+
     <Button
         android:id="@+id/select_operand_1_button"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:freezesText="true"
@@ -14,10 +25,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clear_button" />
 
-    <Button
-        android:id="@+id/select_operator_button"
+    <TextView
+        android:id="@+id/inline_then"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/create_node_inline_then"
+        app:layout_constraintTop_toTopOf="@id/select_operator_button"
+        app:layout_constraintBottom_toBottomOf="@id/select_operator_button"
+        app:layout_constraintStart_toStartOf="@id/select_operator_button"
+        app:layout_constraintEnd_toEndOf="@id/select_operator_button" />
+
+    <Button
+        android:id="@+id/select_operator_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
+        app:layout_constrainedHeight="true"
         android:freezesText="true"
         android:text="@string/placeholder_default_operator"
         app:layout_constraintEnd_toStartOf="@id/select_operand_2_button"
@@ -26,6 +50,7 @@
 
     <Button
         android:id="@+id/select_operand_2_button"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:freezesText="true"
@@ -33,8 +58,19 @@
         app:layout_constraintStart_toEndOf="@id/select_operator_button"
         app:layout_constraintTop_toTopOf="@id/select_operand_1_button" />
 
+    <TextView
+        android:id="@+id/inline_else"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_node_inline_else"
+        app:layout_constraintTop_toTopOf="@id/select_operand_2_button"
+        app:layout_constraintBottom_toBottomOf="@id/select_operand_2_button"
+        app:layout_constraintStart_toStartOf="@id/select_operand_2_button"
+        app:layout_constraintEnd_toEndOf="@id/select_operand_2_button" />
+
     <Button
         android:id="@+id/select_operand_3_button"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:freezesText="true"
@@ -50,14 +86,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_operator_button" />
+        app:layout_constraintTop_toBottomOf="@id/select_operand_1_button" />
 
     <Button
         android:id="@+id/clear_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="0dp"
-        android:text="x"
+        android:text="@string/temp_close_x"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

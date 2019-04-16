@@ -20,6 +20,12 @@
     <string name="node_list_group_operator">%1s (</string>
     <string name="node_list_sum_all_end_bracket">) %1s</string>
 
+    <string name="create_node_inline_if">if</string>
+    <string name="create_node_inline_then">then</string>
+    <string name="create_node_inline_else">else</string>
+
+    <string name="temp_close_x">✕</string>
+
     <string name="start_welcome">Welcome!</string>
     <string name="start_configure_button">Configure</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>

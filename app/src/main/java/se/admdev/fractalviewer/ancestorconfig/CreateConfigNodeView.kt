@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.animation.AnimatorInflater
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
@@ -9,9 +10,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
+import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_inline_create_config_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
@@ -58,19 +61,21 @@ class CreateConfigNodeView : ConstraintLayout {
 
         constraintConditional = ConstraintSet().apply {
             clone(this@CreateConfigNodeView)
+            connect(R.id.inline_if, START, PARENT_ID, START)
+            connect(R.id.inline_if, END, R.id.select_operand_1_button, START)
+            connect(R.id.select_operand_1_button, START, R.id.inline_if, END)
+            connect(R.id.select_operand_1_button, END, R.id.inline_then, START)
+            connect(R.id.inline_then, START, R.id.select_operand_1_button, END)
+            connect(R.id.inline_then, END, R.id.select_operand_2_button, START)
+            connect(R.id.select_operator_button, START, R.id.select_operand_2_button, START)
+            connect(R.id.select_operator_button, END, R.id.select_operand_2_button, END)
+            connect(R.id.select_operand_2_button, START, R.id.inline_then, END)
+            connect(R.id.select_operand_2_button, END, R.id.inline_else, START)
+            connect(R.id.inline_else, START, R.id.select_operand_2_button, END)
+            connect(R.id.inline_else, END, R.id.select_operand_3_button, START)
+            connect(R.id.select_operand_3_button, START, R.id.inline_else, END)
+            connect(R.id.select_operand_3_button, END, PARENT_ID, END)
 
-            connect(
-                R.id.select_operand_2_button, ConstraintSet.END,
-                R.id.select_operand_3_button, ConstraintSet.START
-            )
-            connect(
-                R.id.select_operand_3_button, ConstraintSet.START,
-                R.id.select_operand_2_button, ConstraintSet.END
-            )
-            connect(
-                R.id.select_operand_3_button, ConstraintSet.END,
-                ConstraintSet.PARENT_ID, ConstraintSet.END
-            )
         }
 
         operandButtonMap = mapOf(

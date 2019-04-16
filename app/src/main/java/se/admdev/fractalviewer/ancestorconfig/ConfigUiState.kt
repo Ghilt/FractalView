@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.ChangeBounds
@@ -35,39 +36,20 @@ class ConfigUiState(
 
     private val constraintCreateGroupOperation = ConstraintSet().apply {
         clone(fragment.context, R.layout.fragment_core_config)
-        connect(
-            R.id.grid_background, ConstraintSet.BOTTOM,
-            ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM
-        )
+        connect(R.id.grid_background, BOTTOM, PARENT_ID, BOTTOM)
     }
 
+    // TODO Cloning from layout inflates the layout, seems suboptimal,
+    // TODO should prefer to clone from already inflated layout instead
     private val constraintCreateConfigNode = ConstraintSet().apply {
         clone(fragment.context, R.layout.fragment_core_config)
-        connect(
-            R.id.grid_background, ConstraintSet.BOTTOM,
-            ConstraintSet.PARENT_ID, ConstraintSet.TOP
-        )
-        connect(
-            R.id.list_empty_switcher, ConstraintSet.TOP,
-            ConstraintSet.PARENT_ID, ConstraintSet.TOP
-        )
-        connect(
-            R.id.list_empty_switcher, ConstraintSet.BOTTOM,
-            R.id.inline_create_operator_controls, ConstraintSet.TOP
-        )
-
-        connect(
-            R.id.ancestor_grid, ConstraintSet.BOTTOM,
-            ConstraintSet.PARENT_ID, ConstraintSet.TOP, 10
-        )
-        clear(R.id.ancestor_grid, ConstraintSet.TOP)
-
-        connect(
-            R.id.inline_create_operator_controls, ConstraintSet.BOTTOM,
-            ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM
-        )
-
-        clear(R.id.inline_create_operator_controls, ConstraintSet.TOP)
+        connect(R.id.grid_background, BOTTOM, PARENT_ID, TOP)
+        connect(R.id.list_empty_switcher, TOP, PARENT_ID, TOP)
+        connect(R.id.list_empty_switcher, BOTTOM, R.id.inline_create_operator_controls, TOP)
+        connect(R.id.ancestor_grid, BOTTOM, PARENT_ID, TOP, 10) // Otherwise slightly visible
+        clear(R.id.ancestor_grid, TOP)
+        connect(R.id.inline_create_operator_controls, BOTTOM, PARENT_ID, BOTTOM)
+        clear(R.id.inline_create_operator_controls, TOP)
     }
 
     private val constraintFabCollapsed = ConstraintSet().apply {
@@ -76,37 +58,13 @@ class ConfigUiState(
 
     private val constraintFabExpanded = ConstraintSet().apply {
         clone(fragment.context, R.layout.layout_add_buttons)
-        connect(
-            R.id.add_conditional_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_config_node_menu_fab, ConstraintSet.TOP,
-            fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
-        )
-        connect(
-            R.id.add_all_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_conditional_config_node_fab, ConstraintSet.TOP,
-            fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
-        )
-        connect(
-            R.id.add_operation_config_node_fab, ConstraintSet.BOTTOM,
-            R.id.add_all_config_node_fab, ConstraintSet.TOP,
-            fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
-        )
-
-        connect(
-            R.id.add_conditional_config_node_fab, ConstraintSet.START,
-            R.id.add_config_node_menu_fab, ConstraintSet.START,
-            0
-        )
-        connect(
-            R.id.add_all_config_node_fab, ConstraintSet.START,
-            R.id.add_conditional_config_node_fab, ConstraintSet.START,
-            0
-        )
-        connect(
-            R.id.add_operation_config_node_fab, ConstraintSet.START,
-            R.id.add_all_config_node_fab, ConstraintSet.START,
-            0
-        )
+        val pad = fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
+        connect(R.id.add_conditional_config_node_fab, BOTTOM, R.id.add_config_node_menu_fab, TOP, pad)
+        connect(R.id.add_all_config_node_fab, BOTTOM, R.id.add_conditional_config_node_fab, TOP, pad)
+        connect(R.id.add_operation_config_node_fab, BOTTOM, R.id.add_all_config_node_fab, TOP, pad)
+        connect(R.id.add_conditional_config_node_fab, START, R.id.add_config_node_menu_fab, START, 0)
+        connect(R.id.add_all_config_node_fab, START, R.id.add_conditional_config_node_fab, START, 0)
+        connect(R.id.add_operation_config_node_fab, START, R.id.add_all_config_node_fab, START, 0)
     }
 
     fun updateGroupNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
@@ -138,7 +96,6 @@ class ConfigUiState(
     }
 
     fun updateNodeCreationMode(hasSelectedNode: Boolean) = fragment.apply {
-
         val duration = resources.getInteger(R.integer.animation_ms_long).toLong()
 
         if (hasSelectedNode && !isCreateOperationState) {
@@ -240,7 +197,6 @@ class ConfigUiState(
     }
 
     private fun fadeComponent(view: View, visible: Boolean) {
-        // TransitionManager.beginDelayedTransition(v) //Really do not get along with the TransitionManager
 
         if (visible) {
             view.visibility = true.viewVisibility
