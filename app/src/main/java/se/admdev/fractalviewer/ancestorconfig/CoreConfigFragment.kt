@@ -110,7 +110,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
 
         inline_create_operator_controls.setOnSaveNodeClickListener { op1, operator, op2, op3 ->
-            val success = model.createNodeClearSelection(op1, operator, op2, op3)
+            val success = model.createNode(op1, operator, op2, op3)
             if (success) {
                 model.clearConfigNodeSelection()
             }

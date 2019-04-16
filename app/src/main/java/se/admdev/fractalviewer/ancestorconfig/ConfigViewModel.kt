@@ -153,7 +153,7 @@ class ConfigViewModel : ViewModel() {
         configNodes.triggerObserver()
     }
 
-    fun createNodeClearSelection(op1: Operand?, operator: Operator, op2: Operand?, op3: Operand?): Boolean {
+    fun createNode(op1: Operand?, operator: Operator, op2: Operand?, op3: Operand?): Boolean {
         return if (op1 != null && op2 != null && op3 != null) {
             configNodes.addItem(ConditionalConfigNode(getNextNodeLabel(), op1, op2, op3))
             true

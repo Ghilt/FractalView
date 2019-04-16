@@ -165,8 +165,8 @@ class CreateConfigNodeView : ConstraintLayout {
 
             val enoughDataToCreateNode = op1 != null && op2 != null
             if (enoughDataToCreateNode) {
-                function.invoke(op1, operator, op2, op3)
                 operandButtonMap.values.forEach { it.clearText() }
+                function.invoke(op1, operator, op2, op3)
             } else {
                 Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
             }
