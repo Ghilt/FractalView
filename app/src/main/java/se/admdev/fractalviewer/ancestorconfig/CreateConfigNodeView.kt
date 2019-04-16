@@ -2,10 +2,16 @@ package se.admdev.fractalviewer.ancestorconfig
 
 import android.content.Context
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.layout_inline_create_config_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
@@ -22,7 +28,11 @@ private const val REQUEST_CODE_OPERATOR = 100
 
 class CreateConfigNodeView : ConstraintLayout {
 
+    private lateinit var constraintOriginalState: ConstraintSet
+    private lateinit var constraintConditional: ConstraintSet
+
     var parent: CoreConfigFragment? = null
+    private val animationDuration = context.resources.getInteger(R.integer.animation_ms_medium).toLong()
     private lateinit var operandButtonMap: Map<Int, Button>
 
     var availableOperands: ArrayList<CompactPickerItem<Operand>> = ArrayList()
@@ -42,11 +52,45 @@ class CreateConfigNodeView : ConstraintLayout {
     private fun loadLayout() {
         inflate(context, R.layout.layout_inline_create_config_node, this)
 
+        constraintOriginalState = ConstraintSet().apply {
+            clone(this@CreateConfigNodeView)
+        }
+
+        constraintConditional = ConstraintSet().apply {
+            clone(this@CreateConfigNodeView)
+
+            connect(
+                R.id.select_operand_2_button, ConstraintSet.END,
+                R.id.select_operand_3_button, ConstraintSet.START
+            )
+            connect(
+                R.id.select_operand_3_button, ConstraintSet.START,
+                R.id.select_operand_2_button, ConstraintSet.END
+            )
+            connect(
+                R.id.select_operand_3_button, ConstraintSet.END,
+                ConstraintSet.PARENT_ID, ConstraintSet.END
+            )
+        }
+
         operandButtonMap = mapOf(
             REQUEST_CODE_OPERAND_1 to select_operand_1_button,
             REQUEST_CODE_OPERAND_2 to select_operand_2_button,
             REQUEST_CODE_OPERAND_3 to select_operand_3_button
         )
+
+        select_operand_3_button.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (select_operand_3_button.text.isNullOrEmpty()) {
+                    animateToOperationState()
+                } else {
+                    animateToConditionalState()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         operandButtonMap.forEach { code, button -> button.setOnClickListener { showOperandPicker(code, true) } }
 
@@ -60,7 +104,7 @@ class CreateConfigNodeView : ConstraintLayout {
                 ?: run { operandButtonMap.values.last() }
             updateOperandButton(button, op)
         } else {
-            operandButtonMap.values.filter { it.text == op.name }.forEach { updateOperandButton(it, null) }
+            operandButtonMap.values.filter { it.text.toString() == op.name }.forEach { updateOperandButton(it, null) }
             Pair(op, null)
         }
     }
@@ -128,6 +172,22 @@ class CreateConfigNodeView : ConstraintLayout {
             }
         }
     }
+
+    private fun animateToConditionalState() {
+        val transition = ChangeBounds()
+        transition.interpolator = FastOutSlowInInterpolator()
+        transition.duration = animationDuration
+        TransitionManager.beginDelayedTransition(this, transition)
+        constraintConditional.applyTo(this)
+    }
+
+    private fun animateToOperationState() {
+        val transition = ChangeBounds()
+        transition.interpolator = FastOutSlowInInterpolator()
+        transition.duration = animationDuration
+        TransitionManager.beginDelayedTransition(this, transition)
+        constraintOriginalState.applyTo(this)
+    }
 }
 
 private fun Button?.hasOperand(op: Operand?): Boolean = this?.text?.let {
@@ -136,10 +196,9 @@ private fun Button?.hasOperand(op: Operand?): Boolean = this?.text?.let {
 
 private fun Button.createOperand(): Operand? = if (isNotEmpty()) Operand(this.text.toString()) else null
 private fun Button.createOperator(): Operator = Operator.values().first { this.text.toString() == it.symbol }
+private fun ArrayList<CompactPickerItem<Operand>>.findOperand(text: String?) =
+    firstOrNull { it.content.name == text }?.content
 
-private fun ArrayList<CompactPickerItem<Operand>>.findOperand(text: String?): Operand? {
-    return this.firstOrNull { it.content.name == text }?.content
-}
 
 private fun Button.clearText() {
     text = ""

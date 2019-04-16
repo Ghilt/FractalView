@@ -160,6 +160,7 @@ class ConfigUiState(
         val transition = ChangeBounds()
         transition.duration = duration
         transition.interpolator = FastOutSlowInInterpolator()
+        TransitionManager.endTransitions(inline_create_operator_controls)
         TransitionManager.beginDelayedTransition(fragment_layout, transition)
         constraintOriginalState.applyTo(fragment_layout)
     }
