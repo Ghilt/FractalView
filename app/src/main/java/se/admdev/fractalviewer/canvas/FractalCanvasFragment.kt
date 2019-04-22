@@ -11,14 +11,12 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
-import se.admdev.fractalviewer.canvas.model.DragonCurve
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
 
 
 class FractalCanvasFragment : Fragment() {
 
-    var currentIteration = 0
     var ancestorCore: AncestorCore? = null
     lateinit var generator: FractalGenerator
     private lateinit var workManager: ThreadManager
@@ -29,13 +27,6 @@ class FractalCanvasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val curve = DragonCurve()
-
-//        val testPanView: FractalView = shape_view
-//        val path = Path()
-//        testPanView.path = path
-
         arguments?.let {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
 
@@ -48,29 +39,10 @@ class FractalCanvasFragment : Fragment() {
             ancestorCore = core
         }
 
-//        val animation = FractalView.DragonCurveAnimation(testPanView)
-//        animation.duration = Long.MAX_VALUE
-//        startAnimation(animation)
-
         val button = button_itr
         button.setOnClickListener {
-            // TODO experimentation area
-//            testPanView.addRectTemp(CellularFractalArtist().getIterationAsRectangles(generator.iterationsCompleted, generator.getLastIteration()))
-//
-//            val newEnd = curve.getDirectionAt(currentIteration)
-//            path.rLineTo((newEnd.x * 14).toFloat(), (-newEnd.y * 14).toFloat())
-//            currentIteration++
             workManager.toggleGenerationThread()
-
-//            generator.toggleGenerationThread()
-//            generator.generateNextIteration()
-//            testPanView.invalidate()
-//
-//            Thread {
-//                Thread.sleep(1000)
-//                println("test")
-//            }.start()
-
+            button.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
         }
     }
 
@@ -81,16 +53,9 @@ class FractalCanvasFragment : Fragment() {
 
     private fun onGeneratedIteration(pathUpdate: List<Path>) {
         activity?.runOnUiThread {
-            // shape_view?.addRectTemp(CellularFractalArtist().getIterationAsRectangles(iteration, list))
+            iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)
             shape_view?.addPaths(pathUpdate)
             shape_view?.invalidate()
-        }
-    }
-
-    inner class DragonCurveAnimation(private val view: FractalView) : Animation() {
-
-        override fun applyTransformation(interpolatedTime: Float, transformation: Transformation) {
-            view.requestLayout()
         }
     }
 }

@@ -6,7 +6,7 @@ import android.view.View
 // Copied from: https://android-developers.googleblog.com/2010/06/making-sense-of-multitouch.html
 // Doesn't seem to be possible to do panning with GestureDetectors... which is weird?
 
-class TouchInteractionHandler(val v: View) {
+class TouchInteractionHandler(private val v: View) {
 
 
     private var lastTouchX: Float = 0f

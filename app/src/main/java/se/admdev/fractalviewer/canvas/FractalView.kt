@@ -12,10 +12,10 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     val list: MutableList<RectF> = mutableListOf()
 
-    val tempSize = 5
+    private val tempSize = 5
 
-    var paths: MutableList<List<Path>> = mutableListOf()
-    var paints: List<Paint> = List(tempSize) { i ->
+    private var paths: MutableList<List<Path>> = mutableListOf()
+    private var paints: List<Paint> = List(tempSize) { i ->
         Paint().apply {
             isAntiAlias = false // still get blurry when zooming
             style = Paint.Style.FILL
@@ -29,15 +29,18 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var scaleFactor = 1f
     private var midPointX: Float = 0f
     private var midPointY: Float = 0f
+    private var quarterPointY: Float = 0f
 
     // if infinity zoom is to be applied I think scaling the path is necessary
     private val scaleGestureDetector = ScaleGestureDetector(getContext(), PinchListener())
     private val touchData = TouchInteractionHandler(this)
+    val iterationCount
+        get() = paths.size
 
     //http://android-developers.blogspot.com/2010/06/making-sense-of-multitouch.html
 
     init {
-        setBackgroundColor(Color.parseColor("#330F445F"))
+//        setBackgroundColor(Color.parseColor("#330F445F"))
 
         val strokeWidth = 2
 
@@ -48,13 +51,13 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         paint.strokeWidth = strokeWidth.toFloat()
         paint.color = Color.BLACK
 
-
 //        scaleMatrix.setScale(5f, 5f)
 //        path.transform(scaleMatrix)
 
         post {
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
+            quarterPointY = midPointY / 2
 //            path.moveTo(midPointX, midPointY)
 //            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
         }
@@ -68,8 +71,8 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         canvas.scale(scaleFactor, scaleFactor, midPointX, midPointY)
         canvas.translate(
-            touchData.posX * 1 / scaleFactor,
-            touchData.posY * 1 / scaleFactor
+            midPointX + touchData.posX / scaleFactor,
+            quarterPointY + touchData.posY / scaleFactor
         ) // scale translation inversely to maintain reasonable panning distance
 
 //        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)

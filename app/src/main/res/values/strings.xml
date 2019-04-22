@@ -13,6 +13,10 @@
     <string name="placeholder_select_operand">\?</string>
     <string name="placeholder_target_text"> The above will determine the next cell</string>
 
+    <string name="canvas_start_iteration">Start</string>
+    <string name="canvas_stop_iteration">Stop</string>
+    <string name="canvas_iteration_count">Iteration: %1d</string>
+
     <string name="node_list_empty_text">To begin configuring your fractal select one or many tiles in the grid and add a calculation.</string>
     <string name="node_list_create_conditional_part1">if (</string>
     <string name="node_list_create_conditional_part2">)</string>
