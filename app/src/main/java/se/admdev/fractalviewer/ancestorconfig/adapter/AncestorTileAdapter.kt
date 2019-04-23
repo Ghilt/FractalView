@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 
-class AncestorTileAdapter : RecyclerView.Adapter<AncestorTileViewHolder>() {
+class AncestorTileAdapter(private val clickable: Boolean) : RecyclerView.Adapter<AncestorTileViewHolder>() {
 
     interface AncestorGridClickListener {
         fun onTileClicked(position: Int)
@@ -17,7 +17,7 @@ class AncestorTileAdapter : RecyclerView.Adapter<AncestorTileViewHolder>() {
     var containerSize: Float = 0f
 
     override fun onCreateViewHolder(view: ViewGroup, type: Int) =
-        AncestorTileViewHolder.create(view, listener)
+        AncestorTileViewHolder.create(view, listener, clickable)
     override fun getItemCount() = size * size
     override fun onBindViewHolder(view: AncestorTileViewHolder, pos: Int)
             = view.bind(getTileFromPos(pos), size, containerSize)

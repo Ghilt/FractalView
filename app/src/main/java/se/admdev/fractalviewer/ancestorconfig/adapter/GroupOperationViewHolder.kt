@@ -54,9 +54,10 @@ class GroupOperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) 
         fun create(parent: ViewGroup): ConfigNodeViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return GroupOperationViewHolder(view).apply {
-                adapter = AncestorTileAdapter()
+                adapter = AncestorTileAdapter(false)
                 adapter?.containerSize = itemView.resources.getDimension(R.dimen.grid_size_miniature)
                 grid.adapter = adapter
+                // grid.isLayoutFrozen = true // Enable click through for the recyclerview miniature but bugs recycling
             }
         }
     }

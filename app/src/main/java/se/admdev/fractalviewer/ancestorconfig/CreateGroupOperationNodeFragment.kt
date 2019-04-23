@@ -27,7 +27,7 @@ class CreateGroupOperationNodeFragment : Fragment() {
 
     private lateinit var model: ConfigViewModel
     private lateinit var creationData: CreateNodeViewModel
-    private val creationGridAdapter = AncestorTileAdapter()
+    private val creationGridAdapter = AncestorTileAdapter(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

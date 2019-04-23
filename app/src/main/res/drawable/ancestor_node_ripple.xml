@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorGradientCenter">
+
+    <item>
+        <selector>
+            <item
+                android:drawable="@drawable/tile_background_selected"
+                android:state_selected="true" />
+
+            <item android:drawable="@drawable/tile_background" />
+        </selector>
+    </item>
+</ripple>

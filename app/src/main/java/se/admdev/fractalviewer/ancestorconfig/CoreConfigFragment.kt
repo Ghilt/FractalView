@@ -30,7 +30,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ancestorAdapter = AncestorTileAdapter()
+        ancestorAdapter = AncestorTileAdapter(true)
         listAdapter = ConfigurationListAdapter(this::onConfigNodeClicked)
 
         model = activity?.run {
