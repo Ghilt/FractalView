@@ -59,19 +59,19 @@ class CreateOperationNodeFragment : Fragment() {
 
         select_first_operand_button.setOnClickListener {
             val data = model.getAvailableOperandsArrayList()
-            CompactPickerFragment.newInstance(this, data, true, REQUEST_CODE_FIRST_OPERAND_PICKER)
+            CompactPickerFragment.newOperandInstance(this, data, REQUEST_CODE_FIRST_OPERAND_PICKER)
                 .show(fragmentManager, CompactPickerFragment.TAG)
         }
 
         select_operator_button.setOnClickListener {
             val data = ArrayList(Operator.values().map { CompactPickerItem(it, it.symbol) })
-            CompactPickerFragment.newInstance(this, data, false, REQUEST_CODE_OPERATOR_PICKER)
+            CompactPickerFragment.newOperatorInstance(this, data, REQUEST_CODE_OPERATOR_PICKER)
                 .show(fragmentManager, CompactPickerFragment.TAG)
         }
 
         select_second_operand_button.setOnClickListener {
             val data = model.getAvailableOperandsArrayList()
-            CompactPickerFragment.newInstance(this, data, true, REQUEST_CODE_SECOND_OPERAND_PICKER)
+            CompactPickerFragment.newOperandInstance(this, data, REQUEST_CODE_SECOND_OPERAND_PICKER)
                 .show(fragmentManager, CompactPickerFragment.TAG)
         }
 

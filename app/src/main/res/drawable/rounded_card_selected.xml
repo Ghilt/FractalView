@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:startColor="@color/white_1"
-        android:centerColor="@color/bright_pink"
-        android:endColor="@color/colorAccent"
-        android:angle="45" />
-    <!--<solid android:color="@color/white_1"/>-->
+    <solid android:color="@color/selected_orange"/>
     <corners
         android:radius="@dimen/card_corner_radius" />
 </shape>

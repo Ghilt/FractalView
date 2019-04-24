@@ -97,9 +97,9 @@ class CreateConfigNodeView : ConstraintLayout {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        operandButtonMap.forEach { code, button -> button.setOnClickListener { showOperandPicker(code, true) } }
+        operandButtonMap.forEach { (code, button) -> button.setOnClickListener { showOperandPicker(code) } }
 
-        select_operator_button.setOnClickListener { showOperatorPicker(REQUEST_CODE_OPERATOR, true) }
+        select_operator_button.setOnClickListener { showOperatorPicker(REQUEST_CODE_OPERATOR) }
     }
 
     /* Return value represents first: Operand which no longer are selected, Second: Operand which now are selected*/
@@ -126,8 +126,8 @@ class CreateConfigNodeView : ConstraintLayout {
         return Pair(if (containsOldOp) null else oldOp, if (containsChangeOp) changedOp else null)
     }
 
-    private fun showOperandPicker(requestCode: Int, allowFreeFormInput: Boolean = true) = parent?.apply {
-        CompactPickerFragment.newInstance(this, availableOperands, allowFreeFormInput, requestCode)
+    private fun showOperandPicker(requestCode: Int) = parent?.apply {
+        CompactPickerFragment.newOperandInstance(this, availableOperands, requestCode)
             .show(fragmentManager, CompactPickerFragment.TAG)
     }
 
@@ -135,9 +135,9 @@ class CreateConfigNodeView : ConstraintLayout {
         select_operator_button.setTextIfNotNull(op?.symbol)
     }
 
-    private fun showOperatorPicker(requestCode: Int, allowFreeFormInput: Boolean = true) = parent?.apply {
+    private fun showOperatorPicker(requestCode: Int) = parent?.apply {
         val data = ArrayList(Operator.values().map { CompactPickerItem(it, it.symbol) })
-        CompactPickerFragment.newInstance(this, data, allowFreeFormInput, requestCode)
+        CompactPickerFragment.newOperatorInstance(this, data, requestCode)
             .show(fragmentManager, CompactPickerFragment.TAG)
     }
 

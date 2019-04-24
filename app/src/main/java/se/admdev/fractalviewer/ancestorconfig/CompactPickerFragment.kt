@@ -1,6 +1,5 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -14,7 +13,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.dialog_compact_picker.*
+import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.CompactPickerAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
@@ -23,6 +24,7 @@ import se.admdev.fractalviewer.viewVisibility
 private const val ARG_OPTIONS_DATA = "argOptionsData"
 private const val ARG_RETURN_REQUEST_CODE = "argReturnRequestCode"
 private const val ARG_FREE_FORM_INPUT = "argFreeFormInput"
+private const val ARG_HEADER_TEXT = "argHeaderText"
 
 class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAdapter.OptionClickListener {
 
@@ -51,14 +53,17 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(se.admdev.fractalviewer.R.layout.dialog_compact_picker, container, false)
+        return inflater.inflate(R.layout.dialog_compact_picker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        header_text.setText(arguments?.getInt(ARG_HEADER_TEXT) ?: 0)
+
         val layoutManager = FlexboxLayoutManager(context)
         layoutManager.flexWrap = FlexWrap.WRAP
+        layoutManager.justifyContent = JustifyContent.CENTER
         options_grid.layoutManager = layoutManager
 
         options_grid.adapter = CompactPickerAdapter(data, this)
@@ -67,11 +72,11 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
 
         inputText.visibility = if (freeFormInput) View.VISIBLE else View.GONE
 
-        inputText.addTextChangedListener( object : TextWatcher{
+        inputText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                val editMode = (!inputText.text.isEmpty()).viewVisibility
+                val editMode = (inputText.text.isNotEmpty()).viewVisibility
                 confirm_pick_button.visibility = editMode
                 dimming_overlay.visibility = editMode
             }
@@ -102,9 +107,36 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
         const val EXTRA_SELECTED = "extraSelectedItem"
 
         @JvmStatic
+        fun <T : Parcelable> newOperandInstance(
+            parentFragment: Fragment,
+            dataList: ArrayList<CompactPickerItem<T>>,
+            returnRequestCode: Int
+        ) = newInstance(
+            parentFragment,
+            dataList,
+            R.string.compact_picker_dialog_header_operand,
+            true,
+            returnRequestCode
+        )
+
+        @JvmStatic
+        fun <T : Parcelable> newOperatorInstance(
+            parentFragment: Fragment,
+            dataList: ArrayList<CompactPickerItem<T>>,
+            returnRequestCode: Int
+        ) = newInstance(
+            parentFragment,
+            dataList,
+            R.string.compact_picker_dialog_header_operator,
+            false,
+            returnRequestCode
+        )
+
+        @JvmStatic
         fun <T : Parcelable> newInstance(
             parentFragment: Fragment,
             dataList: ArrayList<CompactPickerItem<T>>,
+            headerTextRes: Int,
             freeFormInput: Boolean,
             returnRequestCode: Int
         ): CompactPickerFragment<T> {
@@ -113,6 +145,7 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
                     putParcelableArrayList(ARG_OPTIONS_DATA, dataList)
                     putInt(ARG_RETURN_REQUEST_CODE, returnRequestCode)
                     putBoolean(ARG_FREE_FORM_INPUT, freeFormInput)
+                    putInt(ARG_HEADER_TEXT, headerTextRes)
                 }
                 setTargetFragment(parentFragment, returnRequestCode)
             }

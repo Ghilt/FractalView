@@ -1,6 +1,5 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,15 +57,15 @@ class CreateConditionNodeFragment : Fragment() {
 
 
         select_conditional_operand_button.setOnClickListener {
-            showPicker(REQUEST_CODE_CONDITIONAL_OPERAND, false)
+            showOperandPicker(REQUEST_CODE_CONDITIONAL_OPERAND)
         }
 
         select_truth_path_operand_button.setOnClickListener {
-            showPicker(REQUEST_CODE_TRUTH_OPERAND)
+            showOperandPicker(REQUEST_CODE_TRUTH_OPERAND)
         }
 
         select_false_path_operand_button.setOnClickListener {
-            showPicker(REQUEST_CODE_FALSE_OPERAND)
+            showOperandPicker(REQUEST_CODE_FALSE_OPERAND)
         }
 
         view.findViewById<Button>(R.id.accept_selection_button).setOnClickListener {
@@ -85,9 +84,9 @@ class CreateConditionNodeFragment : Fragment() {
     }
 
 
-    private fun showPicker(requestCode: Int, allowFreeFormInput: Boolean = true) {
+    private fun showOperandPicker(requestCode: Int) {
         val data = model.getAvailableOperandsArrayList()
-        CompactPickerFragment.newInstance(this, data, allowFreeFormInput, requestCode)
+        CompactPickerFragment.newOperandInstance(this, data, requestCode)
             .show(fragmentManager, CompactPickerFragment.TAG)
     }
 

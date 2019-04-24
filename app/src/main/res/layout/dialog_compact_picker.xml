@@ -4,20 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/rounded_card"
     android:orientation="vertical"
     tools:context=".ancestorconfig.CompactPickerFragment">
 
-    <EditText
-        android:id="@+id/free_form_edit_text"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/placeholder_select_operand"
-        android:hint="@string/placeholder_select_operand"
-        android:inputType="numberSigned"
-        android:translationZ="2dp"
-        android:visibility="gone"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/free_form_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:autofillHints="@string/placeholder_select_numeric_operand"
+        android:background="@drawable/rounded_card"
+        android:elevation="@dimen/view_elevation_large"
+        android:hint="@string/placeholder_select_numeric_operand"
+        android:inputType="numberSigned"
+        android:padding="6dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_text" />
 
     <Button
         android:id="@+id/confirm_pick_button"
@@ -33,10 +50,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_grid"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:background="@color/bright_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/free_form_edit_text" />
 

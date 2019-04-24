@@ -11,6 +11,7 @@
     <string name="placeholder_default_operator">\%</string>
     <string name="placeholder_select_operator">\?</string>
     <string name="placeholder_select_operand">\?</string>
+    <string name="placeholder_select_numeric_operand">Numeric operand</string>
     <string name="placeholder_target_text"> The above will determine the next cell</string>
 
     <string name="canvas_start_iteration">Start</string>
@@ -27,6 +28,9 @@
     <string name="create_node_inline_if">if</string>
     <string name="create_node_inline_then">then</string>
     <string name="create_node_inline_else">else</string>
+
+    <string name="compact_picker_dialog_header_operand">Select operand</string>
+    <string name="compact_picker_dialog_header_operator">Select operator</string>
 
     <string name="temp_close_x">✕</string>
 

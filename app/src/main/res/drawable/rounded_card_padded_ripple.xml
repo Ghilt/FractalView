@@ -5,10 +5,10 @@
     <item>
         <selector>
             <item
-                android:drawable="@drawable/rounded_card_selected"
+                android:drawable="@drawable/rounded_card_padded_selected"
                 android:state_selected="true" />
 
-            <item android:drawable="@drawable/rounded_card" />
+            <item android:drawable="@drawable/rounded_card_padded" />
         </selector>
     </item>
 </ripple>

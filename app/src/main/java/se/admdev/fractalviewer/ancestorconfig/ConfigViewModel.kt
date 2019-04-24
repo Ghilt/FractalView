@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.content.res.ColorStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import se.admdev.fractalviewer.ancestorconfig.model.*
@@ -89,7 +90,7 @@ class ConfigViewModel : ViewModel() {
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
     private fun getAvailableOperands() = configNodes.value?.map {
         val name = it.label.toString()
-        CompactPickerItem(Operand(it), name) { this.setBackgroundColor(it.label.getLabelColor()) }
+        CompactPickerItem(Operand(it), name) { this.backgroundTintList = ColorStateList.valueOf(it.label.getLabelColor()) }
     }
 
     fun hasSelectedConfigNode() = configNodes.value?.any { it.selected } ?: false

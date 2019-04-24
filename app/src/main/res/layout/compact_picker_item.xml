@@ -3,5 +3,6 @@
     android:id="@+id/content_text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/light_yellow"
-    android:padding="30dp" />
+    android:background="@drawable/rounded_card_padded_ripple"
+    android:elevation="@dimen/view_elevation_small"
+    android:padding="20dp" />
