@@ -16,7 +16,7 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:elevation">2dp</item>
-        <item name="android:background">@drawable/config_node_ripple</item>
+        <item name="android:background">@drawable/rounded_card_ripple</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:stateListAnimator">@animator/lift_on_touch</item>
     </style>
@@ -48,6 +48,25 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingBottom">12dp</item>
         <item name="android:background">@drawable/ancestor_gradient_anim</item>
+    </style>
+
+    <!--Not the parent style i want, but i cant seem to inherit from @android:attr/buttonStyleSmall-->
+    <style name="WhiteRoundedButton" parent="@android:style/Widget.Button.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rounded_card_ripple</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:minWidth">48dp</item>
+    </style>
+
+    <style name="WhiteRoundedButton.Accept">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">164dp</item>
+        <item name="android:text">@string/general_accept</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textColor">@color/bright_green</item>
+
     </style>
 
 </resources>
