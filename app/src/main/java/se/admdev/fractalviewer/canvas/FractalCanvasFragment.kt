@@ -5,19 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
+import se.admdev.fractalviewer.ancestorconfig.saveConfigurationNodes
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
-
+import se.admdev.fractalviewer.setGone
 
 class FractalCanvasFragment : Fragment() {
 
-    var ancestorCore: AncestorCore? = null
+    lateinit var ancestorCore: AncestorCore
     lateinit var generator: FractalGenerator
     private lateinit var workManager: ThreadManager
 
@@ -29,20 +29,21 @@ class FractalCanvasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
+            ancestorCore = core ?: throw Exception("Error: No ancestor core for FractalCanvasFragment")
 
-            generator = if (core == null) {
-                throw Exception("Error: No ancestor core for FractalCanvasFragment")
-            } else {
-                FractalGenerator(core)
-            }
+            generator = FractalGenerator(ancestorCore)
             workManager = ThreadManager(generator, ::onGeneratedIteration)
-            ancestorCore = core
         }
 
-        val button = button_itr
-        button.setOnClickListener {
+        button_itr.setOnClickListener {
             workManager.toggleGenerationThread()
-            button.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+            button_itr.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+        }
+
+        button_save.setOnClickListener {
+            activity.saveConfigurationNodes(ancestorCore)
+            Toast.makeText(activity, R.string.canvas_save_configuration_feedback, Toast.LENGTH_SHORT).show()
+            button_save.setGone()
         }
     }
 

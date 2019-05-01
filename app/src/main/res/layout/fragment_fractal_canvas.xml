@@ -4,29 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FractalViewerActivity">
+    tools:context=".FractalViewerActivity"
+    android:animateLayoutChanges="true">
 
     <Button
         android:id="@+id/button_itr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:elevation="@dimen/view_elevation_small"
         android:text="@string/canvas_start_iteration"
+        android:textColor="@color/white_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/iteration_counter_text"
+    <Button
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="10dp"
-        tools:text="@string/canvas_iteration_count"/>
+        android:textColor="@color/white_1"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:elevation="@dimen/view_elevation_small"
+        android:text="@string/canvas_save_configuration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_itr" />
 
     <se.admdev.fractalviewer.canvas.FractalView
         android:id="@+id/shape_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/iteration_counter_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottom_right_corner"
+        android:elevation="@dimen/view_elevation_small"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white_1"
+        tools:text="@string/canvas_iteration_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
