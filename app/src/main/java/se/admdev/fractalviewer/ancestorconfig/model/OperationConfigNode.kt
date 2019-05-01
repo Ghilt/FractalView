@@ -76,5 +76,11 @@ class OperationConfigNode(
         return { _, _ -> operator.function(opVal1, opVal2) }
     }
 
+    companion object {
+        /** Deserialization currently requires one unique field to identify correct subclass
+         *  Cannot be obfuscated
+         */
+        const val ID_FIELD = "firstOperand"
+    }
 }
 

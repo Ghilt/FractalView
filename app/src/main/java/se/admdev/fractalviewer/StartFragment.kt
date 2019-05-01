@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_start.*
+import se.admdev.fractalviewer.ancestorconfig.loadConfigurationNodes
 
 class StartFragment : Fragment() {
 
@@ -22,6 +23,11 @@ class StartFragment : Fragment() {
 
         configure_button.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_coreConfigFragment)
+        }
+
+        load_saved_config_button.setOnClickListener {
+            val loaded = activity.loadConfigurationNodes()
+            //TODO
         }
 
         debug_dragon_curve_button.setOnClickListener { v ->

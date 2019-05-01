@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:textSize="20sp"
         android:text="@string/start_welcome" />
 
     <Button
@@ -21,6 +22,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/start_configure_button" />
+
+    <Button
+        android:id="@+id/load_saved_config_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/start_load_configuration_button" />
 
     <Button
         android:id="@+id/debug_dragon_curve_button"

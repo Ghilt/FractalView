@@ -18,9 +18,17 @@ class AncestorCore(@Suppress("CanBeParameter") private val configNodes: List<Con
     @IgnoredOnParcel
     val midX = width / 2
     @IgnoredOnParcel
+    @Transient // To exclude it from gson serialization
     var function: ((Coord, List<Cell>) -> Int)? = configNodes.last().compile(configNodes)
 
     fun calculateValue(currentCell: Coord, ancestors: List<Cell>): Int {
         return function?.invoke(currentCell, ancestors) ?: 0
+    }
+
+    companion object {
+        /** Deserialization currently requires one unique field to identify correct subclass
+         *  Cannot be obfuscated
+         */
+        const val JSON_LIST_NAME = "configNodes"
     }
 }

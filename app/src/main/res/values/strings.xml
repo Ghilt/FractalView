@@ -39,7 +39,8 @@
     <string name="temp_close_x">✕</string>
 
     <string name="start_welcome">Welcome!</string>
-    <string name="start_configure_button">Configure</string>
+    <string name="start_configure_button">Create new</string>
+    <string name="start_load_configuration_button">Load saved</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
 
 </resources>
