@@ -19,6 +19,11 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_startFragment_to_loadAncestorCoreFragment"
+            app:destination="@id/loadAncestorCoreFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
     <fragment android:id="@+id/coreConfigFragment"
               android:name="se.admdev.fractalviewer.ancestorconfig.CoreConfigFragment"
@@ -38,5 +43,15 @@
             app:argType="se.admdev.fractalviewer.ancestorconfig.model.AncestorCore"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadAncestorCoreFragment"
+        android:name="se.admdev.fractalviewer.ancestorconfig.LoadAncestorCoreFragment"
+        android:label="fragment_load_ancestor_core">
+        <action
+            android:id="@+id/action_loadCoreFragment_to_coreConfigFragment"
+            app:destination="@id/coreConfigFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
 </navigation>

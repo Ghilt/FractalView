@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ViewSwitcher
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
@@ -71,3 +72,8 @@ fun Button.showOperand(op: Operand?) {
 }
 
 fun Button.isNotEmpty(): Boolean = text.isNotEmpty()
+
+fun ViewSwitcher.showList(show: Boolean) {
+    val currentlyShowingEmpty = nextView is RecyclerView
+    if (show == currentlyShowingEmpty) showNext()
+}

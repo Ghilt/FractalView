@@ -41,6 +41,11 @@
     <string name="start_welcome">Welcome!</string>
     <string name="start_configure_button">Create new</string>
     <string name="start_load_configuration_button">Load saved</string>
+    <string name="start_load_configuration_button_edit">Edit</string>
+    <string name="start_load_configuration_button_show">Show</string>
+    <string name="start_load_configuration_button_delete">Delete</string>
+    <string name="start_load_configuration_title">Load previously created configuration</string>
+    <string name="start_load_configuration_no_saved">You do not have any saved configs</string>
     <string name="start_debug_dragon_curve_button">(debug) dragoncurve canvas</string>
 
 </resources>

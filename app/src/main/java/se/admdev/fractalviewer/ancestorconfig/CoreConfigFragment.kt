@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
@@ -20,6 +19,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorTile
 import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import se.admdev.fractalviewer.gridLayoutManager
+import se.admdev.fractalviewer.showList
 
 class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickListener {
 
@@ -40,7 +40,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
             listAdapter.notifyDataSetChanged()
-            showList(items.isNotEmpty())
+            list_empty_switcher.showList(items.isNotEmpty())
             minus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             plus_grid_size_button.isEnabled = model.isChangeGridSizeEnabled()
             uiState.updateNodeCreationMode(model.hasSelectedConfigNode())
@@ -55,11 +55,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             ancestorAdapter.notifyDataSetChanged()
             uiState.updateGroupNodeCreationMode(model.hasSelectedTile())
         })
-    }
-
-    private fun showList(show: Boolean) {
-        val currentlyShowingEmpty = list_empty_switcher.nextView is RecyclerView
-        if (show == currentlyShowingEmpty) list_empty_switcher.showNext()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
