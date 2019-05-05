@@ -1,6 +1,5 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-import android.animation.AnimatorInflater
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
@@ -14,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
-import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_inline_create_config_node.view.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem

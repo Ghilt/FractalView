@@ -31,18 +31,18 @@ class ConfigUiState(
     private var isFabMenuExpanded = false
 
     private val constraintOriginalState = ConstraintSet().apply {
-        clone(fragment.context, R.layout.fragment_core_config)
+        clone(fragment.fragment_layout)
     }
 
     private val constraintCreateGroupOperation = ConstraintSet().apply {
-        clone(fragment.context, R.layout.fragment_core_config)
+        clone(fragment.fragment_layout)
         connect(R.id.grid_background, BOTTOM, PARENT_ID, BOTTOM)
     }
 
     // TODO Cloning from layout inflates the layout, seems suboptimal,
     // TODO should prefer to clone from already inflated layout instead
     private val constraintCreateConfigNode = ConstraintSet().apply {
-        clone(fragment.context, R.layout.fragment_core_config)
+        clone(fragment.fragment_layout)
         connect(R.id.grid_background, BOTTOM, PARENT_ID, TOP)
         connect(R.id.list_empty_switcher, TOP, PARENT_ID, TOP)
         connect(R.id.list_empty_switcher, BOTTOM, R.id.inline_create_operator_controls, TOP)

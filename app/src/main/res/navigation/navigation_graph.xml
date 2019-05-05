@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_graph"
-            app:startDestination="@id/startFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@+id/startFragment">
 
-    <fragment android:id="@+id/startFragment" android:name="se.admdev.fractalviewer.StartFragment"
-              android:label="fragment_start" tools:layout="@layout/fragment_start">
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="se.admdev.fractalviewer.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_startFragment_to_coreConfigFragment"
             app:destination="@id/coreConfigFragment"
-            app:exitAnim="@anim/slide_out_left_rotate"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
@@ -22,12 +27,15 @@
         <action
             android:id="@+id/action_startFragment_to_loadAncestorCoreFragment"
             app:destination="@id/loadAncestorCoreFragment"
+            app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left" />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <fragment android:id="@+id/coreConfigFragment"
-              android:name="se.admdev.fractalviewer.ancestorconfig.CoreConfigFragment"
-              android:label="CoreConfigFragment">
+    <fragment
+        android:id="@+id/coreConfigFragment"
+        android:name="se.admdev.fractalviewer.ancestorconfig.CoreConfigFragment"
+        android:label="CoreConfigFragment">
         <action
             android:id="@+id/showFractal"
             app:destination="@id/fractalCanvasFragment"
@@ -35,14 +43,15 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <fragment android:id="@+id/fractalCanvasFragment"
-              android:name="se.admdev.fractalviewer.canvas.FractalCanvasFragment"
-              android:label="FractalCanvasFragment">
+    <fragment
+        android:id="@+id/fractalCanvasFragment"
+        android:name="se.admdev.fractalviewer.canvas.FractalCanvasFragment"
+        android:label="FractalCanvasFragment">
         <argument
             android:name="ancestor_core"
+            android:defaultValue="@null"
             app:argType="se.admdev.fractalviewer.ancestorconfig.model.AncestorCore"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/loadAncestorCoreFragment"
