@@ -155,9 +155,13 @@ class ConfigViewModel : ViewModel() {
     fun loadFromAncestorCore(core: AncestorCore) {
         if (!loadedFromCore) {
             loadedFromCore = true
-            configNodes.value?.addAll(core.configNodes)
-            configNodes.triggerObserver()
+            configNodes.value = core.configNodes.toMutableList()
         }
+    }
+
+    fun clearConfigData() {
+        loadedFromCore = false
+        configNodes.value?.clear()
     }
 }
 

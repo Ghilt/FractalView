@@ -58,7 +58,7 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val coreList = activity.loadConfigurationNodes()
+        val coreList = activity.loadAncestorCores()
         list_empty_switcher.showList(coreList.isNotEmpty())
         listAdapter.setDataSet(coreList)
         core_list.adapter = listAdapter

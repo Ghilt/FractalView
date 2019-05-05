@@ -74,7 +74,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         node_list.adapter = listAdapter
         model.configNodes.triggerObserver()
 
-
         plus_grid_size_button.setOnClickListener {
             model.increaseAncestorTiles()
         }
@@ -115,6 +114,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         uiState = ConfigUiState(this)
         uiState.onViewCreated()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        model.clearConfigData()
     }
 
     private fun setupFabButtons() {

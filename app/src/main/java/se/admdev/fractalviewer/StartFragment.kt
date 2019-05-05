@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_start.*
+import se.admdev.fractalviewer.ancestorconfig.ConfigViewModel
 
 class StartFragment : Fragment() {
 
@@ -19,6 +21,8 @@ class StartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewModelProviders.of(requireActivity()).get(ConfigViewModel::class.java)
 
         configure_button.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_coreConfigFragment)

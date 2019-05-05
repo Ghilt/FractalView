@@ -10,25 +10,36 @@ import se.admdev.fractalviewer.ancestorconfig.model.*
 import java.lang.reflect.Type
 
 private const val prefsName = "se.admdev.fractalviewer.canvas"
-private const val prefsKey = "canvas_TODO_MANY_SAVES"
+private const val prefsKey = "fractalAncestorCores.v1.0.0"
 
-fun Activity?.saveConfigurationNodes(core: AncestorCore) {
+fun Activity?.saveAncestorCore(core: AncestorCore) {
+    val list = mutableListOf(core)
+    list.addAll(loadAncestorCores())
+
     val prefs = this?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
-    val persistable = Gson().toJson(core)
+    val persistable = Gson().toJson(list)
     prefs?.apply{
         edit().putString(prefsKey, persistable).apply()
     }
 }
 
-fun Activity?.loadConfigurationNodes(): List<AncestorCore> {
+fun Activity?.loadAncestorCores(): List<AncestorCore> {
     val gson = Gson()
     val prefs = this?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
     val json = prefs?.getString(prefsKey, "")
     val parser = JsonParser()
-    val parsedCore = parser.parse(json).asJsonObject
-    val array = parsedCore.getAsJsonArray(AncestorCore.JSON_LIST_NAME)
-    val list: List<ConfigNode> = array.toList().map { gson.fromJson(it, determineType(it)) as ConfigNode}
-    return listOf(AncestorCore(list))
+    val parsedCoreList = parser.parse(json)
+
+    return if (parsedCoreList.isJsonArray) {
+        parsedCoreList.asJsonArray.toList().map { c ->
+            val jsonCore = c.asJsonObject
+            val array = jsonCore.getAsJsonArray(AncestorCore.JSON_LIST_NAME)
+            val list: List<ConfigNode> = array.toList().map { gson.fromJson(it, determineType(it)) as ConfigNode}
+            AncestorCore(list)
+        }
+    } else {
+        emptyList()
+    }
 }
 
 /**

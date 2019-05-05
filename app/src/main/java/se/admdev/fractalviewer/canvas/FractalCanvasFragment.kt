@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
-import se.admdev.fractalviewer.ancestorconfig.saveConfigurationNodes
+import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
 import se.admdev.fractalviewer.setGone
@@ -42,7 +42,7 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_save.setOnClickListener {
-            activity.saveConfigurationNodes(ancestorCore)
+            activity.saveAncestorCore(ancestorCore)
             Toast.makeText(activity, R.string.canvas_save_configuration_feedback, Toast.LENGTH_SHORT).show()
             button_save.setGone()
         }
