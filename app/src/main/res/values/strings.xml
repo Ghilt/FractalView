@@ -14,6 +14,8 @@
     <string name="placeholder_select_numeric_operand">Numeric operand</string>
     <string name="placeholder_target_text"> The above will determine the next cell</string>
 
+    <string name="accessibility_play_button">play fractal button</string>
+
     <string name="canvas_start_iteration">Start</string>
     <string name="canvas_save_configuration">Save</string>
     <string name="canvas_save_configuration_feedback">Saved configuration</string>

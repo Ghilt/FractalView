@@ -47,6 +47,12 @@ fun View.setVisible() {
     visibility = View.VISIBLE
 }
 
+var View.isVisible
+    get() = visibility != View.GONE
+    set(value){
+        visibility = if(value) View.VISIBLE else View.GONE
+    }
+
 fun getDarkTintColorStateList(v: View): ColorStateList = v.resources.getColorStateList(R.color.colorPrimaryDark, null)
 
 fun TextView.showLabel(label: Char?) {

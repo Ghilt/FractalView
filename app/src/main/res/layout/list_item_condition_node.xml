@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ConfigNode">
 
     <TextView
         android:id="@+id/label"
         style="@style/ConfigNodeLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/label_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:backgroundTint="@color/colorPrimaryDark"
         tools:text="A" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/label_guideline"
+        style="@style/ConfigNodeGuideline" />
+
     <TextView
-        android:id="@+id/group_operator_text"
+        android:id="@+id/if_statement_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:elevation="5dp"
         android:text="@string/node_list_create_conditional_part1"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/operand_condition_text"
         style="@style/ConfigNodeLabelReference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/operand_condition_end_bracket"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/if_statement_text"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorPrimary"
         tools:text="B" />
 
@@ -27,12 +46,21 @@
         android:id="@+id/operand_condition_end_bracket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/node_list_create_conditional_part2"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/operand_true_text"
+        app:layout_constraintStart_toEndOf="@+id/operand_condition_text"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/operand_true_text"
         style="@style/ConfigNodeLabelReference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/operand_else_text"
+        app:layout_constraintStart_toEndOf="@id/operand_condition_end_bracket"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorPrimary"
         tools:text="C" />
 
@@ -40,14 +68,30 @@
         android:id="@+id/operand_else_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/node_list_create_conditional_part3"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/operand_false_text"
+        app:layout_constraintStart_toEndOf="@id/operand_true_text"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/operand_false_text"
         style="@style/ConfigNodeLabelReference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/play_fractal_button"
+        app:layout_constraintStart_toEndOf="@id/operand_else_text"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorPrimary"
         tools:text="D" />
 
+    <ImageButton
+        android:id="@+id/play_fractal_button"
+        style="@style/PlayButton"
+        android:contentDescription="@string/accessibility_play_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

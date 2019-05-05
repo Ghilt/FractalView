@@ -9,12 +9,11 @@
 
     <style name="ConfigNode">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginStart">12dp</item>
         <item name="android:layout_marginTop">6dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:gravity">center_vertical</item>
         <item name="android:elevation">2dp</item>
         <item name="android:background">@drawable/rounded_card_ripple</item>
         <item name="android:orientation">horizontal</item>
@@ -22,12 +21,9 @@
     </style>
 
     <style name="ConfigNodeLabel">
-        <item name="android:layout_width">wrap_content</item>
-        <!--TODO separate label background from text or make height match parent-->
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">12dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white_1</item>
         <item name="android:background">@drawable/configuration_node_label_background</item>
@@ -36,7 +32,7 @@
     <style name="ConfigNodeLabelReference">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginStart">10dp</item>
         <item name="android:padding">@dimen/node_label_padding</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white_1</item>
@@ -66,7 +62,20 @@
         <item name="android:text">@string/general_accept</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:textColor">@color/bright_green</item>
+    </style>
 
+    <style name="PlayButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@drawable/configuration_node_play_button_ripple</item>
+        <item name="android:src">@drawable/play_fractal</item>
+    </style>
+
+    <style name="ConfigNodeGuideline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintGuide_begin">45dp</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
 </resources>

@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ConfigNode">
 
     <TextView
         android:id="@+id/label"
         style="@style/ConfigNodeLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/label_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:backgroundTint="@color/colorPrimaryDark"
         tools:text="A" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/label_guideline"
+        style="@style/ConfigNodeGuideline" />
 
     <TextView
         android:id="@+id/first_operand_text"
         style="@style/ConfigNodeLabelReference"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorAccent"
         tools:text="A" />
 
@@ -19,13 +32,32 @@
         android:id="@+id/operator_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/node_list_sum_all_end_bracket"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/second_operand_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/first_operand_text"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/second_operand_text"
         style="@style/ConfigNodeLabelReference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/play_fractal_button"
+        app:layout_constraintStart_toEndOf="@+id/operator_text"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorAccent"
         tools:text="C" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/play_fractal_button"
+        style="@style/PlayButton"
+        android:contentDescription="@string/accessibility_play_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.GroupOperationConfigNode
 class GroupOperationViewHolder(itemView: View) : ConfigNodeViewHolder(itemView) {
 
     private val label: TextView = itemView.label
-    private val groupOperatorText: TextView = itemView.group_operator_text
+    private val groupOperatorText: TextView = itemView.if_statement_text
     private val grid: RecyclerView = itemView.ancestor_grid_miniature
     private val operatorText: TextView = itemView.operator_text
     private val operandText: TextView = itemView.operand_text

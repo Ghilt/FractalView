@@ -2,7 +2,9 @@ package se.admdev.fractalviewer.ancestorconfig.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
+import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter.Companion.VIEW_TYPE_CONDITION
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter.Companion.VIEW_TYPE_GROUP_OPERATION
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter.Companion.VIEW_TYPE_OPERATION
@@ -19,7 +21,7 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     }
 
     companion object {
-        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean, Boolean) -> Unit)): ConfigNodeViewHolder {
+        fun create(parent: ViewGroup, type: Int, listener: ((ConfigNode, Boolean, Boolean, Boolean) -> Unit)): ConfigNodeViewHolder {
             return when (type) {
                 VIEW_TYPE_OPERATION -> OperationViewHolder.create(parent)
                 VIEW_TYPE_GROUP_OPERATION -> GroupOperationViewHolder.create(parent)
@@ -29,13 +31,21 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
                 }
             }.apply {
                 itemView.setOnClickListener {
-                    boundNode?.let { listener.invoke(it, false, false) }
+                    itemView.isSelected = !itemView.isSelected
+                    boundNode?.let {
+                        it.selected = itemView.isSelected
+                        listener.invoke(it, true, itemView.isSelected, false)
+                    }
                 }
+                itemView.findViewById<ImageButton>(R.id.play_fractal_button).setOnClickListener {
+                    boundNode?.let { listener.invoke(it, false, false, true) }
+                }
+
                 itemView.setOnLongClickListener {
                     itemView.isSelected = !itemView.isSelected
                     boundNode?.let {
                         it.selected = itemView.isSelected
-                        listener.invoke(it, true, itemView.isSelected)
+                        listener.invoke(it, true, itemView.isSelected, false)
                     }
                     true
                 }

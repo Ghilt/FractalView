@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/selected_orange">
+
+    <item>
+        <selector>
+            <item
+                android:drawable="@drawable/configuration_node_play_button_background_selected"
+                android:state_selected="true" />
+
+            <item android:drawable="@drawable/configuration_node_play_button_background" />
+        </selector>
+    </item>
+</ripple>
