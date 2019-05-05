@@ -33,9 +33,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         ancestorAdapter = AncestorTileAdapter(true)
         listAdapter = ConfigurationListAdapter(this::onConfigNodeClicked)
 
-        model = activity?.run {
-            ViewModelProviders.of(this).get(ConfigViewModel::class.java)
-        } ?: throw Throwable("Invalid Activity")
+        model = ViewModelProviders.of(requireActivity()).get(ConfigViewModel::class.java)
 
         model.configNodes.observe(this, Observer<List<ConfigNode>> { items ->
             listAdapter.setDataSet(items)
@@ -63,6 +61,10 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let { arg ->
+            CoreConfigFragmentArgs.fromBundle(arg).ancestorCore?.let { model.loadFromAncestorCore(it) }
+        }
 
         ancestorAdapter.containerSize = resources.getDimension(R.dimen.grid_size)
         ancestorAdapter.listener = this

@@ -7,7 +7,7 @@ import se.admdev.fractalviewer.canvas.model.Cell
 import se.admdev.fractalviewer.canvas.model.Coord
 
 @Parcelize
-class AncestorCore(@Suppress("CanBeParameter") private val configNodes: List<ConfigNode>) : Parcelable {
+class AncestorCore(@Suppress("CanBeParameter") val configNodes: List<ConfigNode>) : Parcelable {
     //TODO I think the above warning supression is safe and that is something with Parcelize which isn't finished
 
     //TODO only supports square ancestor areas/single size(probably for the better) atm

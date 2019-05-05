@@ -32,15 +32,28 @@ class LoadAncestorCoreFragment : Fragment() {
     }
 
     private fun onAncestorCoreClicked(core: AncestorCore, action: AncestorCoreAction) {
-        //TODO stopped here: send ancestor core to coreconfig fragment
 
         view?.let {
             when (action) {
-                EDIT -> Navigation.findNavController(it).navigate(R.id.action_loadCoreFragment_to_coreConfigFragment)
-                SHOW -> Navigation.findNavController(it).navigate(R.id.action_loadCoreFragment_to_coreConfigFragment)
-                DELETE -> Navigation.findNavController(it).navigate(R.id.action_loadCoreFragment_to_coreConfigFragment)
+                EDIT -> startConfigFragment(it, core)
+                SHOW -> startFractalFragment(it, core)
+                DELETE -> Navigation.findNavController(it).navigate(R.id.editFractal)
             }
         }
+    }
+
+    private fun startConfigFragment(view: View, core: AncestorCore) {
+        val action = LoadAncestorCoreFragmentDirections.editFractal().apply {
+            ancestorCore = core
+        }
+        Navigation.findNavController(view).navigate(action)
+    }
+
+    private fun startFractalFragment(view: View, core: AncestorCore) {
+        val action = LoadAncestorCoreFragmentDirections.loadFractal().apply {
+            ancestorCore = core
+        }
+        Navigation.findNavController(view).navigate(action)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +62,5 @@ class LoadAncestorCoreFragment : Fragment() {
         list_empty_switcher.showList(coreList.isNotEmpty())
         listAdapter.setDataSet(coreList)
         core_list.adapter = listAdapter
-
     }
 }

@@ -12,12 +12,14 @@ private const val ANCESTOR_TILE_MAX_SIZE = 7
 
 class ConfigViewModel : ViewModel() {
 
+    private var loadedFromCore = false
     val configNodes = MutableLiveData<MutableList<ConfigNode>>().apply { value = mutableListOf() }
     val ancestorTiles = MutableLiveData<List<List<AncestorTile>>>().apply {
         value = calculateAncestorTiles(ANCESTOR_TILE_INITIAL_SIZE)
     }
     val ancestorTileDimension: Int
         get() = ancestorTiles.value?.size ?: 0
+
 
     private fun calculateAncestorTiles(
         newSize: Int,
@@ -147,6 +149,14 @@ class ConfigViewModel : ViewModel() {
             true
         } else {
             false
+        }
+    }
+
+    fun loadFromAncestorCore(core: AncestorCore) {
+        if (!loadedFromCore) {
+            loadedFromCore = true
+            configNodes.value?.addAll(core.configNodes)
+            configNodes.triggerObserver()
         }
     }
 }
