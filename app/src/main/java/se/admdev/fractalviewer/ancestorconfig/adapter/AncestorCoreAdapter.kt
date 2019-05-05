@@ -12,7 +12,7 @@ class AncestorCoreAdapter(private val listener: ((AncestorCore, AncestorCoreActi
 //        setHasStableIds(true)
 //    }
 
-    private var data = listOf<AncestorCore>()
+    private var data = listOf<AncestorCoreListItem>()
 
     override fun onCreateViewHolder(view: ViewGroup, type: Int): AncestorCoreViewHolder =
         AncestorCoreViewHolder.create(view, listener)
@@ -27,7 +27,6 @@ class AncestorCoreAdapter(private val listener: ((AncestorCore, AncestorCoreActi
 //    }
 
     fun setDataSet(items: List<AncestorCore>) {
-        data = items
+        data = items.mapIndexed{ i, core -> AncestorCoreListItem(core) {notifyItemChanged(i)} }
     }
-
 }

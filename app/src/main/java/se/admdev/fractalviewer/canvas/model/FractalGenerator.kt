@@ -1,6 +1,7 @@
 package se.admdev.fractalviewer.canvas.model
 
 
+import android.graphics.Path
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import kotlin.math.absoluteValue
 
@@ -136,4 +137,10 @@ class FractalGenerator(private val core: AncestorCore) {
     fun getLastIteration(): List<Cell> {
         return frac[iterationsCompleted - 1] ?: listOf()
     }
+
+    /* To be used for miniature thumbnail of fractal */
+    /* TODO clean up code here, is a bit messy responsibility wise */
+    fun iterateOver(action: (Int, List<Cell>) -> List<Path>): List<List<Path>> =
+        frac.map { (itr, value) -> action(itr, value) }
+
 }

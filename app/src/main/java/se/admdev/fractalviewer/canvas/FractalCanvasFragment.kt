@@ -30,7 +30,7 @@ class FractalCanvasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
-            ancestorCore = core ?: throw Exception("Error: No ancestor core for FractalCanvasFragment")
+            ancestorCore = core ?: throw IllegalArgumentException("Error: No ancestor core for FractalCanvasFragment")
 
             generator = FractalGenerator(ancestorCore)
             workManager = ThreadManager(generator, ::onGeneratedIteration)
@@ -55,12 +55,15 @@ class FractalCanvasFragment : Fragment() {
 
     private fun onGeneratedIteration(pathUpdate: List<Path>) {
         activity?.runOnUiThread {
-            if (view != null){
+            if (view != null) {
                 iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)
                 shape_view?.addPaths(pathUpdate)
                 shape_view?.invalidate()
             } else {
-                Log.d("Fractal", "FractalCanvasFragment.OnGeneratedIteration(): Fragment already detached, no UI to update")
+                Log.d(
+                    "Fractal",
+                    "FractalCanvasFragment.OnGeneratedIteration(): Fragment already detached, no UI to update"
+                )
             }
         }
     }
