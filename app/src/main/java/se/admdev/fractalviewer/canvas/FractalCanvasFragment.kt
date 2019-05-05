@@ -2,6 +2,7 @@ package se.admdev.fractalviewer.canvas
 
 import android.graphics.Path
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,9 +55,13 @@ class FractalCanvasFragment : Fragment() {
 
     private fun onGeneratedIteration(pathUpdate: List<Path>) {
         activity?.runOnUiThread {
-            iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)
-            shape_view?.addPaths(pathUpdate)
-            shape_view?.invalidate()
+            if (view != null){
+                iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)
+                shape_view?.addPaths(pathUpdate)
+                shape_view?.invalidate()
+            } else {
+                Log.d("Fractal", "FractalCanvasFragment.OnGeneratedIteration(): Fragment already detached, no UI to update")
+            }
         }
     }
 }
