@@ -2,12 +2,15 @@ package se.admdev.fractalviewer.canvas
 
 import android.graphics.Path
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
@@ -43,8 +46,24 @@ class FractalCanvasFragment : Fragment() {
 
         button_save.setOnClickListener {
             activity.saveAncestorCore(ancestorCore)
-            Toast.makeText(activity, R.string.canvas_save_configuration_feedback, Toast.LENGTH_SHORT).show()
-            button_save.setGone()
+
+            context?.let {
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle(R.string.dialog_save_fractal_title)
+
+                val input = EditText(it)
+                input.inputType = InputType.TYPE_CLASS_TEXT
+                builder.setView(input)
+
+                builder.setPositiveButton(R.string.general_save) { _, _ ->
+                    activity.saveAncestorCore(ancestorCore)
+                    Snackbar.make(button_save, R.string.canvas_save_configuration_feedback, Snackbar.LENGTH_SHORT)
+                        .show()
+                    button_save.setGone()
+                }
+                builder.setNegativeButton(R.string.general_cancel) { dialog, _ -> dialog.cancel() }
+                builder.show()
+            }
         }
     }
 
