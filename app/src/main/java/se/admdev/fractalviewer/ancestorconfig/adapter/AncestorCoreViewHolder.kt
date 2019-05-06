@@ -25,12 +25,7 @@ class AncestorCoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     fun bind(core: AncestorCoreListItem) {
         this.core = core
         name.text = "$core"
-
-        thumbnail.clearData()
-        core.miniatureData?.apply {
-            forEach { thumbnail.addPaths(it) }
-        }
-        thumbnail.invalidate()
+        thumbnail.setFractalData(core.miniatureData)
     }
 
     companion object {

@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import se.admdev.fractalviewer.canvas.CellularFractalArtist.Companion.CELL_SIZE
 
 /* Trimmed down version of the fractal view, slight case of duplicated code for the time being*/
 class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -42,9 +43,30 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
             invalidate()
         }
     }
+    // https://stackoverflow.com/questions/13273838/onmeasure-wrap-content-how-do-i-know-the-size-to-wrap
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val desiredWidth = 2 * CELL_SIZE.toInt() * ITERATIONS_OF_THUMBNAIL
+        val desiredHeight = CELL_SIZE.toInt() * ITERATIONS_OF_THUMBNAIL
 
-    // TODO https://stackoverflow.com/questions/13273838/onmeasure-wrap-content-how-do-i-know-the-size-to-wrap
-    // make it so wrap content wraps the entire thumbnail
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        val width = when (widthMode) {
+            MeasureSpec.EXACTLY -> widthSize
+            MeasureSpec.AT_MOST -> Math.min(desiredWidth, widthSize)
+            else -> desiredWidth
+        }
+
+        val height = when (heightMode) {
+            MeasureSpec.EXACTLY -> heightSize
+            MeasureSpec.AT_MOST -> Math.min(desiredHeight, heightSize)
+            else -> desiredHeight
+        }
+
+        setMeasuredDimension(width, height)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -54,11 +76,24 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         canvas.restore()
     }
 
-    fun addPaths(newIterationPaths: List<Path>) {
+    private fun addPaths(newIterationPaths: List<Path>) {
         paths.add(newIterationPaths)
     }
 
-    fun clearData() {
+    private fun clearData() {
         paths.clear()
+    }
+
+    fun setFractalData(miniatureData: List<List<Path>>?) {
+        clearData()
+        miniatureData?.apply {
+            forEach { addPaths(it) }
+        }
+        requestLayout()
+        invalidate()
+    }
+
+    companion object {
+        const val ITERATIONS_OF_THUMBNAIL = 10
     }
 }
