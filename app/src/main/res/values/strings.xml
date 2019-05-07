@@ -43,6 +43,7 @@
     <string name="compact_picker_dialog_header_operator">Select operator</string>
 
     <string name="dialog_save_fractal_title">Give this beauty a name!</string>
+    <string name="dialog_save_fractal_hint">Name</string>
 
     <string name="temp_close_x">✕</string>
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_1">
+
+    <EditText
+        style="@style/FreeFormInput"
+        android:layout_width="match_parent"
+        android:autofillHints="@string/dialog_save_fractal_hint"
+        android:hint="@string/dialog_save_fractal_hint"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLength="12"
+        android:layout_margin="?dialogPreferredPadding"/>
+</LinearLayout>

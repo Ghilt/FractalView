@@ -50,10 +50,7 @@ class FractalCanvasFragment : Fragment() {
             context?.let {
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle(R.string.dialog_save_fractal_title)
-
-                val input = EditText(it)
-                input.inputType = InputType.TYPE_CLASS_TEXT
-                builder.setView(input)
+                builder.setView(R.layout.alert_dialog_edit_text)
 
                 builder.setPositiveButton(R.string.general_save) { _, _ ->
                     activity.saveAncestorCore(ancestorCore)
