@@ -2,15 +2,14 @@ package se.admdev.fractalviewer.canvas
 
 import android.graphics.Path
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.alert_dialog_edit_text.view.*
 import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
@@ -45,17 +44,17 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_save.setOnClickListener {
-            activity.saveAncestorCore(ancestorCore)
 
             context?.let {
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle(R.string.dialog_save_fractal_title)
-                builder.setView(R.layout.alert_dialog_edit_text)
+
+                val layout = layoutInflater.inflate(R.layout.alert_dialog_edit_text, null)
+                builder.setView(layout)
 
                 builder.setPositiveButton(R.string.general_save) { _, _ ->
-                    activity.saveAncestorCore(ancestorCore)
-                    Snackbar.make(button_save, R.string.canvas_save_configuration_feedback, Snackbar.LENGTH_SHORT)
-                        .show()
+                    activity.saveAncestorCore(ancestorCore, layout.dialog_name_input.text.toString())
+                    Snackbar.make(button_save, R.string.canvas_save_configuration_feedback, Snackbar.LENGTH_SHORT).show()
                     button_save.setGone()
                 }
                 builder.setNegativeButton(R.string.general_cancel) { dialog, _ -> dialog.cancel() }

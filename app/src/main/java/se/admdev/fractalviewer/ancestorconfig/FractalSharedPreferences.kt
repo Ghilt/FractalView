@@ -7,12 +7,14 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore.Companion.JSON_NAME_NAME
 import java.lang.reflect.Type
 
 private const val prefsName = "se.admdev.fractalviewer.canvas"
 private const val prefsKey = "fractalAncestorCores.v1.0.0"
 
-fun Activity?.saveAncestorCore(core: AncestorCore) {
+fun Activity?.saveAncestorCore(ancestorCore: AncestorCore, name: String) {
+    val core = AncestorCore(ancestorCore.configNodes, name)
     val list = mutableListOf(core)
     list.addAll(loadAncestorCores())
 
@@ -35,7 +37,7 @@ fun Activity?.loadAncestorCores(): List<AncestorCore> {
             val jsonCore = c.asJsonObject
             val array = jsonCore.getAsJsonArray(AncestorCore.JSON_LIST_NAME)
             val list: List<ConfigNode> = array.toList().map { gson.fromJson(it, determineType(it)) as ConfigNode}
-            AncestorCore(list)
+            AncestorCore(list, jsonCore.get(JSON_NAME_NAME)?.toString())
         }
     } else {
         emptyList()

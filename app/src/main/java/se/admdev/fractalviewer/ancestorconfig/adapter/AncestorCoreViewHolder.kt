@@ -22,10 +22,10 @@ class AncestorCoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private var core: AncestorCoreListItem? = null
 
-    fun bind(core: AncestorCoreListItem) {
-        this.core = core
-        name.text = "$core"
-        thumbnail.setFractalData(core.miniatureData)
+    fun bind(item: AncestorCoreListItem) {
+        this.core = item
+        name.text = "${item.core.name}"
+        thumbnail.setFractalData(item.miniatureData)
     }
 
     companion object {

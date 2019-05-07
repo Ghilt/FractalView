@@ -5,6 +5,7 @@
     android:background="@color/white_1">
 
     <EditText
+        android:id="@+id/dialog_name_input"
         style="@style/FreeFormInput"
         android:layout_width="match_parent"
         android:autofillHints="@string/dialog_save_fractal_hint"
