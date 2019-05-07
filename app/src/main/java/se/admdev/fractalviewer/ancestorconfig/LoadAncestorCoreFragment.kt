@@ -1,5 +1,8 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.app.Activity
+import android.graphics.Path
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +15,11 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction.*
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
+import se.admdev.fractalviewer.canvas.CellularFractalArtist
+import se.admdev.fractalviewer.canvas.FractalThumbnailView
+import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.showList
+import java.lang.ref.WeakReference
 
 class LoadAncestorCoreFragment : Fragment() {
 
@@ -58,9 +65,26 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val coreList = activity.loadAncestorCores()
-        list_empty_switcher.showList(coreList.isNotEmpty())
-        listAdapter.setDataSet(coreList)
+        list_empty_switcher.showList(false)
         core_list.adapter = listAdapter
+        activity?.let {
+            val task = LoadCoreFromPrefsTask(it) { coreList ->
+                listAdapter.setDataSet(coreList)
+                list_empty_switcher.showList(coreList.isNotEmpty())
+                listAdapter.notifyDataSetChanged()
+
+                //Todo Make smoother, also itemEnter animation on adapter items; falling into place would be nice
+            }
+            task.execute()
+        }
+    }
+
+    private class LoadCoreFromPrefsTask internal constructor(
+        activity: Activity,
+        val listener: (List<AncestorCore>) -> Unit
+    ) : AsyncTask<Void, Void, List<AncestorCore>>() {
+        val weakRefActivity = WeakReference<Activity>(activity)
+        override fun doInBackground(vararg params: Void) = weakRefActivity.get()?.loadAncestorCores()
+        override fun onPostExecute(result: List<AncestorCore>?) { listener.invoke(result.orEmpty()) }
     }
 }
