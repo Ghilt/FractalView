@@ -1,12 +1,15 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 import android.app.Activity
-import android.graphics.Path
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationUtils.loadAnimation
+import android.widget.ViewSwitcher
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_load_ancestor_core.*
@@ -15,15 +18,15 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction.*
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
-import se.admdev.fractalviewer.canvas.CellularFractalArtist
-import se.admdev.fractalviewer.canvas.FractalThumbnailView
-import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.showList
 import java.lang.ref.WeakReference
+import androidx.recyclerview.widget.SimpleItemAnimator
+
 
 class LoadAncestorCoreFragment : Fragment() {
 
     private lateinit var listAdapter: AncestorCoreAdapter
+    private val sync: Synchronizer<List<AncestorCore>> = Synchronizer(AWAIT_ENTER_ANIMATION, AWAIT_PREFS_LOADING)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,29 @@ class LoadAncestorCoreFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         listAdapter = AncestorCoreAdapter(this::onAncestorCoreClicked)
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return if (nextAnim != 0) {
+            val anim = loadAnimation(activity, nextAnim)
+            anim.setAnimationListener(object : AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
+                override fun onAnimationRepeat(animation: Animation) {}
+
+                override fun onAnimationEnd(animation: Animation) {
+                    if (enter) {
+                        sync.onFinishedTask(AWAIT_ENTER_ANIMATION)
+                    }
+                }
+            })
+
+            anim
+        } else {
+            if (enter) {
+                sync.onFinishedTask(AWAIT_ENTER_ANIMATION)
+            }
+            super.onCreateAnimation(transit, enter, nextAnim)
+        }
     }
 
     private fun onAncestorCoreClicked(core: AncestorCore, action: AncestorCoreAction) {
@@ -65,15 +91,21 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list_empty_switcher.showList(false)
+        val switcher: ViewSwitcher? = list_empty_switcher
+        switcher?.showList(false)
         core_list.adapter = listAdapter
+        (core_list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+
+        sync.action = { coreList ->
+            listAdapter.setDataSet(coreList)
+            switcher?.showList(coreList.isNotEmpty())
+            listAdapter.notifyDataSetChanged()
+        }
+
         activity?.let {
             val task = LoadCoreFromPrefsTask(it) { coreList ->
-                listAdapter.setDataSet(coreList)
-                list_empty_switcher.showList(coreList.isNotEmpty())
-                listAdapter.notifyDataSetChanged()
-
-                //Todo Make smoother, also itemEnter animation on adapter items; falling into place would be nice
+                sync.data = coreList
+                sync.onFinishedTask(AWAIT_PREFS_LOADING)
             }
             task.execute()
         }
@@ -85,6 +117,13 @@ class LoadAncestorCoreFragment : Fragment() {
     ) : AsyncTask<Void, Void, List<AncestorCore>>() {
         val weakRefActivity = WeakReference<Activity>(activity)
         override fun doInBackground(vararg params: Void) = weakRefActivity.get()?.loadAncestorCores()
-        override fun onPostExecute(result: List<AncestorCore>?) { listener.invoke(result.orEmpty()) }
+        override fun onPostExecute(result: List<AncestorCore>?) {
+            listener.invoke(result.orEmpty())
+        }
+    }
+
+    companion object {
+        const val AWAIT_ENTER_ANIMATION = "awaitAnimation"
+        const val AWAIT_PREFS_LOADING = "awaitPrefsLoading"
     }
 }
