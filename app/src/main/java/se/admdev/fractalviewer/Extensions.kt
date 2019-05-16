@@ -3,6 +3,7 @@ package se.admdev.fractalviewer
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.util.TypedValue
 import android.view.View
 import android.widget.Button
@@ -82,4 +83,10 @@ fun Button.isNotEmpty(): Boolean = text.isNotEmpty()
 fun ViewSwitcher.showList(show: Boolean) {
     val currentlyShowingEmpty = nextView is RecyclerView
     if (show == currentlyShowingEmpty) showNext()
+}
+
+fun View.startBackgroundAnimation(animDrawable: AnimationDrawable) {
+    animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
+    animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
+    animDrawable.start()
 }

@@ -20,6 +20,7 @@ import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.startBackgroundAnimation
 import se.admdev.fractalviewer.viewVisibility
 
 class ConfigUiState(
@@ -150,18 +151,12 @@ class ConfigUiState(
 
     fun onViewCreated() = fragment.apply {
         val gridBackground = grid_background.background as AnimationDrawable
-        startBackgroundAnimation(gridBackground)
+        view?.startBackgroundAnimation(gridBackground)
         val inlineNodeCreationBackground = inline_create_operator_controls.background as AnimationDrawable
-        startBackgroundAnimation(inlineNodeCreationBackground)
+        view?.startBackgroundAnimation(inlineNodeCreationBackground)
 
         list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-    }
-
-    private fun CoreConfigFragment.startBackgroundAnimation(animDrawable: AnimationDrawable) {
-        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
-        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
-        animDrawable.start()
     }
 
     fun showRevealAnimationCreationFragment() = fragment.apply {

@@ -16,4 +16,8 @@ class Synchronizer<T>(vararg taskIds: String) {
             }
         }
     }
+
+    fun clear() {
+        tasks.keys.forEach { tasks[it] = false }
+    }
 }

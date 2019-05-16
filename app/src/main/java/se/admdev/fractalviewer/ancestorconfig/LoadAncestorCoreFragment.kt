@@ -1,6 +1,7 @@
 package se.admdev.fractalviewer.ancestorconfig
 
 import android.app.Activity
+import android.graphics.drawable.AnimationDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils.loadAnimation
+import android.widget.TextView
 import android.widget.ViewSwitcher
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -21,6 +23,7 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.Anc
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction.*
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.showList
+import se.admdev.fractalviewer.startBackgroundAnimation
 import java.lang.ref.WeakReference
 
 class LoadAncestorCoreFragment : Fragment() {
@@ -37,7 +40,6 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         listAdapter = AncestorCoreAdapter(this::onAncestorCoreClicked)
     }
 
@@ -90,14 +92,18 @@ class LoadAncestorCoreFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        sync.clear()
         super.onViewCreated(view, savedInstanceState)
         val switcher: ViewSwitcher? = list_empty_switcher
         val list: RecyclerView? = core_list
+        val emptyText: TextView? = empty_view
+
         switcher?.showList(false)
         (list?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
         sync.action = { coreList ->
             switcher?.showList(coreList.isNotEmpty())
+            emptyText?.setText(R.string.start_load_configuration_no_saved)
             listAdapter.setDataSet(coreList)
             list.adapter = listAdapter
         }
@@ -109,6 +115,9 @@ class LoadAncestorCoreFragment : Fragment() {
             }
             task.execute()
         }
+
+        val gridBackground = container.background as AnimationDrawable
+        view.startBackgroundAnimation(gridBackground)
     }
 
     private class LoadCoreFromPrefsTask internal constructor(
