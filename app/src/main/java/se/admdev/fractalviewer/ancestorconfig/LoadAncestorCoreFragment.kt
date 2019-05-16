@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.ViewSwitcher
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_load_ancestor_core.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreAdapter
@@ -20,8 +22,6 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.Anc
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.showList
 import java.lang.ref.WeakReference
-import androidx.recyclerview.widget.SimpleItemAnimator
-
 
 class LoadAncestorCoreFragment : Fragment() {
 
@@ -92,14 +92,14 @@ class LoadAncestorCoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val switcher: ViewSwitcher? = list_empty_switcher
+        val list: RecyclerView? = core_list
         switcher?.showList(false)
-        core_list.adapter = listAdapter
-        (core_list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        (list?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
         sync.action = { coreList ->
-            listAdapter.setDataSet(coreList)
             switcher?.showList(coreList.isNotEmpty())
-            listAdapter.notifyDataSetChanged()
+            listAdapter.setDataSet(coreList)
+            list.adapter = listAdapter
         }
 
         activity?.let {
