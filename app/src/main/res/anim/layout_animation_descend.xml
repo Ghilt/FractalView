@@ -2,7 +2,7 @@
 <layoutAnimation
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:animation="@anim/item_animation_descend"
-    android:delay="25%"
+    android:delay="23%"
     android:animationOrder="normal"
     />
 

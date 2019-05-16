@@ -39,7 +39,6 @@
             android:layout_height="match_parent"
             android:layoutAnimation="@anim/layout_animation_descend"
             android:orientation="vertical"
-            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
             tools:listitem="@layout/list_item_saved_ancestor_core" />

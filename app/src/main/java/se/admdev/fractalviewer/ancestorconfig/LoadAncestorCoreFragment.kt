@@ -102,10 +102,14 @@ class LoadAncestorCoreFragment : Fragment() {
         (list?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
         sync.action = { coreList ->
-            switcher?.showList(coreList.isNotEmpty())
-            emptyText?.setText(R.string.start_load_configuration_no_saved)
-            listAdapter.setDataSet(coreList)
-            list.adapter = listAdapter
+            list.post { // WORKAROUND: This is needed for the animation show up properly on some devices
+                switcher?.showList(coreList.isNotEmpty())
+                emptyText?.setText(R.string.start_load_configuration_no_saved)
+                listAdapter.setDataSet(coreList)
+                list.adapter = listAdapter
+                listAdapter.notifyDataSetChanged()
+                list.scheduleLayoutAnimation()
+            }
         }
 
         activity?.let {
