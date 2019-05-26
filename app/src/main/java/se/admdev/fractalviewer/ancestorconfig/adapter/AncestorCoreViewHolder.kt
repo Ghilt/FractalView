@@ -32,17 +32,17 @@ class AncestorCoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         private const val LAYOUT = R.layout.list_item_saved_ancestor_core
 
-        fun create(parent: ViewGroup, listener: ((AncestorCore, AncestorCoreAction) -> Unit)): AncestorCoreViewHolder {
+        fun create(parent: ViewGroup, listener: ((Int, AncestorCore, AncestorCoreAction) -> Unit)): AncestorCoreViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(LAYOUT, parent, false)
             return AncestorCoreViewHolder(view).apply {
                 edit.setOnClickListener {
-                    core?.let { listener.invoke(it.core, EDIT) }
+                    core?.let { listener.invoke(adapterPosition, it.core, EDIT) }
                 }
                 show.setOnClickListener {
-                    core?.let { listener.invoke(it.core, SHOW) }
+                    core?.let { listener.invoke(adapterPosition, it.core, SHOW) }
                 }
                 delete.setOnClickListener {
-                    core?.let { listener.invoke(it.core, DELETE) }
+                    core?.let { listener.invoke(adapterPosition, it.core, DELETE) }
                 }
             }
         }

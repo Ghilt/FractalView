@@ -66,31 +66,6 @@ class LoadAncestorCoreFragment : Fragment() {
         }
     }
 
-    private fun onAncestorCoreClicked(core: AncestorCore, action: AncestorCoreAction) {
-
-        view?.let {
-            when (action) {
-                EDIT -> startConfigFragment(it, core)
-                SHOW -> startFractalFragment(it, core)
-                DELETE -> Navigation.findNavController(it).navigate(R.id.editFractal)
-            }
-        }
-    }
-
-    private fun startConfigFragment(view: View, core: AncestorCore) {
-        val action = LoadAncestorCoreFragmentDirections.editFractal().apply {
-            ancestorCore = core
-        }
-        Navigation.findNavController(view).navigate(action)
-    }
-
-    private fun startFractalFragment(view: View, core: AncestorCore) {
-        val action = LoadAncestorCoreFragmentDirections.loadFractal().apply {
-            ancestorCore = core
-        }
-        Navigation.findNavController(view).navigate(action)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sync.clear()
         super.onViewCreated(view, savedInstanceState)
@@ -122,6 +97,37 @@ class LoadAncestorCoreFragment : Fragment() {
 
         val gridBackground = container.background as AnimationDrawable
         view.startBackgroundAnimation(gridBackground)
+    }
+
+    private fun onAncestorCoreClicked(adapterPos: Int, core: AncestorCore, action: AncestorCoreAction) {
+
+        view?.let {
+            when (action) {
+                EDIT -> startConfigFragment(it, core)
+                SHOW -> startFractalFragment(it, core)
+                DELETE -> deleteFractal(adapterPos, core)
+            }
+        }
+    }
+
+    private fun startConfigFragment(view: View, core: AncestorCore) {
+        val action = LoadAncestorCoreFragmentDirections.editFractal().apply {
+            ancestorCore = core
+        }
+        Navigation.findNavController(view).navigate(action)
+    }
+
+    private fun startFractalFragment(view: View, core: AncestorCore) {
+        val action = LoadAncestorCoreFragmentDirections.loadFractal().apply {
+            ancestorCore = core
+        }
+        Navigation.findNavController(view).navigate(action)
+    }
+
+    private fun deleteFractal(adapterPos: Int, core: AncestorCore) {
+        activity.deleteAncestorCore(core)
+        listAdapter.removeItem(adapterPos, core)
+        list_empty_switcher?.showList(listAdapter.itemCount != 0)
     }
 
     private class LoadCoreFromPrefsTask internal constructor(

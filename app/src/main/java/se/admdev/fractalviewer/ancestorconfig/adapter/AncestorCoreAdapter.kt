@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreViewHolder.AncestorCoreAction
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 
-class AncestorCoreAdapter(private val listener: ((AncestorCore, AncestorCoreAction) -> Unit)) :
+class AncestorCoreAdapter(private val listener: ((Int, AncestorCore, AncestorCoreAction) -> Unit)) :
     RecyclerView.Adapter<AncestorCoreViewHolder>() {
 
 //    init {
@@ -28,5 +28,10 @@ class AncestorCoreAdapter(private val listener: ((AncestorCore, AncestorCoreActi
 
     fun setDataSet(items: List<AncestorCore>) {
         data = items.mapIndexed{ i, core -> AncestorCoreListItem(core) {notifyItemChanged(i)} }
+    }
+
+    fun removeItem(position: Int, core: AncestorCore) {
+        data = data.filter { it.core.name != core.name }
+        notifyItemRemoved(position)
     }
 }

@@ -25,6 +25,16 @@ fun Activity?.saveAncestorCore(ancestorCore: AncestorCore, name: String) {
     }
 }
 
+fun Activity?.deleteAncestorCore(ancestorCore: AncestorCore) {
+    val list = loadAncestorCores().filter { it.name != ancestorCore.name }
+
+    val prefs = this?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+    val persistable = Gson().toJson(list)
+    prefs?.apply{
+        edit().putString(prefsKey, persistable).apply()
+    }
+}
+
 fun Activity?.loadAncestorCores(): List<AncestorCore> {
     val gson = Gson()
     val prefs = this?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
@@ -37,7 +47,8 @@ fun Activity?.loadAncestorCores(): List<AncestorCore> {
             val jsonCore = c.asJsonObject
             val array = jsonCore.getAsJsonArray(AncestorCore.JSON_LIST_NAME)
             val list: List<ConfigNode> = array.toList().map { gson.fromJson(it, determineType(it)) as ConfigNode}
-            AncestorCore(list, jsonCore.get(JSON_NAME_NAME)?.toString())
+            val name = jsonCore.get(JSON_NAME_NAME)?.toString()?.trim { it == '"' } // TODO Wrestle with Gson nicely
+            AncestorCore(list, name)
         }
     } else {
         emptyList()
