@@ -111,15 +111,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/list_empty_switcher" />
 
-    <include
-        layout="@layout/layout_add_buttons"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/list_empty_switcher"
-        app:layout_constraintEnd_toEndOf="@id/list_empty_switcher"
-        app:layout_constraintStart_toStartOf="@id/list_empty_switcher"
-        app:layout_constraintTop_toTopOf="@id/list_empty_switcher" />
-
     <se.admdev.fractalviewer.ancestorconfig.CreateConfigNodeView
         android:id="@+id/inline_create_operator_controls"
         style="@style/InlineCreateConfigNodeView"

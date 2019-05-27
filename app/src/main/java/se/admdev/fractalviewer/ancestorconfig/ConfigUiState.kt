@@ -3,7 +3,6 @@ package se.admdev.fractalviewer.ancestorconfig
 import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -13,12 +12,10 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
-import androidx.core.content.res.ResourcesCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_core_config.*
-import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.startBackgroundAnimation
 import se.admdev.fractalviewer.viewVisibility
@@ -28,8 +25,6 @@ class ConfigUiState(
     private var isCreateGroupOperationState: Boolean = false,
     private var isCreateOperationState: Boolean = false
 ) {
-
-    private var isFabMenuExpanded = false
 
     private val constraintOriginalState = ConstraintSet().apply {
         clone(fragment.fragment_layout)
@@ -51,21 +46,6 @@ class ConfigUiState(
         clear(R.id.ancestor_grid, TOP)
         connect(R.id.inline_create_operator_controls, BOTTOM, PARENT_ID, BOTTOM)
         clear(R.id.inline_create_operator_controls, TOP)
-    }
-
-    private val constraintFabCollapsed = ConstraintSet().apply {
-        clone(fragment.context, R.layout.layout_add_buttons)
-    }
-
-    private val constraintFabExpanded = ConstraintSet().apply {
-        clone(fragment.context, R.layout.layout_add_buttons)
-        val pad = fragment.resources.getDimension(R.dimen.fab_spacing).toInt()
-        connect(R.id.add_conditional_config_node_fab, BOTTOM, R.id.add_config_node_menu_fab, TOP, pad)
-        connect(R.id.add_all_config_node_fab, BOTTOM, R.id.add_conditional_config_node_fab, TOP, pad)
-        connect(R.id.add_operation_config_node_fab, BOTTOM, R.id.add_all_config_node_fab, TOP, pad)
-        connect(R.id.add_conditional_config_node_fab, START, R.id.add_config_node_menu_fab, START, 0)
-        connect(R.id.add_all_config_node_fab, START, R.id.add_conditional_config_node_fab, START, 0)
-        connect(R.id.add_operation_config_node_fab, START, R.id.add_all_config_node_fab, START, 0)
     }
 
     fun updateGroupNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
@@ -125,29 +105,6 @@ class ConfigUiState(
 
     fun showDim() = fragment.apply { fadeComponent(dimming_overlay, true) }
     fun hideDim() = fragment.apply { fadeComponent(dimming_overlay, false) }
-    fun showFab(visible: Boolean) = fragment.apply { fadeComponent(fab_space, visible) }
-
-    fun toggleFabMenu() = fragment.apply {
-        val transition = ChangeBounds()
-        transition.interpolator = FastOutSlowInInterpolator()
-        TransitionManager.beginDelayedTransition(fab_space, transition)
-        val constraint = if (isFabMenuExpanded) constraintFabCollapsed else constraintFabExpanded
-        constraint.applyTo(fab_space)
-        isFabMenuExpanded = !isFabMenuExpanded
-
-        if (isFabMenuExpanded) {
-            val d =
-                ResourcesCompat.getDrawable(resources, R.drawable.plus_to_cross_anim, null) as AnimatedVectorDrawable
-            add_config_node_menu_fab.setImageDrawable(d)
-            d.start()
-        } else {
-            val d =
-                ResourcesCompat.getDrawable(resources, R.drawable.cross_to_plus_anim, null) as AnimatedVectorDrawable
-            add_config_node_menu_fab.setImageDrawable(d)
-            d.start()
-        }
-
-    }
 
     fun onViewCreated() = fragment.apply {
         val gridBackground = grid_background.background as AnimationDrawable
@@ -159,12 +116,6 @@ class ConfigUiState(
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
-    fun showRevealAnimationCreationFragment() = fragment.apply {
-        val translateAnim = AnimationUtils.loadAnimation(context, R.anim.fab_to_dialog_translate)
-        translateAnim.interpolator = FastOutSlowInInterpolator()
-        animateCreateNodeDialog(create_node_frame, translateAnim)
-    }
-
     private fun animateGroupNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
         frame.startAnimation(translateAnim)
         ViewAnimationUtils.createCircularReveal(
@@ -173,22 +124,6 @@ class ConfigUiState(
         ).apply {
             duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
         }.start()
-    }
-
-    private fun animateCreateNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
-        frame.startAnimation(translateAnim)
-        ViewAnimationUtils.createCircularReveal(
-            frame, frame.width / 2, frame.height / 2, 60f,
-            frame.height.toFloat()
-        ).apply {
-            duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
-        }.start()
-    }
-
-    fun closeFabMenu() = fragment.apply {
-        if (isFabMenuExpanded) {
-            toggleFabMenu()
-        }
     }
 
     private fun fadeComponent(view: View, visible: Boolean) {

@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_core_config.*
-import kotlinx.android.synthetic.main.layout_add_buttons.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
@@ -88,17 +87,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             if (childFragmentManager.backStackEntryCount == 0) {
                 model.clearNodeCreationData()
                 uiState.hideDim()
-                uiState.showFab(true)
-            } else {
-                uiState.closeFabMenu()
-                uiState.showFab(false)
             }
         }
 
         dimming_overlay.setOnClickListener { /*Prevent click through*/ }
         grid_background.setOnClickListener { /*Prevent click through*/ }
-
-        setupFabButtons()
 
         inline_create_operator_controls.parent = this
         inline_create_operator_controls.setOnCloseClickListener {
@@ -119,26 +112,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     override fun onDestroy() {
         super.onDestroy()
         model.clearConfigData()
-    }
-
-    private fun setupFabButtons() {
-        add_config_node_menu_fab.setOnClickListener {
-            uiState.toggleFabMenu()
-        }
-
-        add_conditional_config_node_fab.setOnClickListener {
-            uiState.showRevealAnimationCreationFragment()
-            startCreateConditionNodeFragment()
-        }
-
-        add_all_config_node_fab.setOnClickListener {
-            model.selectAll()
-        }
-
-        add_operation_config_node_fab.setOnClickListener {
-            uiState.showRevealAnimationCreationFragment()
-            startCreateOperationNodeFragment()
-        }
     }
 
     override fun onTileClicked(position: Int) {
@@ -183,44 +156,8 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         return false
     }
 
-    private fun startCreateOperationNodeFragment(): Boolean {
-
-        if (!isCreateNodeFragmentShown()) {
-            childFragmentManager.beginTransaction()
-                .add(
-                    R.id.create_node_frame,
-                    CreateOperationNodeFragment.newInstance(),
-                    CreateOperationNodeFragment.TAG
-                )
-                .addToBackStack(CreateOperationNodeFragment.TAG)
-                .commit()
-            return true
-        }
-        return false
-    }
-
-    private fun startCreateConditionNodeFragment() {
-        uiState.showDim()
-        if (!isCreateConditionNodeFragmentShown()) {
-            childFragmentManager.beginTransaction()
-                .add(
-                    R.id.create_node_frame,
-                    CreateConditionNodeFragment.newInstance(),
-                    CreateConditionNodeFragment.TAG
-                )
-                .addToBackStack(CreateGroupOperationNodeFragment.TAG)
-                .commit()
-        }
-    }
-
-    private fun isCreateNodeFragmentShown() =
-        childFragmentManager.findFragmentByTag(CreateOperationNodeFragment.TAG) != null
-
     private fun isCreateGroupNodeFragmentShown() =
         childFragmentManager.findFragmentByTag(CreateGroupOperationNodeFragment.TAG) != null
-
-    private fun isCreateConditionNodeFragmentShown() =
-        childFragmentManager.findFragmentByTag(CreateConditionNodeFragment.TAG) != null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
