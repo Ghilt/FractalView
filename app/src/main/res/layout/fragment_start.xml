@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".StartFragment">
 
     <TextView
@@ -12,31 +15,72 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="@string/start_welcome" />
+        android:text="@string/start_welcome"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/flare"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="3">
+
+        <View
+            android:id="@+id/flare_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ancestor_gradient_anim"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/flare_foreground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/circle_frame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="@dimen/view_elevation_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/configure_button"
-        android:layout_width="wrap_content"
+        style="@style/BlueButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/start_configure_button" />
 
     <Button
         android:id="@+id/load_saved_config_button"
-        android:layout_width="wrap_content"
+        style="@style/BlueButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/start_load_configuration_button" />
 
     <Button
-        android:id="@+id/debug_dragon_curve_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/start_tutorial_button"
+        style="@style/BlueButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/start_debug_dragon_curve_button" />
+        android:layout_marginEnd="20dp"
+        android:enabled="false"
+        android:text="@string/start_tutorial_button" />
 
 </LinearLayout>

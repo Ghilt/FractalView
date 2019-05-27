@@ -4,26 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FractalViewerActivity"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:context=".FractalViewerActivity">
 
     <Button
         android:id="@+id/button_itr"
+        style="@style/BlueButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
         android:elevation="@dimen/view_elevation_small"
         android:text="@string/canvas_start_iteration"
-        android:textColor="@color/white_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button_save"
+        style="@style/BlueButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white_1"
-        android:backgroundTint="@color/colorPrimaryDark"
         android:elevation="@dimen/view_elevation_small"
         android:text="@string/canvas_save_configuration"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,9 +39,9 @@
         android:background="@drawable/rounded_bottom_right_corner"
         android:elevation="@dimen/view_elevation_small"
         android:padding="10dp"
+        android:textColor="@color/white_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white_1"
         tools:text="@string/canvas_iteration_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
