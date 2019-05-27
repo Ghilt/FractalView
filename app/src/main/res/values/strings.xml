@@ -3,6 +3,7 @@
 
     <string name="general_accept">Accept</string>
     <string name="general_save">Save</string>
+    <string name="general_yes">Yes</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_not_enough_input_error">Not enough input</string>
 
@@ -42,7 +43,8 @@
     <string name="compact_picker_dialog_header_operand">Select operand</string>
     <string name="compact_picker_dialog_header_operator">Select operator</string>
 
-    <string name="dialog_save_fractal_title">Give this beauty a name!</string>
+    <string name="dialog_delete_fractal_title">Are you sure you want to remove %s?</string>
+    <string name="dialog_save_fractal_title">Choose a name for this fractal</string>
     <string name="dialog_save_fractal_hint">Name</string>
 
     <string name="temp_close_x">✕</string>

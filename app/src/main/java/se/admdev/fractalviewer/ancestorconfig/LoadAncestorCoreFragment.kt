@@ -12,6 +12,7 @@ import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.TextView
 import android.widget.ViewSwitcher
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -125,9 +126,18 @@ class LoadAncestorCoreFragment : Fragment() {
     }
 
     private fun deleteFractal(adapterPos: Int, core: AncestorCore) {
-        activity.deleteAncestorCore(core)
-        listAdapter.removeItem(adapterPos, core)
-        list_empty_switcher?.showList(listAdapter.itemCount != 0)
+        context?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.setTitle(it.getString(R.string.dialog_delete_fractal_title, core.name))
+
+            builder.setPositiveButton(R.string.general_yes) { _, _ ->
+                activity.deleteAncestorCore(core)
+                listAdapter.removeItem(adapterPos, core)
+                list_empty_switcher?.showList(listAdapter.itemCount != 0)
+            }
+            builder.setNegativeButton(R.string.general_cancel) { dialog, _ -> dialog.cancel() }
+            builder.show()
+        }
     }
 
     private class LoadCoreFromPrefsTask internal constructor(
