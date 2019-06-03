@@ -34,12 +34,15 @@ class StartFragment : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_loadAncestorCoreFragment)
         }
 
-        start_tutorial_button.setOnClickListener { v ->
+        settings_button.setOnClickListener { v ->
             // TODO Tutorial fragment
         }
 
-        val gridBackground = view.flare_background.background as AnimationDrawable
+        var gridBackground = view.flare_background_1.background as AnimationDrawable
         view.startBackgroundAnimation(gridBackground)
+
+        gridBackground = view.flare_background_2.background as AnimationDrawable
+        view.postDelayed({view.startBackgroundAnimation(gridBackground)}, 1800)
 
     }
 
