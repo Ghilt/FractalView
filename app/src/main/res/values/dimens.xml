@@ -7,6 +7,7 @@
     <dimen name="fab_spacing">10dp</dimen>
     <dimen name="node_label_padding">4dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
+    <dimen name="edge_padding">12dp</dimen>
 
     <!--https://material.io/design/environment/elevation.html-->
     <dimen name="view_elevation_none">0dp</dimen>

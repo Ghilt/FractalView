@@ -24,8 +24,6 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ViewModelProviders.of(requireActivity()).get(ConfigViewModel::class.java)
-
         configure_button.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_coreConfigFragment)
         }
@@ -35,14 +33,14 @@ class StartFragment : Fragment() {
         }
 
         settings_button.setOnClickListener { v ->
-            // TODO Tutorial fragment
+            Navigation.findNavController(v).navigate(R.id.action_startFragment_to_settingsFragment)
         }
 
-        var gridBackground = view.flare_background_1.background as AnimationDrawable
-        view.startBackgroundAnimation(gridBackground)
+        var background = view.flare_background_1.background as AnimationDrawable
+        view.startBackgroundAnimation(background)
 
-        gridBackground = view.flare_background_2.background as AnimationDrawable
-        view.postDelayed({view.startBackgroundAnimation(gridBackground)}, 1800)
+        background = view.flare_background_2.background as AnimationDrawable
+        view.postDelayed({view.startBackgroundAnimation(background)}, 1800)
 
     }
 
