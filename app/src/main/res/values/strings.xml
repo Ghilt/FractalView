@@ -62,5 +62,7 @@
 
     <string name="start_settings">Settings</string>
     <string name="settings_tutorial">Tutorial</string>
+    <string name="settings_tutorial_step_1">Define mathematical and logical rules to make a triangular fractal pattern:</string>
+    <string name="settings_tutorial_step_2">Each cell in the triangle depends on the cells above.</string>
 
 </resources>

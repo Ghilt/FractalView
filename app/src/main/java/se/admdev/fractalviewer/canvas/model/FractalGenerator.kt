@@ -42,7 +42,7 @@ class FractalGenerator(private val core: AncestorCore) {
             }
         }
 
-        if (midNeighbours.isEmpty() && !endNeighbours.isEmpty()) {
+        if (midNeighbours.isEmpty() && endNeighbours.isNotEmpty()) {
             //Skip first window if no midNeighbours. Prevent representing it here as well as in startNeighbours
             endNeighbours.removeAt(0)
         }

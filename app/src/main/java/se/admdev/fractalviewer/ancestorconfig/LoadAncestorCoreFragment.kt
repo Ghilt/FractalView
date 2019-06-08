@@ -41,7 +41,7 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listAdapter = AncestorCoreAdapter(this::onAncestorCoreClicked)
+        listAdapter = AncestorCoreAdapter(ITERATIONS_OF_THUMBNAIL ,this::onAncestorCoreClicked)
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -154,5 +154,6 @@ class LoadAncestorCoreFragment : Fragment() {
     companion object {
         const val AWAIT_ENTER_ANIMATION = "awaitAnimation"
         const val AWAIT_PREFS_LOADING = "awaitPrefsLoading"
+        const val ITERATIONS_OF_THUMBNAIL = 10
     }
 }

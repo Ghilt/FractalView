@@ -4,10 +4,10 @@ import android.graphics.Path
 import android.os.AsyncTask
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.canvas.CellularFractalArtist
-import se.admdev.fractalviewer.canvas.FractalThumbnailView.Companion.ITERATIONS_OF_THUMBNAIL
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 
 class AncestorCoreListItem(
+    miniatureSize: Int,
     val core: AncestorCore,
     notifyAdapterOnMiniatureDone: () -> Unit
 ) {
@@ -19,17 +19,18 @@ class AncestorCoreListItem(
             miniatureData = it
             notifyAdapterOnMiniatureDone.invoke()
         }
-        CreateFractalMiniatureTask(core, listener).execute()
+        CreateFractalMiniatureTask(miniatureSize, core, listener).execute()
     }
 
     private class CreateFractalMiniatureTask internal constructor(
+        val miniatureSize: Int,
         val core: AncestorCore,
         val listener: (List<List<Path>>) -> Unit
     ) : AsyncTask<Void, Void, List<List<Path>>>() {
 
         override fun doInBackground(vararg params: Void): List<List<Path>> {
             val generator = FractalGenerator(core)
-            repeat(ITERATIONS_OF_THUMBNAIL) { generator.generateNextIteration() }
+            repeat(miniatureSize) { generator.generateNextIteration() }
             val artist = CellularFractalArtist()
             return generator.iterateOver { itr, value -> artist.getIterationAsPaths(itr, value) }
         }

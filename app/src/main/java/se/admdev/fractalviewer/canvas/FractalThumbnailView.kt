@@ -14,6 +14,8 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
 
     private val tempSize = 5
 
+    var iterations = 0
+
     private var paths: MutableList<List<Path>> = mutableListOf()
     private var paints: List<Paint> = List(tempSize) { i ->
         Paint().apply {
@@ -26,7 +28,6 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
     }
 
     private val paint: Paint
-    private var midPointX: Float = 0f
 
     init {
         val strokeWidth = 2
@@ -37,16 +38,12 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         paint.alpha = 255
         paint.strokeWidth = strokeWidth.toFloat()
         paint.color = Color.BLACK
-
-        post {
-            midPointX = (width / 2).toFloat()
-            invalidate()
-        }
     }
+
     // https://stackoverflow.com/questions/13273838/onmeasure-wrap-content-how-do-i-know-the-size-to-wrap
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = 2 * CELL_SIZE.toInt() * ITERATIONS_OF_THUMBNAIL
-        val desiredHeight = CELL_SIZE.toInt() * ITERATIONS_OF_THUMBNAIL
+        val desiredWidth = 2 * CELL_SIZE.toInt() * iterations
+        val desiredHeight = CELL_SIZE.toInt() * iterations
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -70,6 +67,7 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        val midPointX = (width / 2).toFloat()
         canvas.save()
         canvas.translate(midPointX, 0f)
         paths.forEach { it.forEachIndexed { i, path -> canvas.drawPath(path, paints[i]) } }
@@ -85,15 +83,12 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
     }
 
     fun setFractalData(miniatureData: List<List<Path>>?) {
+        iterations = miniatureData?.size ?: 0
         clearData()
         miniatureData?.apply {
             forEach { addPaths(it) }
         }
         requestLayout()
         invalidate()
-    }
-
-    companion object {
-        const val ITERATIONS_OF_THUMBNAIL = 10
     }
 }

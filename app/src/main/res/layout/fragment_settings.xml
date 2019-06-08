@@ -23,6 +23,7 @@
             android:textColor="@color/white_1"
             android:gravity="center"
             android:textSize="40sp"
+            android:elevation="@dimen/view_elevation_small"
             android:layout_margin="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +37,8 @@
             android:gravity="start|center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:elevation="@dimen/view_elevation_large"
             android:text="@string/settings_tutorial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

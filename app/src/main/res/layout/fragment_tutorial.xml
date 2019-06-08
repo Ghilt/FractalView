@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/edge_padding"
         android:orientation="vertical"
+        android:padding="@dimen/edge_padding"
         tools:context=".StartFragment">
 
         <TextView
@@ -18,14 +18,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
             android:layout_marginTop="30dp"
+            android:gravity="center"
             android:text="@string/settings_tutorial"
             android:textColor="@color/white_1"
-            android:gravity="center"
             android:textSize="40sp"
-            android:layout_margin="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/step1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:text="@string/settings_tutorial_step_1"
+            android:textColor="@color/white_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_card"
+            android:padding="10dp">
+
+            <se.admdev.fractalviewer.canvas.FractalThumbnailView
+                android:id="@+id/example_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/step2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:text="@string/settings_tutorial_step_2"
+            android:textColor="@color/white_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </LinearLayout>
 </ScrollView>
