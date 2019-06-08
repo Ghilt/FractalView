@@ -17,7 +17,7 @@
 
     <color name="colorGradientStart">#04418a</color>
     <color name="colorGradientCenter">#0293cf</color>
-    <color name="colorGradientEnd">#32c3ff</color>
+    <color name="colorGradientEnd">#05519a</color>
 
     <color name="dimming_background">#a555</color>
 </resources>

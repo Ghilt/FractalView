@@ -63,6 +63,9 @@
     <string name="start_settings">Settings</string>
     <string name="settings_tutorial">Tutorial</string>
     <string name="settings_tutorial_step_1">Define mathematical and logical rules to make a triangular fractal pattern:</string>
-    <string name="settings_tutorial_step_2">Each cell in the triangle depends on the cells above.</string>
+    <string name="settings_tutorial_step_2">Each cell represents a numerical value. A cell becomes filled(black) if the numerical value is different from zero. Each cell in the triangle depends on the cells above it.</string>
+    <string name="settings_tutorial_step_3_summation_label">Summation example:</string>
+    <string name="settings_tutorial_step_3">To begin creating a fractal you first need to select which cells that shall affect the next cell in line for calculation:</string>
+    <string name="settings_tutorial_step_4">Above is an example of how the next cell value would be calculated if you chose to take the sum in a particular pattern of previous cells. The above would result in ever increasing values, and won\'t make for a good fractal.</string>
 
 </resources>

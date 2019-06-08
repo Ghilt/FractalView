@@ -23,7 +23,7 @@ class TutorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        example_1.iterations = ITERATIONS_OF_THUMBNAIL //Pre set size to prevent thumbnail fractal from blinking in
         val exampleCore = createExample1Fractal()
         exampleCoreListItem =
             AncestorCoreListItem(ITERATIONS_OF_THUMBNAIL, exampleCore, ::onFinishLoadingExampleFractal)
