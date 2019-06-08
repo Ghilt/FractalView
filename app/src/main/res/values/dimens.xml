@@ -27,4 +27,6 @@
     <item name="ancestor_grid_focus_scaling_target" format="float" type="dimen">1.3</item>
     <dimen name="ancestor_grid_focus_translation_target">50dp</dimen>
 
+    <dimen name="tutorial_demo_grid_margin">8dp</dimen>
+
 </resources>

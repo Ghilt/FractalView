@@ -2,6 +2,7 @@ package se.admdev.fractalviewer
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,11 @@ class TutorialFragment : Fragment() {
         val exampleCore = createExample1Fractal()
         exampleCoreListItem =
             AncestorCoreListItem(ITERATIONS_OF_THUMBNAIL, exampleCore, ::onFinishLoadingExampleFractal)
+
+
+        demo_grid_0.setOnClickListener { it.isSelected = !it.isSelected }
+        demo_grid_1.setOnClickListener { it.isSelected = !it.isSelected }
+        demo_grid_2.setOnClickListener { it.isSelected = !it.isSelected }
 
         val background = view.background as AnimationDrawable
         view.startBackgroundAnimation(background)

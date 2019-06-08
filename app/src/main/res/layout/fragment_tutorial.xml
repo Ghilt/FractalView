@@ -95,11 +95,11 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/tutorial_sum_example"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/step3_example_label" />
 
@@ -115,6 +115,75 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_card"
+            android:padding="@dimen/edge_padding">
+
+            <TextView
+                android:id="@+id/step4_demo_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_tutorial_step_4_demo_label"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/grid_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/edge_padding"
+                android:background="@drawable/rounded_card"
+                android:backgroundTint="@color/black"
+                app:layout_constraintDimensionRatio="3:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step4_demo_label" />
+
+            <View
+                android:id="@+id/demo_grid_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginTop="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginBottom="@dimen/tutorial_demo_grid_margin"
+                android:background="@drawable/rounded_card_ripple"
+                app:layout_constraintBottom_toBottomOf="@id/grid_background"
+                app:layout_constraintEnd_toStartOf="@id/demo_grid_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/grid_background" />
+
+            <View
+                android:id="@+id/demo_grid_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginTop="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginBottom="@dimen/tutorial_demo_grid_margin"
+                android:background="@drawable/rounded_card_ripple"
+                app:layout_constraintBottom_toBottomOf="@id/grid_background"
+                app:layout_constraintEnd_toStartOf="@id/demo_grid_2"
+                app:layout_constraintStart_toEndOf="@id/demo_grid_0"
+                app:layout_constraintTop_toTopOf="@id/grid_background"  />
+
+            <View
+                android:id="@+id/demo_grid_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginTop="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginEnd="@dimen/tutorial_demo_grid_margin"
+                android:layout_marginBottom="@dimen/tutorial_demo_grid_margin"
+                android:background="@drawable/rounded_card_ripple"
+                app:layout_constraintBottom_toBottomOf="@id/grid_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/demo_grid_1"
+                app:layout_constraintTop_toTopOf="@id/grid_background" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </ScrollView>

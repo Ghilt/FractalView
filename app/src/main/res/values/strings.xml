@@ -68,4 +68,6 @@
     <string name="settings_tutorial_step_3">To begin creating a fractal you first need to select which cells that shall affect the next cell in line for calculation:</string>
     <string name="settings_tutorial_step_4">Above is an example of how the next cell value would be calculated if you chose to take the sum in a particular pattern of previous cells. The above would result in ever increasing values, and won\'t make for a good fractal.</string>
 
+    <string name="settings_tutorial_step_4_demo_label">Demo, mess around a bit:</string>
+
 </resources>

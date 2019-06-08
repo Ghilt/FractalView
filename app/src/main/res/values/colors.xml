@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="selected_orange">#FFA501</color>
     <color name="light_yellow">#FFFFE0</color>
+    <color name="black">#010203</color>
     <color name="white_1">#FFFEFF</color>
     <color name="white_2">#EFEBEC</color>
     <color name="light_blue">#ADD8e7</color>
