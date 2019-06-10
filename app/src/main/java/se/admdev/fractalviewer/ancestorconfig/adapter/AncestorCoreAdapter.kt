@@ -12,7 +12,7 @@ class AncestorCoreAdapter(private val miniatureSize: Int, private val listener: 
 //        setHasStableIds(true)
 //    }
 
-    private var data = listOf<AncestorCoreListItem>()
+    private var data = listOf<AncestorCoreMiniature>()
 
     override fun onCreateViewHolder(view: ViewGroup, type: Int): AncestorCoreViewHolder =
         AncestorCoreViewHolder.create(view, listener)
@@ -27,7 +27,7 @@ class AncestorCoreAdapter(private val miniatureSize: Int, private val listener: 
 //    }
 
     fun setDataSet(items: List<AncestorCore>) {
-        data = items.mapIndexed { i, core -> AncestorCoreListItem(miniatureSize, core) { notifyItemChanged(i) } }
+        data = items.mapIndexed { i, core -> AncestorCoreMiniature(miniatureSize, core) { notifyItemChanged(i) } }
     }
 
     fun removeItem(position: Int, core: AncestorCore) {

@@ -6,7 +6,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.canvas.CellularFractalArtist
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 
-class AncestorCoreListItem(
+class AncestorCoreMiniature(
     miniatureSize: Int,
     val core: AncestorCore,
     notifyAdapterOnMiniatureDone: () -> Unit

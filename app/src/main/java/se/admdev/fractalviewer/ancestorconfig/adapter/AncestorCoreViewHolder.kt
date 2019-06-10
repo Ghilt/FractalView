@@ -20,9 +20,9 @@ class AncestorCoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private val show: ImageButton = itemView.show_button
     private val delete: ImageButton = itemView.delete_button
 
-    private var core: AncestorCoreListItem? = null
+    private var core: AncestorCoreMiniature? = null
 
-    fun bind(item: AncestorCoreListItem) {
+    fun bind(item: AncestorCoreMiniature) {
         this.core = item
         name.text = "${item.core.name}"
         thumbnail.setFractalData(item.miniatureData)

@@ -132,6 +132,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/step4_demo_label_sum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edge_padding"
+                android:text="@string/settings_tutorial_step_4_demo_label_sum"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step4_demo_label" />
+
             <View
                 android:id="@+id/grid_background"
                 android:layout_width="0dp"
@@ -142,7 +152,7 @@
                 app:layout_constraintDimensionRatio="3:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/step4_demo_label" />
+                app:layout_constraintTop_toBottomOf="@id/step4_demo_label_sum" />
 
             <View
                 android:id="@+id/demo_grid_0"
@@ -154,7 +164,7 @@
                 android:background="@drawable/rounded_card_ripple"
                 app:layout_constraintBottom_toBottomOf="@id/grid_background"
                 app:layout_constraintEnd_toStartOf="@id/demo_grid_1"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/grid_background"
                 app:layout_constraintTop_toTopOf="@id/grid_background" />
 
             <View
@@ -168,7 +178,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/grid_background"
                 app:layout_constraintEnd_toStartOf="@id/demo_grid_2"
                 app:layout_constraintStart_toEndOf="@id/demo_grid_0"
-                app:layout_constraintTop_toTopOf="@id/grid_background"  />
+                app:layout_constraintTop_toTopOf="@id/grid_background" />
 
             <View
                 android:id="@+id/demo_grid_2"
@@ -180,9 +190,100 @@
                 android:layout_marginBottom="@dimen/tutorial_demo_grid_margin"
                 android:background="@drawable/rounded_card_ripple"
                 app:layout_constraintBottom_toBottomOf="@id/grid_background"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/grid_background"
                 app:layout_constraintStart_toEndOf="@id/demo_grid_1"
                 app:layout_constraintTop_toTopOf="@id/grid_background" />
+
+            <TextView
+                android:id="@+id/demo_operator_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settings_tutorial_step_4_demo_operator_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/grid_background" />
+
+            <TextView
+                android:id="@+id/demo_operator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settings_tutorial_step_4_demo_operator"
+                android:textColor="@color/black"
+                android:textSize="38sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demo_operator_label" />
+
+            <TextView
+                android:id="@+id/demo_operand_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settings_tutorial_step_4_demo_operator_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demo_operator" />
+
+            <TextView
+                android:id="@+id/demo_operand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settings_tutorial_step_4_demo_default_operand"
+                android:textColor="@color/black"
+                android:freezesText="true"
+                android:textSize="38sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demo_operand_label" />
+
+            <ImageButton
+                android:id="@+id/demo_operand_decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_card_ripple"
+                android:contentDescription="@string/start_settings"
+                android:padding="5dp"
+                android:src="@drawable/left_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/demo_operand"
+                app:layout_constraintEnd_toStartOf="@id/demo_operand"
+                app:layout_constraintTop_toTopOf="@id/demo_operand" />
+
+            <ImageButton
+                android:id="@+id/demo_operand_increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_card_ripple"
+                android:contentDescription="@string/start_settings"
+                android:padding="5dp"
+                android:src="@drawable/right_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/demo_operand"
+                app:layout_constraintStart_toEndOf="@id/demo_operand"
+                app:layout_constraintTop_toTopOf="@id/demo_operand" />
+
+            <TextView
+                android:id="@+id/demo_result_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settings_tutorial_step_4_demo_result_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demo_operand" />
+
+            <se.admdev.fractalviewer.canvas.FractalThumbnailView
+                android:id="@+id/demo_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demo_result_label" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
