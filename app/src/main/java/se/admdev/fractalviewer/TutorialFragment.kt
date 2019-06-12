@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer
 
+import android.animation.AnimatorInflater
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,25 +25,51 @@ class TutorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        demo_grid_0.isSelected = true
+        demo_grid_2.isSelected = true
         example_1.iterations = ITERATIONS_OF_THUMBNAIL //Pre set size to prevent thumbnail fractal from blinking in
         val exampleCore = createExample1Fractal()
         exampleCoreListItem =
             AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, exampleCore, ::onFinishLoadingExampleFractal)
 
+        demo_grid_0.setOnClickListener {
+            it.isSelected = !it.isSelected
+            createDemoFractal()
+        }
+        demo_grid_1.setOnClickListener {
+            it.isSelected = !it.isSelected
+            createDemoFractal()
+        }
+        demo_grid_2.setOnClickListener {
+            it.isSelected = !it.isSelected
+            createDemoFractal()
+        }
+        demo_operand_increase.setOnClickListener {
+            val newVal = demo_operand.text.toString().toInt() + 1
+            demo_operand.text = "$newVal"
+            if (newVal >= 12) {
+                it.isVisible = false
+            }
 
-        demo_grid_0.setOnClickListener { it.isSelected = !it.isSelected }
-        demo_grid_1.setOnClickListener { it.isSelected = !it.isSelected }
-        demo_grid_2.setOnClickListener { it.isSelected = !it.isSelected }
-        demo_operand_increase.setOnClickListener { demo_operand.text = "${(demo_operand.text.toString().toInt() + 1)}" }
+            demo_operand_decrease.isVisible = true
+            AnimatorInflater.loadAnimator(context, R.animator.increase_bump).apply { setTarget(demo_operand) }.start()
+            createDemoFractal()
+        }
         demo_operand_decrease.setOnClickListener {
-            //TODO trigger redraw everywhere; not just decrease
-            //TODO prevent too small or too large numbers
-            demo_operand.text = "${(demo_operand.text.toString().toInt() - 1)}"
+            val newVal = demo_operand.text.toString().toInt() - 1
+            demo_operand.text = "$newVal"
+            if (newVal <= 1) {
+                it.isVisible = false
+            }
+
+            demo_operand_increase.isVisible = true
+            AnimatorInflater.loadAnimator(context, R.animator.decrease_bump).apply { setTarget(demo_operand) }.start()
             createDemoFractal()
         }
 
         val background = view.background as AnimationDrawable
         view.startBackgroundAnimation(background)
+        createDemoFractal()
     }
 
     private fun createDemoFractal() {

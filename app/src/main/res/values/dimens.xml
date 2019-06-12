@@ -17,6 +17,7 @@
     <dimen name="view_elevation_dialog">24dp</dimen>
 
     <!--Animation-->
+    <integer name="animation_short">100</integer>
     <integer name="animation_ms">250</integer>
     <integer name="animation_ms_medium">300</integer>
     <integer name="animation_ms_long">400</integer>

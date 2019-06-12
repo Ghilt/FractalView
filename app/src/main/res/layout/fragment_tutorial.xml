@@ -196,44 +196,44 @@
 
             <TextView
                 android:id="@+id/demo_operator_label"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/settings_tutorial_step_4_demo_operator_label"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/demo_operator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/grid_background" />
 
             <TextView
                 android:id="@+id/demo_operator"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:text="@string/settings_tutorial_step_4_demo_operator"
                 android:textColor="@color/black"
                 android:textSize="38sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/demo_operator_label" />
+                app:layout_constraintStart_toEndOf="@id/demo_operator_label"
+                app:layout_constraintTop_toTopOf="@id/demo_operator_label"
+                app:layout_constraintBottom_toBottomOf="@id/demo_operator_label"/>
 
             <TextView
                 android:id="@+id/demo_operand_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="@string/settings_tutorial_step_4_demo_operator_label"
+                android:text="@string/settings_tutorial_step_4_demo_operand_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/demo_operator" />
+                app:layout_constraintTop_toBottomOf="@id/demo_operator_label" />
 
             <TextView
                 android:id="@+id/demo_operand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:freezesText="true"
                 android:text="@string/settings_tutorial_step_4_demo_default_operand"
                 android:textColor="@color/black"
-                android:freezesText="true"
                 android:textSize="38sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

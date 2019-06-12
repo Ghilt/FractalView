@@ -70,8 +70,9 @@
 
     <string name="settings_tutorial_step_4_demo_label">Interactive demo:</string>
     <string name="settings_tutorial_step_4_demo_label_sum">Take the sum(click to select/deselect):</string>
-    <string name="settings_tutorial_step_4_demo_operator_label">Then perform the following operation on that sum:</string>
+    <string name="settings_tutorial_step_4_demo_operator_label">Then perform the modulo operation on that sum:</string>
     <string name="settings_tutorial_step_4_demo_operator">\%</string>
+    <string name="settings_tutorial_step_4_demo_operand_label">Use a number as a second operand to the modulo operation:</string>
     <string name="settings_tutorial_step_4_demo_default_operand">2</string>
     <string name="settings_tutorial_step_4_demo_result_label">See the result change below:</string>
 
