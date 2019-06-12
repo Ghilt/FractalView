@@ -156,6 +156,7 @@ class ConfigViewModel : ViewModel() {
         if (!loadedFromCore) {
             loadedFromCore = true
             configNodes.value = core.configNodes.toMutableList()
+            ancestorTiles.value = calculateAncestorTiles(core.width, ancestorTiles.value)
         }
     }
 
