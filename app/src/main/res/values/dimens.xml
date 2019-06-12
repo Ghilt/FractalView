@@ -4,7 +4,7 @@
     <dimen name="grid_background_size">220dp</dimen>
     <dimen name="grid_size_miniature">30dp</dimen>
 
-    <dimen name="fab_spacing">10dp</dimen>
+    <dimen name="spacing">10dp</dimen>
     <dimen name="node_label_padding">4dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
     <dimen name="edge_padding">14dp</dimen>
@@ -28,6 +28,6 @@
     <item name="ancestor_grid_focus_scaling_target" format="float" type="dimen">1.3</item>
     <dimen name="ancestor_grid_focus_translation_target">50dp</dimen>
 
-    <dimen name="tutorial_demo_grid_margin">8dp</dimen>
+    <dimen name="tutorial_demo_grid_margin">4dp</dimen>
 
 </resources>

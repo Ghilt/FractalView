@@ -3,19 +3,19 @@
     <path android:fillColor="#00000000"
         android:pathData="M7.51,1.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
-    <path android:fillColor="#e6bc46"
+    <path android:fillColor="@color/selected_orange"
         android:pathData="M17.51,1.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
     <path android:fillColor="#00000000"
         android:pathData="M27.51,1.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
-    <path android:fillColor="#e6bc46"
+    <path android:fillColor="@color/selected_orange"
         android:pathData="M7.51,11.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
     <path android:fillColor="#00000000"
         android:pathData="M17.51,11.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
-    <path android:fillColor="#e6bc46"
+    <path android:fillColor="@color/selected_orange"
         android:pathData="M27.51,11.58h10v10h-10zM7.51,21.58h10v10h-10z"
         android:strokeColor="#000" android:strokeLineJoin="round" android:strokeWidth=".69"/>
     <path android:fillColor="#00000000"

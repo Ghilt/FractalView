@@ -67,13 +67,16 @@
     <string name="settings_tutorial_step_3_summation_label">Summation example:</string>
     <string name="settings_tutorial_step_3">To begin creating a fractal you first need to select which cells that shall affect the next cell in line for calculation:</string>
     <string name="settings_tutorial_step_4">Above is an example of how the next cell value would be calculated if you chose to take the sum in a particular pattern of previous cells. The above would result in ever increasing values, and won\'t make for a good fractal.</string>
+    <string name="settings_tutorial_step_5">That will conclude this brief tutorial. I hope this  points you in the right direction when trying to understand this app. You can find a list of all available operators in the settings.</string>
 
-    <string name="settings_tutorial_step_4_demo_label">Interactive demo:</string>
+    <string name="settings_tutorial_step_4_demo_label">Interactive demo</string>
     <string name="settings_tutorial_step_4_demo_label_sum">Take the sum(click to select/deselect):</string>
-    <string name="settings_tutorial_step_4_demo_operator_label">Then perform the modulo operation on that sum:</string>
-    <string name="settings_tutorial_step_4_demo_operator">\%</string>
-    <string name="settings_tutorial_step_4_demo_operand_label">Use a number as a second operand to the modulo operation:</string>
+    <string name="settings_tutorial_step_4_demo_a_sum">A = Σ( </string>
+    <string name="settings_tutorial_step_4_demo_b">B = </string>
+    <string name="settings_tutorial_step_4_demo_a_sum_end">)</string>
+    <string name="settings_tutorial_step_4_demo_operator">A \% B = </string>
+    <string name="settings_tutorial_step_4_demo_operand_label">Select a integer to use:</string>
     <string name="settings_tutorial_step_4_demo_default_operand">2</string>
-    <string name="settings_tutorial_step_4_demo_result_label">See the result change below:</string>
+    <string name="settings_tutorial_step_4_demo_result_label">Then below the input will be used with the modulo operator which can create nice fractal patterns all on its own. The tricky thing to understand is what the sum is in each step, take a moment to ponder.</string>
 
 </resources>
