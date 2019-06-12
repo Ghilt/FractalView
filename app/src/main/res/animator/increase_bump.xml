@@ -5,7 +5,7 @@
     <set android:ordering="together">
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/decelerate_cubic"
             android:propertyName="translationY"
             android:valueFrom="0"
@@ -13,7 +13,7 @@
             android:valueType="floatType" />
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/decelerate_cubic"
             android:propertyName="scaleX"
             android:repeatCount="0"
@@ -22,7 +22,7 @@
             android:valueType="floatType" />
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/decelerate_cubic"
             android:propertyName="scaleY"
             android:repeatCount="0"
@@ -35,7 +35,7 @@
     <set android:ordering="together">
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/fast_out_slow_in"
             android:propertyName="translationY"
             android:valueFrom="-8dp"
@@ -43,7 +43,7 @@
             android:valueType="floatType" />
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/fast_out_slow_in"
             android:propertyName="scaleX"
             android:repeatCount="0"
@@ -52,7 +52,7 @@
             android:valueType="floatType" />
 
         <objectAnimator
-            android:duration="@integer/animation_short"
+            android:duration="@integer/animation_ms_shortest"
             android:interpolator="@android:interpolator/fast_out_slow_in"
             android:propertyName="scaleY"
             android:repeatCount="0"

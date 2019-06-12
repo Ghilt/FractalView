@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.animation.AnimatorInflater
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,8 +46,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         })
 
         model.ancestorTiles.observe(this, Observer<List<List<AncestorTile>>> { items ->
-            minus_grid_size_button.isEnabled = !model.isAncestorGridMinSize() && model.isChangeGridSizeEnabled()
-            plus_grid_size_button.isEnabled = !model.isAncestorGridMaxSize() && model.isChangeGridSizeEnabled()
+            val showChangeGridSizeButtons = model.isChangeGridSizeEnabled() && !model.hasSelectedTile()
+            minus_grid_size_button.isEnabled = !model.isAncestorGridMinSize() && showChangeGridSizeButtons
+            plus_grid_size_button.isEnabled = !model.isAncestorGridMaxSize() && showChangeGridSizeButtons
             ancestor_grid.gridLayoutManager.spanCount = model.ancestorTileDimension
             ancestorAdapter.setDataSet(items) // No longer get adapter animations for free, could calculate diff here and not reset
             ancestorAdapter.notifyDataSetChanged()
@@ -75,10 +77,14 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         plus_grid_size_button.setOnClickListener {
             model.increaseAncestorTiles()
+            AnimatorInflater.loadAnimator(context, R.animator.increase_bump_small).apply { setTarget(ancestor_grid) }
+                .start()
         }
 
         minus_grid_size_button.setOnClickListener {
             model.decreaseAncestorTiles()
+            AnimatorInflater.loadAnimator(context, R.animator.decrease_bump_small).apply { setTarget(ancestor_grid) }
+                .start()
         }
 
         childFragmentManager.addOnBackStackChangedListener {
