@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.android.synthetic.main.fragment_start.view.*
-import se.admdev.fractalviewer.ancestorconfig.ConfigViewModel
+import se.admdev.fractalviewer.ancestorconfig.isFirstTimeUser
 
 class StartFragment : Fragment() {
 
@@ -25,7 +24,11 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         configure_button.setOnClickListener { v ->
-            Navigation.findNavController(v).navigate(R.id.action_startFragment_to_coreConfigFragment)
+            if (activity.isFirstTimeUser()) {
+                Navigation.findNavController(v).navigate(R.id.action_startFragment_to_tutorialFragment)
+            } else {
+                Navigation.findNavController(v).navigate(R.id.action_startFragment_to_coreConfigFragment)
+            }
         }
 
         load_saved_config_button.setOnClickListener { v ->
@@ -40,7 +43,7 @@ class StartFragment : Fragment() {
         view.startBackgroundAnimation(background)
 
         background = view.flare_background_2.background as AnimationDrawable
-        view.postDelayed({view.startBackgroundAnimation(background)}, 1800)
+        view.postDelayed({ view.startBackgroundAnimation(background) }, 1800)
 
     }
 

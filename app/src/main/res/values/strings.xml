@@ -2,6 +2,7 @@
     <string name="app_name">FractalViewer</string>
 
     <string name="general_accept">Accept</string>
+    <string name="general_ok">OK</string>
     <string name="general_save">Save</string>
     <string name="general_yes">Yes</string>
     <string name="general_cancel">Cancel</string>
@@ -62,6 +63,7 @@
 
     <string name="start_settings">Settings</string>
     <string name="settings_tutorial">Tutorial</string>
+    <string name="settings_first_time_user_flag_reset">First time user flag reset</string>
     <string name="settings_tutorial_step_1">Define mathematical and logical rules to make a triangular fractal pattern:</string>
     <string name="settings_tutorial_step_2">Each cell represents a numerical value. A cell becomes filled(black) if the numerical value is different from zero. Each cell in the triangle depends on the cells above it.</string>
     <string name="settings_tutorial_step_3_summation_label">Summation example:</string>
@@ -77,6 +79,6 @@
     <string name="settings_tutorial_step_4_demo_operator">A \% B = </string>
     <string name="settings_tutorial_step_4_demo_operand_label">Select a integer to use:</string>
     <string name="settings_tutorial_step_4_demo_default_operand">2</string>
-    <string name="settings_tutorial_step_4_demo_result_label">Then below the input will be used with the modulo operator which can create nice fractal patterns all on its own. The tricky thing to understand is what the sum is in each step, take a moment to ponder.</string>
+    <string name="settings_tutorial_step_4_demo_result_label">Below the input will be used with the modulo operator which can create nice fractal patterns all on its own. The tricky thing to understand is what the sum is in each step, take a moment to ponder.</string>
 
 </resources>

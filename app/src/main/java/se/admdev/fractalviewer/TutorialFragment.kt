@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_tutorial.*
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreMiniature
+import se.admdev.fractalviewer.ancestorconfig.isFirstTimeUser
 import se.admdev.fractalviewer.ancestorconfig.model.*
+import se.admdev.fractalviewer.ancestorconfig.saveIsFirstTimeUser
 
 class TutorialFragment : Fragment() {
 
@@ -25,6 +29,13 @@ class TutorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        title.setOnLongClickListener {
+            Toast.makeText(view.context, R.string.settings_first_time_user_flag_reset, Toast.LENGTH_SHORT).show()
+            activity.saveIsFirstTimeUser(true)
+            true
+        }
+
         demo_grid_0.isSelected = true
         demo_grid_2.isSelected = true
         example_1.iterations = ITERATIONS_OF_THUMBNAIL //Pre set size to prevent thumbnail fractal from blinking in
@@ -32,6 +43,24 @@ class TutorialFragment : Fragment() {
         exampleCoreListItem =
             AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, exampleCore, ::onFinishLoadingExampleFractal)
 
+        setupInteractiveDemoControls()
+
+        val firstTimeUser = activity.isFirstTimeUser()
+        ok_button.isVisible = firstTimeUser
+        ok_button.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_tutorialFragment_to_coreConfigFragment)
+        }
+
+        val background = view.background as AnimationDrawable
+        view.startBackgroundAnimation(background)
+        createDemoFractal()
+
+        if (firstTimeUser) {
+            activity.saveIsFirstTimeUser(false)
+        }
+    }
+
+    private fun setupInteractiveDemoControls() {
         demo_grid_0.setOnClickListener {
             it.isSelected = !it.isSelected
             createDemoFractal()
@@ -66,10 +95,6 @@ class TutorialFragment : Fragment() {
             AnimatorInflater.loadAnimator(context, R.animator.decrease_bump).apply { setTarget(demo_operand) }.start()
             createDemoFractal()
         }
-
-        val background = view.background as AnimationDrawable
-        view.startBackgroundAnimation(background)
-        createDemoFractal()
     }
 
     private fun createDemoFractal() {

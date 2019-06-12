@@ -31,6 +31,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_startFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" >
+            <argument android:defaultValue="true"
+                android:name="first_time_user" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/coreConfigFragment"
@@ -44,9 +54,9 @@
             app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="AncestorCore"
+            android:defaultValue="@null"
             app:argType="se.admdev.fractalviewer.ancestorconfig.model.AncestorCore"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/fractalCanvasFragment"
@@ -80,7 +90,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="se.admdev.fractalviewer.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="SettingsFragment">
         <action
             android:id="@+id/action_settingsFragment_to_tutorialFragment"
             app:destination="@id/tutorialFragment"
@@ -93,5 +103,17 @@
     <fragment
         android:id="@+id/tutorialFragment"
         android:name="se.admdev.fractalviewer.TutorialFragment"
-        android:label="TutorialFragment" />
+        android:label="TutorialFragment">
+        <action
+            android:id="@+id/action_tutorialFragment_to_coreConfigFragment"
+            app:destination="@id/coreConfigFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="first_time_user"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
 </navigation>
