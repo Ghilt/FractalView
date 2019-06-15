@@ -21,6 +21,7 @@
     <string name="accessibility_play_button">play fractal button</string>
     <string name="accessibility_edit_button">edit fractal button</string>
     <string name="accessibility_delete_button">delete fractal button</string>
+    <string name="accessibility_accept_button">accept</string>
 
     <string name="canvas_start_iteration">Start</string>
     <string name="canvas_save_configuration">Save</string>

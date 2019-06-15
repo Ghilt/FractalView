@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.flexbox.FlexWrap
@@ -20,6 +22,7 @@ import se.admdev.fractalviewer.ancestorconfig.adapter.CompactPickerAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
 import se.admdev.fractalviewer.viewVisibility
+
 
 private const val ARG_OPTIONS_DATA = "argOptionsData"
 private const val ARG_RETURN_REQUEST_CODE = "argReturnRequestCode"
@@ -78,18 +81,30 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
             override fun afterTextChanged(s: Editable?) {
                 val editMode = (inputText.text.isNotEmpty()).viewVisibility
                 confirm_pick_button.visibility = editMode
-                dimming_overlay.visibility = editMode
             }
         })
 
-        confirm_pick_button.setOnClickListener {
-            val intent = Intent()
-            intent.putExtra(EXTRA_SELECTED, Operand(inputText.text.toString()))
-            targetFragment?.onActivityResult(
-                targetRequestCode, returnRequestCode, intent
-            )
-            dialog.dismiss()
+        inputText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                onAcceptClicked(inputText)
+                true
+            } else {
+                false
+            }
         }
+
+        confirm_pick_button.setOnClickListener {
+            onAcceptClicked(inputText)
+        }
+    }
+
+    private fun onAcceptClicked(inputText: EditText) {
+        val intent = Intent()
+        intent.putExtra(EXTRA_SELECTED, Operand(inputText.text.toString()))
+        targetFragment?.onActivityResult(
+            targetRequestCode, returnRequestCode, intent
+        )
+        dialog.dismiss()
     }
 
     override fun onItemClicked(position: Int) {

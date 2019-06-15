@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context=".ancestorconfig.CompactPickerFragment">
 
+    <!-- //Workaround Damnit android, maybe its the entire DialogFragment which is legacy, but this is not nice -->
+    <View
+        android:layout_width="1000dp"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/header_text"
         android:layout_width="wrap_content"
@@ -22,7 +30,7 @@
     <EditText
         android:id="@+id/free_form_edit_text"
         style="@style/FreeFormInput"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_margin="20dp"
         android:autofillHints="@string/placeholder_select_numeric_operand"
         android:background="@drawable/rounded_card"
@@ -33,19 +41,22 @@
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_text" />
+        app:layout_constraintTop_toBottomOf="@id/header_text"
+        android:imeOptions="actionDone"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/confirm_pick_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/general_accept"
-        android:translationZ="2dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="6dp"
+        android:layout_margin="4dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:background="@drawable/check_mark_ripple"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/free_form_edit_text" />
+        app:layout_constraintTop_toTopOf="@id/free_form_edit_text"
+        app:layout_constraintBottom_toBottomOf="@id/free_form_edit_text"
+        app:layout_constraintEnd_toEndOf="@id/free_form_edit_text"
+        android:contentDescription="@string/accessibility_accept_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_grid"
@@ -57,16 +68,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/free_form_edit_text" />
-
-    <View
-        android:id="@+id/dimming_overlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/dimming_background"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
