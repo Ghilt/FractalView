@@ -260,7 +260,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_card_ripple"
-                android:contentDescription="@string/start_settings"
+                android:contentDescription="@string/accessibility_decrease"
                 android:padding="5dp"
                 android:src="@drawable/left_arrow"
                 app:layout_constraintBottom_toBottomOf="@id/demo_operand"
@@ -272,7 +272,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_card_ripple"
-                android:contentDescription="@string/start_settings"
+                android:contentDescription="@string/accessibility_increase"
                 android:padding="5dp"
                 android:src="@drawable/right_arrow"
                 app:layout_constraintBottom_toBottomOf="@id/demo_operand"
@@ -330,7 +330,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_card_ripple"
-            android:text="@string/general_ok"/>
+            android:text="@string/general_ok" />
 
     </LinearLayout>
 </ScrollView>

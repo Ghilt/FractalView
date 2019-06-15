@@ -12,51 +12,85 @@
     <View
         android:layout_width="1000dp"
         android:layout_height="1dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/header_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="18sp"
         android:textColor="@color/white_1"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/operand_decrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/start_settings"
+        android:padding="5dp"
+        android:src="@drawable/arrow_left_ripple"
+        android:tint="@color/white_1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/free_form_edit_text"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/free_form_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/free_form_edit_text" />
 
     <EditText
         android:id="@+id/free_form_edit_text"
         style="@style/FreeFormInput"
         android:layout_width="0dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:autofillHints="@string/placeholder_select_numeric_operand"
         android:background="@drawable/rounded_card"
         android:hint="@string/placeholder_select_numeric_operand"
+        android:imeOptions="actionDone"
         android:inputType="numberSigned"
         android:maxLength="6"
         android:visibility="gone"
         app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/operand_increase"
+        app:layout_constraintStart_toEndOf="@id/operand_decrease"
+        app:layout_constraintTop_toBottomOf="@id/header_text" />
+
+    <ImageButton
+        android:id="@+id/operand_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/start_settings"
+        android:padding="5dp"
+        android:src="@drawable/arrow_right_ripple"
+        android:tint="@color/white_1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/free_form_edit_text"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_text"
-        android:imeOptions="actionDone"/>
+        app:layout_constraintStart_toEndOf="@id/free_form_edit_text"
+        app:layout_constraintTop_toTopOf="@id/free_form_edit_text" />
 
     <ImageButton
         android:id="@+id/confirm_pick_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="6dp"
-        android:layout_margin="4dp"
-        app:layout_constraintDimensionRatio="1:1"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/check_mark_ripple"
+        android:contentDescription="@string/accessibility_accept_button"
+        android:elevation="6dp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/free_form_edit_text"
         app:layout_constraintBottom_toBottomOf="@id/free_form_edit_text"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/free_form_edit_text"
-        android:contentDescription="@string/accessibility_accept_button" />
+        app:layout_constraintTop_toTopOf="@id/free_form_edit_text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_grid"

@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.ancestorconfig
 
+import android.animation.AnimatorInflater
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.flexbox.FlexWrap
@@ -21,6 +23,7 @@ import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.adapter.CompactPickerAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.CompactPickerItem
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
+import se.admdev.fractalviewer.isVisible
 import se.admdev.fractalviewer.viewVisibility
 
 
@@ -73,7 +76,9 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
 
         val inputText = free_form_edit_text
 
-        inputText.visibility = if (freeFormInput) View.VISIBLE else View.GONE
+        inputText.isVisible = freeFormInput
+        operand_increase.isVisible = freeFormInput
+        operand_decrease.isVisible = freeFormInput
 
         inputText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -93,17 +98,32 @@ class CompactPickerFragment<T : Parcelable> : DialogFragment(), CompactPickerAda
             }
         }
 
+        operand_increase.setOnClickListener {
+            val newVal = (inputText.text.toString().toIntOrNull() ?: 1) + 1
+            inputText.setText("$newVal", TextView.BufferType.EDITABLE)
+            AnimatorInflater.loadAnimator(context, R.animator.increase_bump_small).apply { setTarget(inputText) }.start()
+        }
+
+        operand_decrease.setOnClickListener {
+            val newVal = (inputText.text.toString().toIntOrNull() ?: 3) - 1
+            inputText.setText("$newVal", TextView.BufferType.EDITABLE)
+            AnimatorInflater.loadAnimator(context, R.animator.decrease_bump_small).apply { setTarget(inputText) }.start()
+        }
+
         confirm_pick_button.setOnClickListener {
             onAcceptClicked(inputText)
         }
     }
 
     private fun onAcceptClicked(inputText: EditText) {
-        val intent = Intent()
-        intent.putExtra(EXTRA_SELECTED, Operand(inputText.text.toString()))
-        targetFragment?.onActivityResult(
-            targetRequestCode, returnRequestCode, intent
-        )
+        val text = inputText.text.toString()
+        if (text.toIntOrNull() != null){
+            val intent = Intent()
+            intent.putExtra(EXTRA_SELECTED, Operand(inputText.text.toString()))
+            targetFragment?.onActivityResult(
+                targetRequestCode, returnRequestCode, intent
+            )
+        }
         dialog.dismiss()
     }
 
