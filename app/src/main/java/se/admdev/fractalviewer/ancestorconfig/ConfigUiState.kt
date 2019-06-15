@@ -46,21 +46,20 @@ class ConfigUiState(
     }
 
     fun updateGroupNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
-
         val duration = resources.getInteger(R.integer.animation_ms_group_operator_reveal).toLong()
 
         if (hasSelectedTile && !isCreateGroupOperationState) {
+            val enterFromDepth = AnimatorInflater.loadAnimator(context, R.animator.enter_from_depth)
+            enterFromDepth.setTarget(create_node_frame)
+            val gridFocus = AnimatorInflater.loadAnimator(context, R.animator.grid_focus)
+            gridFocus.setTarget(ancestor_grid)
 
             val started = startCreateGroupOperationNodeFragment()
 
             childFragmentManager.executePendingTransactions() // important line
-            if (started) AnimatorInflater.loadAnimator(context, R.animator.enter_from_depth).apply {
-                setTarget(
-                    create_node_frame
-                )
-            }.start()
+            if (started) enterFromDepth.start()
 
-            AnimatorInflater.loadAnimator(context, R.animator.grid_focus).apply { setTarget(ancestor_grid) }.start()
+            gridFocus.start()
             val transition = ChangeBounds()
             transition.interpolator = FastOutSlowInInterpolator()
             transition.duration = duration
