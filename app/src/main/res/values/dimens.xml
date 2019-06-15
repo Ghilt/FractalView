@@ -23,6 +23,7 @@
     <integer name="animation_ms">250</integer>
     <integer name="animation_ms_medium">300</integer>
     <integer name="animation_ms_long">400</integer>
+    <integer name="animation_ms_group_operator_reveal">500</integer>
     <integer name="animation_ms_extra_long">550</integer>
     <integer name="animation_ms_gradient_enter_fade">10</integer>
     <integer name="animation_ms_gradient_exit_fade">4000</integer>

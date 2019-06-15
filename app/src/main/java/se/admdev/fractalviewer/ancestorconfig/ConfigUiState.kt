@@ -5,11 +5,8 @@ import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
 import android.graphics.drawable.AnimationDrawable
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -50,16 +47,18 @@ class ConfigUiState(
 
     fun updateGroupNodeCreationMode(hasSelectedTile: Boolean) = fragment.apply {
 
-        val duration = resources.getInteger(R.integer.animation_ms_long).toLong()
+        val duration = resources.getInteger(R.integer.animation_ms_group_operator_reveal).toLong()
 
         if (hasSelectedTile && !isCreateGroupOperationState) {
 
-            val translateAnim = AnimationUtils.loadAnimation(context, R.anim.group_operator_dialog_reveal)
-            translateAnim.interpolator = FastOutSlowInInterpolator()
             val started = startCreateGroupOperationNodeFragment()
 
-            childFragmentManager.executePendingTransactions() // without this line the fragment is not animated with the line bellow
-            if (started) animateGroupNodeDialog(create_node_frame, translateAnim)
+            childFragmentManager.executePendingTransactions() // important line
+            if (started) AnimatorInflater.loadAnimator(context, R.animator.enter_from_depth).apply {
+                setTarget(
+                    create_node_frame
+                )
+            }.start()
 
             AnimatorInflater.loadAnimator(context, R.animator.grid_focus).apply { setTarget(ancestor_grid) }.start()
             val transition = ChangeBounds()
@@ -114,16 +113,6 @@ class ConfigUiState(
 
         list_empty_switcher.inAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         list_empty_switcher.outAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-    }
-
-    private fun animateGroupNodeDialog(frame: FrameLayout, translateAnim: Animation?) {
-        frame.startAnimation(translateAnim)
-        ViewAnimationUtils.createCircularReveal(
-            frame, frame.width / 2, frame.height / 3, 60f,
-            frame.height.toFloat()
-        ).apply {
-            duration = frame.context.resources.getInteger(R.integer.animation_ms_long).toLong()
-        }.start()
     }
 
     private fun fadeComponent(view: View, visible: Boolean) {

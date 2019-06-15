@@ -7,8 +7,8 @@
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:propertyName="scaleX"
         android:repeatCount="0"
-        android:valueFrom="1.0"
-        android:valueTo="@dimen/ancestor_grid_focus_scaling_target"
+        android:valueFrom="0"
+        android:valueTo="1"
         android:valueType="floatType" />
 
     <objectAnimator
@@ -16,23 +16,17 @@
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:propertyName="scaleY"
         android:repeatCount="0"
-        android:valueFrom="1.0"
-        android:valueTo="@dimen/ancestor_grid_focus_scaling_target"
-        android:valueType="floatType" />
-
-    <objectAnimator
-        android:duration="@integer/animation_ms_group_operator_reveal"
-        android:interpolator="@android:interpolator/decelerate_cubic"
-        android:propertyName="translationY"
         android:valueFrom="0"
-        android:valueTo="@dimen/ancestor_grid_focus_translation_target"
+        android:valueTo="1"
         android:valueType="floatType" />
 
+    <!--Just picking a from value, don't know if I can do percent or something that I can control so that it'll relate
+     to other UI parts-->
     <objectAnimator
         android:duration="@integer/animation_ms_group_operator_reveal"
-        android:interpolator="@android:interpolator/decelerate_cubic"
-        android:propertyName="elevation"
-        android:valueFrom="@dimen/view_elevation_small"
-        android:valueTo="@dimen/view_elevation_dialog"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translationY"
+        android:valueFrom="-400dp"
+        android:valueTo="0dp"
         android:valueType="floatType" />
 </set>
