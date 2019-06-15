@@ -54,7 +54,7 @@ class CreateGroupOperationNodeFragment : Fragment() {
 
         creationData.newNodeOperator.observe(this, Observer<Operator> {
             select_operator_button.setTextIfNotNull(it?.symbol)
-            select_operand_button.isEnabled = it != null && it != Operator.NONE
+            select_operand_button.isEnabled = it != null
         })
 
         creationData.newNodeOperand.observe(this, Observer<Operand> {
@@ -76,7 +76,7 @@ class CreateGroupOperationNodeFragment : Fragment() {
 
         select_group_operator_button.setOnClickListener {
             val data = ArrayList(GroupOperator.values().map { CompactPickerItem(it, it.symbol) })
-            CompactPickerFragment.newOperandInstance(this, data, REQUEST_CODE_GROUP_OPERATOR_PICKER)
+            CompactPickerFragment.newOperatorInstance(this, data, REQUEST_CODE_GROUP_OPERATOR_PICKER)
                 .show(fragmentManager, CompactPickerFragment.TAG)
         }
 

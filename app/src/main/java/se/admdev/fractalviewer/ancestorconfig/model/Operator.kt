@@ -7,9 +7,6 @@ import kotlin.math.pow
 
 @Parcelize
 enum class Operator : Parcelable{
-    NONE {
-        override val symbol = "<none>"
-    },
     ADDITION {
         override val function = { a: Int, b: Int -> a + b }
         override val symbol = "+"
