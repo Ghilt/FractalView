@@ -37,9 +37,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" >
-            <argument android:defaultValue="true"
-                android:name="first_time_user" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="first_time_user"
+                android:defaultValue="true" />
         </action>
     </fragment>
     <fragment
@@ -98,6 +99,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_glossaryFragment"
+            app:destination="@id/glossaryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -113,7 +121,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="first_time_user"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
+    <fragment
+        android:id="@+id/glossaryFragment"
+        android:name="se.admdev.fractalviewer.GlossaryFragment"
+        android:label="GlossaryFragment" />
 </navigation>

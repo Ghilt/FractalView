@@ -7,7 +7,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @Parcelize
-enum class GroupOperator : Parcelable {
+enum class GroupOperator : Parcelable, OperatorData {
     SUM {
         override val function = { a: List<Int> -> a.fold(0) { acc, v -> acc + v } }
         override val symbol = "Σ"
@@ -27,6 +27,4 @@ enum class GroupOperator : Parcelable {
 
     @IgnoredOnParcel
     open val function: (List<Int>) -> Int = { _ -> 0 }
-    @IgnoredOnParcel
-    open val symbol: String = ""
 }

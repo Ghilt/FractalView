@@ -144,10 +144,6 @@ class TutorialFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = TutorialFragment()
-
         const val ITERATIONS_OF_THUMBNAIL = 42
-
     }
 }

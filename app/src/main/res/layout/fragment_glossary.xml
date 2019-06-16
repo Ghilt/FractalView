@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ancestor_gradient_anim">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/edge_padding"
+        tools:context=".StartFragment">
+
+        <TextView
+            android:id="@+id/glossary_group_operator_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:gravity="center"
+            android:text="@string/settings_glossary_group_operator_title"
+            android:textColor="@color/white_1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/glossary_group_operator_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:text="@string/settings_glossary_group_operator_description"
+            android:textColor="@color/white_1"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/group_operator_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/list_item_glossary_entry" />
+
+        <TextView
+            android:id="@+id/glossary_mathematical_operator_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:gravity="center"
+            android:text="@string/settings_glossary_mathematical_operator_title"
+            android:textColor="@color/white_1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/glossary_mathematical_operator_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:text="@string/settings_glossary_mathematical_operator_description"
+            android:textColor="@color/white_1"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mathematical_operator_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/list_item_glossary_entry" />
+
+        <TextView
+            android:id="@+id/glossary_logical_operator_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:gravity="center"
+            android:text="@string/settings_glossary_logical_operator_title"
+            android:textColor="@color/white_1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/glossary_logical_operator_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:text="@string/settings_glossary_logical_operator_description"
+            android:textColor="@color/white_1"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/logical_operator_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/list_item_glossary_entry" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

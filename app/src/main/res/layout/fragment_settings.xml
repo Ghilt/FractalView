@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/edge_padding"
         android:orientation="vertical"
+        android:padding="@dimen/edge_padding"
         tools:context=".StartFragment">
 
         <TextView
@@ -18,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
             android:layout_marginTop="30dp"
+            android:elevation="@dimen/view_elevation_small"
+            android:gravity="center"
             android:text="@string/start_settings"
             android:textColor="@color/white_1"
-            android:gravity="center"
             android:textSize="40sp"
-            android:elevation="@dimen/view_elevation_small"
-            android:layout_margin="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,18 +32,47 @@
         <Button
             android:id="@+id/tutorial_button"
             style="@style/WhiteRoundedButton"
-            android:drawableEnd="@drawable/tutorial_helmet"
-            android:padding="20dp"
-            android:gravity="start|center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableEnd="@drawable/icon_tutorial_helmet"
             android:elevation="@dimen/view_elevation_large"
+            android:gravity="start|center"
+            android:padding="20dp"
             android:text="@string/settings_tutorial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/operator_explanation_button"
+            style="@style/WhiteRoundedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableEnd="@drawable/icon_description"
+            android:elevation="@dimen/view_elevation_large"
+            android:gravity="start|center"
+            android:padding="20dp"
+            android:text="@string/settings_operator_glossary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/credits_button"
+            style="@style/WhiteRoundedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableEnd="@drawable/icon_star"
+            android:elevation="@dimen/view_elevation_large"
+            android:gravity="start|center"
+            android:padding="20dp"
+            android:text="@string/settings_credits"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 </ScrollView>

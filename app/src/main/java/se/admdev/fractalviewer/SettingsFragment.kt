@@ -25,12 +25,11 @@ class SettingsFragment : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_tutorialFragment)
         }
 
+        operator_explanation_button.setOnClickListener { v ->
+            Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_glossaryFragment)
+        }
+
         val background = view.background as AnimationDrawable
         view.startBackgroundAnimation(background)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = SettingsFragment()
     }
 }

@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 import kotlin.math.pow
 
 @Parcelize
-enum class Operator : Parcelable{
+enum class Operator : Parcelable, OperatorData {
     ADDITION {
         override val function = { a: Int, b: Int -> a + b }
         override val symbol = "+"
@@ -19,13 +19,13 @@ enum class Operator : Parcelable{
         override val function = { a: Int, b: Int -> a * b }
         override val symbol = "*"
     },
-    EXPONENT {
-        override val function = { a: Int, b: Int -> a.toDouble().pow(b).toInt() }
-        override val symbol = "\u00F7"
-    },
     DIVISION {
         override val function = { a: Int, b: Int -> a / b }
         override val symbol = "\u005E"
+    },
+    EXPONENT {
+        override val function = { a: Int, b: Int -> a.toDouble().pow(b).toInt() }
+        override val symbol = "\u00F7"
     },
     MODULO {
         override val function = { a: Int, b: Int -> a % b }
@@ -40,11 +40,11 @@ enum class Operator : Parcelable{
         override val symbol = "≠"
     },
     ALMOST_EQUALS {
-        override val function = { a: Int, b: Int -> if ((a != 0 && b != 0) || a == 0 && b == 0 ) 1 else 0 }
+        override val function = { a: Int, b: Int -> if ((a != 0 && b != 0) || a == 0 && b == 0) 1 else 0 }
         override val symbol = "≈"
     },
     NOT_ALMOST_EQUALS {
-        override val function = { a: Int, b: Int -> if ((a == 0 && b != 0) || a != 0 && b == 0 ) 1 else 0 }
+        override val function = { a: Int, b: Int -> if ((a == 0 && b != 0) || a != 0 && b == 0) 1 else 0 }
         override val symbol = "!≈"
     },
     LESS_THAN {
@@ -64,20 +64,22 @@ enum class Operator : Parcelable{
         override val symbol = ">="
     },
     AND {
-        override val function = { a: Int, b: Int -> if (a > 0 && b >  0) 1 else 0}
+        override val function = { a: Int, b: Int -> if (a > 0 && b > 0) 1 else 0 }
         override val symbol = "&&"
     },
     OR {
-        override val function = { a: Int, b: Int -> if (a > 0 || b >  0) 1 else 0}
+        override val function = { a: Int, b: Int -> if (a > 0 || b > 0) 1 else 0 }
         override val symbol = "||"
     },
     XOR {
-        override val function = { a: Int, b: Int -> if ((a != 0 || b != 0) && (a == 0 || b == 0)) 1 else 0}
+        override val function = { a: Int, b: Int -> if ((a != 0 || b != 0) && (a == 0 || b == 0)) 1 else 0 }
         override val symbol = "xor"
     };
 
     @IgnoredOnParcel
     open val function: (Int, Int) -> Int = { _, _ -> 0 }
-    @IgnoredOnParcel
-    open val symbol: String = ""
+
+    companion object {
+        val MATHEMATICAL_OPERATORS = listOf(ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, EXPONENT, MODULO)
+    }
 }
