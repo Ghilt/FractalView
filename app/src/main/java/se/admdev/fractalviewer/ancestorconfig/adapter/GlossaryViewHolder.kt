@@ -17,7 +17,7 @@ class GlossaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(item: OperatorData) {
         name.text = item.symbol
-        description.text = item.symbol
+        description.text = itemView.resources.getString(item.description)
     }
 
     companion object {

@@ -47,6 +47,28 @@
     <string name="compact_picker_dialog_header_operand">Select operand</string>
     <string name="compact_picker_dialog_header_operator">Select operator</string>
 
+    <string name="operator_description_sum">Sum over inputs.</string>
+    <string name="operator_description_product">Take product of inputs.</string>
+    <string name="operator_description_max">Maximum. Take largest value.</string>
+    <string name="operator_description_min">Minimum. Take smallest value.</string>
+    <string name="operator_description_addition">Addition.</string>
+    <string name="operator_description_subtraction">Subtraction.</string>
+    <string name="operator_description_multiplication">Multiplication</string>
+    <string name="operator_description_division">Integer division.</string>
+    <string name="operator_description_exponent">Raise by some power.</string>
+    <string name="operator_description_modulo">Take the modulo.</string>
+    <string name="operator_description_equals">Return 1 if the inputs are exactly equal.</string>
+    <string name="operator_description_not_equal">Return 1 if the inputs are not equal.</string>
+    <string name="operator_description_almost_equals">Return 1 if the inputs are either both 0 or both not 0.</string>
+    <string name="operator_description_not_almpst_equals">Return 1 if one input is 0 and the other is not.</string>
+    <string name="operator_description_less_than">Return 1 if the first input is smaller than the second.</string>
+    <string name="operator_description_greater_than">Return 1 if the first input is larger than the second.</string>
+    <string name="operator_description_less_equal_than">Return 1 if the first input is smaller than or equal to the second.</string>
+    <string name="operator_description_greater_equal_than">Return 1 if the first input is greater than or equal to the second.</string>
+    <string name="operator_description_and">Return 1 if both operands are not 0.</string>
+    <string name="operator_description_or">Return 1 if one or both operands are not 0.</string>
+    <string name="operator_description_xor">Return 1 if exactly one operand is not 0.</string>
+
     <string name="dialog_delete_fractal_title">Are you sure you want to remove %s?</string>
     <string name="dialog_save_fractal_title">Choose a name for this fractal</string>
     <string name="dialog_save_fractal_hint">Name</string>
