@@ -29,6 +29,10 @@ class SettingsFragment : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_glossaryFragment)
         }
 
+        credits_button.setOnClickListener { v ->
+            Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_thirdPartyCreditFragment)
+        }
+
         val background = view.background as AnimationDrawable
         view.startBackgroundAnimation(background)
     }

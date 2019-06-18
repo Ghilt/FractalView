@@ -114,4 +114,6 @@
     <string name="settings_glossary_logical_operator_title">Logic operators</string>
     <string name="settings_glossary_logical_operator_description">The logic operator takes integers as input but treats them as boolean values. A zero is interpreted as false and everything else as true. The output from these operators is always either 0 or 1.</string>
 
+    <string name="settings_third_party_libraries_title">Third party libraries</string>
+
 </resources>

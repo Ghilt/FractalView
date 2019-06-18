@@ -106,6 +106,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_thirdPartyCreditFragment"
+            app:destination="@id/thirdPartyCreditFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -128,4 +135,8 @@
         android:id="@+id/glossaryFragment"
         android:name="se.admdev.fractalviewer.GlossaryFragment"
         android:label="GlossaryFragment" />
+    <fragment
+        android:id="@+id/thirdPartyCreditFragment"
+        android:name="se.admdev.fractalviewer.ThirdPartyCreditFragment"
+        android:label="ThirdPartyCreditFragment" />
 </navigation>
