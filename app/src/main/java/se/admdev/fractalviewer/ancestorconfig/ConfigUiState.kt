@@ -23,6 +23,10 @@ class ConfigUiState(
     private var isCreateOperationState: Boolean = false
 ) {
 
+    private val animEnterFromDepth = AnimatorInflater.loadAnimator(fragment.context, R.animator.enter_from_depth)
+    private val animFocusGrid = AnimatorInflater.loadAnimator(fragment.context, R.animator.grid_focus)
+    private val animUnFocusGrid = AnimatorInflater.loadAnimator(fragment.context, R.animator.grid_unfocus)
+
     private val constraintOriginalState = ConstraintSet().apply {
         clone(fragment.fragment_layout)
     }
@@ -49,17 +53,15 @@ class ConfigUiState(
         val duration = resources.getInteger(R.integer.animation_ms_group_operator_reveal).toLong()
 
         if (hasSelectedTile && !isCreateGroupOperationState) {
-            val enterFromDepth = AnimatorInflater.loadAnimator(context, R.animator.enter_from_depth)
-            enterFromDepth.setTarget(create_node_frame)
-            val gridFocus = AnimatorInflater.loadAnimator(context, R.animator.grid_focus)
-            gridFocus.setTarget(ancestor_grid)
+            animEnterFromDepth.setTarget(create_node_frame)
+            animFocusGrid.setTarget(ancestor_grid)
 
             val started = startCreateGroupOperationNodeFragment()
 
             childFragmentManager.executePendingTransactions() // important line
-            if (started) enterFromDepth.start()
+            if (started) animEnterFromDepth.start()
 
-            gridFocus.start()
+            animFocusGrid.start()
             val transition = ChangeBounds()
             transition.interpolator = FastOutSlowInInterpolator()
             transition.duration = duration
@@ -67,7 +69,7 @@ class ConfigUiState(
             constraintCreateGroupOperation.applyTo(fragment_layout)
 
         } else if (!hasSelectedTile && isCreateGroupOperationState) {
-            AnimatorInflater.loadAnimator(context, R.animator.grid_unfocus).apply { setTarget(ancestor_grid) }.start()
+            animUnFocusGrid.apply { setTarget(ancestor_grid) }.start()
             returnToOriginalState(duration)
         }
 
