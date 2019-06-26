@@ -9,7 +9,10 @@
         android:id="@+id/inline_if"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="@string/create_node_inline_if"
+        android:textColor="@color/white_1"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/select_operand_1_button"
         app:layout_constraintEnd_toEndOf="@id/select_operand_1_button"
         app:layout_constraintStart_toStartOf="@id/select_operand_1_button"
@@ -17,7 +20,7 @@
 
     <Button
         android:id="@+id/select_operand_1_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:freezesText="true"
         app:layout_constraintEnd_toStartOf="@id/select_operator_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +30,10 @@
         android:id="@+id/inline_then"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="@string/create_node_inline_then"
+        android:textColor="@color/white_1"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/select_operator_button"
         app:layout_constraintEnd_toEndOf="@id/select_operator_button"
         app:layout_constraintStart_toStartOf="@id/select_operator_button"
@@ -35,7 +41,7 @@
 
     <Button
         android:id="@+id/select_operator_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:freezesText="true"
         android:text="@string/placeholder_default_operator"
         app:layout_constrainedHeight="true"
@@ -46,7 +52,7 @@
 
     <Button
         android:id="@+id/select_operand_2_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:freezesText="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/select_operator_button"
@@ -57,6 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_node_inline_else"
+        android:textColor="@color/white_1"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/select_operand_2_button"
         app:layout_constraintEnd_toEndOf="@id/select_operand_2_button"
         app:layout_constraintStart_toStartOf="@id/select_operand_2_button"
@@ -64,7 +72,7 @@
 
     <Button
         android:id="@+id/select_operand_3_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:freezesText="true"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/select_operand_1_button" />
@@ -84,6 +92,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:text="@string/temp_close_x"
+        android:textColor="@color/white_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

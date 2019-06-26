@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content_text_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rounded_card_padded_ripple"
+    style="@style/WhiteRoundedButton.Operand"
+    android:layout_margin="5dp"
     android:elevation="@dimen/view_elevation_small"
-    android:padding="20dp" />
+    android:text="@string/placeholder_select_operand" />

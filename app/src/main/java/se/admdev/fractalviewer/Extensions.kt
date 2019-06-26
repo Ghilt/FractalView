@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ViewSwitcher
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
@@ -28,7 +29,8 @@ val RecyclerView.gridLayoutManager
 
 fun Char.getLabelColor(): Int {
     val ran = Random(this.toInt())
-    return Color.argb(1f, ran.nextFloat(), ran.nextFloat(), ran.nextFloat())
+    //Todo improve color generation so that resulting color always have good contrast with white and primaryBackground of app
+    return Color.argb(1f, ran.nextFloat(), ran.nextFloat() * 0.9f, ran.nextFloat() * 0.6f)
 }
 
 fun Int.toPixel(context: Context): Float {
@@ -50,8 +52,8 @@ fun View.setVisible() {
 
 var View.isVisible
     get() = visibility != View.GONE
-    set(value){
-        visibility = if(value) View.VISIBLE else View.GONE
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.GONE
     }
 
 fun getDarkTintColorStateList(v: View): ColorStateList = v.resources.getColorStateList(R.color.colorPrimaryDark, null)
@@ -66,10 +68,12 @@ fun TextView.showLabel(label: Char?) {
 fun Button.showOperand(op: Operand?) {
     if (op.isReferenceOperand()) {
         op?.label?.let {
+            setTextColor(ContextCompat.getColor(context, R.color.white_1))
             text = it.toString()
             backgroundTintList = ColorStateList.valueOf(it.getLabelColor())
         }
     } else if (op != null) {
+        setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
         text = op.name
         backgroundTintList = null
     } else {

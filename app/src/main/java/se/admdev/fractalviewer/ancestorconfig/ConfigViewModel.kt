@@ -1,10 +1,9 @@
 package se.admdev.fractalviewer.ancestorconfig
 
-import android.content.res.ColorStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import se.admdev.fractalviewer.ancestorconfig.model.*
-import se.admdev.fractalviewer.getLabelColor
+import se.admdev.fractalviewer.showOperand
 
 private const val ANCESTOR_TILE_INITIAL_SIZE = 3
 private const val ANCESTOR_TILE_MIN_SIZE = 3
@@ -76,7 +75,8 @@ class ConfigViewModel : ViewModel() {
     fun getAvailableOperandsArrayList() = ArrayList(getAvailableOperands() ?: listOf())
     private fun getAvailableOperands() = configNodes.value?.map {
         val name = it.label.toString()
-        CompactPickerItem(Operand(it), name) { this.backgroundTintList = ColorStateList.valueOf(it.label.getLabelColor()) }
+        val operand = Operand(it)
+        CompactPickerItem(Operand(it), name) { showOperand(operand) }
     }
 
     fun hasSelectedConfigNode() = configNodes.value?.any { it.selected } ?: false

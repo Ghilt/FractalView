@@ -23,7 +23,7 @@
     <Button
         android:layout_marginTop="15dp"
         android:id="@+id/select_group_operator_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         app:layout_constraintEnd_toStartOf="@+id/ancestor_grid_edit_node_creation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_text" />
@@ -43,7 +43,7 @@
 
     <Button
         android:id="@+id/select_operator_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:text="@string/placeholder_select_operator"
         app:layout_constraintEnd_toStartOf="@id/select_operand_button"
         app:layout_constraintStart_toEndOf="@id/ancestor_grid_edit_node_creation"
@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/select_operand_button"
-        style="@style/WhiteRoundedButton"
+        style="@style/WhiteRoundedButton.Operand"
         android:enabled="false"
         android:text="@string/placeholder_select_operand"
         app:layout_constraintStart_toEndOf="@id/select_operator_button"
