@@ -89,6 +89,7 @@
     <string name="settings_tutorial">Tutorial</string>
     <string name="settings_operator_glossary">Operator glossary</string>
     <string name="settings_credits">Third party libraries</string>
+    <string name="settings_credits_gson">Gson</string>
     <string name="settings_first_time_user_flag_reset">First time user flag reset</string>
     <string name="settings_tutorial_step_1">Define mathematical and logical rules to make a triangular fractal pattern:</string>
     <string name="settings_tutorial_step_2">Each cell represents a numerical value. A cell becomes filled(black) if the numerical value is different from zero. Each cell in the triangle depends on the cells above it.</string>
