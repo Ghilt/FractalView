@@ -75,7 +75,7 @@
 
     <string name="temp_close_x">✕</string>
 
-    <string name="start_welcome">FractalViewer\n• Explore\n• Create\n• View</string>
+    <string name="start_welcome">Maths</string>
     <string name="start_configure_button">Create</string>
     <string name="start_load_configuration_button">Load</string>
     <string name="start_load_configuration_button_edit">Edit</string>
