@@ -10,20 +10,10 @@ import android.view.View
 // TODO experimental drawing class
 class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    val list: MutableList<RectF> = mutableListOf()
+//    Rejected from experimentation on what is heaviest to draw
+//    val list: MutableList<RectF> = mutableListOf()
 
-    private val tempSize = 5
-
-    private var paths: MutableList<List<Path>> = mutableListOf()
-    private var paints: List<Paint> = List(tempSize) { i ->
-        Paint().apply {
-            isAntiAlias = false // still get blurry when zooming
-            style = Paint.Style.FILL
-            alpha = 255
-            strokeWidth = 2.toFloat()
-            color = Color.argb(1f, i / tempSize.toFloat(), i / tempSize.toFloat(), i / tempSize.toFloat())
-        }
-    }
+    private var paths: MutableList<Path> = mutableListOf()
 
     private val paint: Paint
     private var scaleFactor = 1f
@@ -77,10 +67,10 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
 //        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
 
-        paths.forEach { it.forEachIndexed { i, path -> canvas.drawPath(path, paints[i]) } }
+        paths.forEach { path -> canvas.drawPath(path, paint) }
 //        canvas.drawPath(path, paint)
 
-        list.forEach { canvas.drawRect(it, paint) }
+//        list.forEach { canvas.drawRect(it, paint) }
 
         canvas.restore()
 //        path.addRect(300f, 300f, 450f, 400f, Path.Direction.CCW)
@@ -93,17 +83,17 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    fun addRectTemp(iterationAsRectangles: List<RectF>) {
-        list.addAll(iterationAsRectangles)
-    }
+//    fun addRectTemp(iterationAsRectangles: List<RectF>) {
+//        list.addAll(iterationAsRectangles)
+//    }
 
 // When I had one giant path for entire fractal which lagged more than splitting it to one path per iteration
 //    fun addPathUpdate(pathUpdate: (List<Path>) -> Unit) {
 //        pathUpdate.invoke(paths)
 //    }
 
-    fun addPaths(newIterationPaths: List<Path>) {
-        paths.add(newIterationPaths)
+    fun addPaths(newIterationPath: Path) {
+        paths.add(newIterationPath)
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {

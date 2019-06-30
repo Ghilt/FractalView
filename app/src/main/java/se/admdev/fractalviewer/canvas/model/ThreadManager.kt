@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class ThreadManager(
     private val generator: FractalGenerator,
-    listener: (List<Path>) -> Unit
+    listener: (Path) -> Unit
 ) {
 
     private val artist = CellularFractalArtist()

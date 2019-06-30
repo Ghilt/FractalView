@@ -140,7 +140,7 @@ class FractalGenerator(private val core: AncestorCore) {
 
     /* To be used for miniature thumbnail of fractal */
     /* TODO clean up code here, is a bit messy responsibility wise */
-    fun iterateOver(action: (Int, List<Cell>) -> List<Path>): List<List<Path>> =
+    fun iterateOver(action: (Int, List<Cell>) -> Path): List<Path> =
         frac.map { (itr, value) -> action(itr, value) }
 
 }

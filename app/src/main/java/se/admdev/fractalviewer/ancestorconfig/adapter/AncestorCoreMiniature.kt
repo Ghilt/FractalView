@@ -12,10 +12,10 @@ class AncestorCoreMiniature(
     notifyAdapterOnMiniatureDone: () -> Unit
 ) {
 
-    var miniatureData: List<List<Path>>? = null
+    var miniatureData: List<Path>? = null
 
     init {
-        val listener: (List<List<Path>>) -> Unit = {
+        val listener: (List<Path>) -> Unit = {
             miniatureData = it
             notifyAdapterOnMiniatureDone.invoke()
         }
@@ -25,17 +25,17 @@ class AncestorCoreMiniature(
     private class CreateFractalMiniatureTask internal constructor(
         val miniatureSize: Int,
         val core: AncestorCore,
-        val listener: (List<List<Path>>) -> Unit
-    ) : AsyncTask<Void, Void, List<List<Path>>>() {
+        val listener: (List<Path>) -> Unit
+    ) : AsyncTask<Void, Void, List<Path>>() {
 
-        override fun doInBackground(vararg params: Void): List<List<Path>> {
+        override fun doInBackground(vararg params: Void): List<Path> {
             val generator = FractalGenerator(core)
             repeat(miniatureSize) { generator.generateNextIteration() }
             val artist = CellularFractalArtist()
             return generator.iterateOver { itr, value -> artist.getIterationAsPaths(itr, value) }
         }
 
-        override fun onPostExecute(result: List<List<Path>>) {
+        override fun onPostExecute(result: List<Path>) {
             listener.invoke(result)
         }
     }

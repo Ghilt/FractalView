@@ -68,7 +68,7 @@ class FractalCanvasFragment : Fragment() {
         workManager.stopWork()
     }
 
-    private fun onGeneratedIteration(pathUpdate: List<Path>) {
+    private fun onGeneratedIteration(pathUpdate: Path) {
         activity?.runOnUiThread {
             if (view != null) {
                 iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)

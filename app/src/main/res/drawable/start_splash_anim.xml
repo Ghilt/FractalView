@@ -52,7 +52,7 @@
                 <objectAnimator
                     android:propertyName="fillAlpha"
                     android:startOffset="0"
-                    android:duration="3000"
+                    android:duration="500"
                     android:valueFrom="0"
                     android:valueTo="0.9"
                     android:valueType="floatType"

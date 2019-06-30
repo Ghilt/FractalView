@@ -12,20 +12,9 @@ import se.admdev.fractalviewer.canvas.CellularFractalArtist.Companion.CELL_SIZE
 /* Trimmed down version of the fractal view, slight case of duplicated code for the time being*/
 class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private val tempSize = 5
-
     var iterations = 0
 
-    private var paths: MutableList<List<Path>> = mutableListOf()
-    private var paints: List<Paint> = List(tempSize) { i ->
-        Paint().apply {
-            isAntiAlias = false // still get blurry when zooming
-            style = Paint.Style.FILL
-            alpha = 255
-            strokeWidth = 2.toFloat()
-            color = Color.argb(1f, i / tempSize.toFloat(), i / tempSize.toFloat(), i / tempSize.toFloat())
-        }
-    }
+    private var paths: MutableList<Path> = mutableListOf()
 
     private val paint: Paint
 
@@ -70,11 +59,11 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         val midPointX = (width / 2).toFloat()
         canvas.save()
         canvas.translate(midPointX, 0f)
-        paths.forEach { it.forEachIndexed { i, path -> canvas.drawPath(path, paints[i]) } }
+        paths.forEach { path -> canvas.drawPath(path, paint) }
         canvas.restore()
     }
 
-    private fun addPaths(newIterationPaths: List<Path>) {
+    private fun addPaths(newIterationPaths: Path) {
         paths.add(newIterationPaths)
     }
 
@@ -82,7 +71,7 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         paths.clear()
     }
 
-    fun setFractalData(miniatureData: List<List<Path>>?) {
+    fun setFractalData(miniatureData: List<Path>?) {
         iterations = miniatureData?.size ?: 0
         clearData()
         miniatureData?.apply {
