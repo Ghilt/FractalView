@@ -96,10 +96,10 @@
     <string name="settings_tutorial_step_3_summation_label">Summation example:</string>
     <string name="settings_tutorial_step_3">To begin creating a fractal you first need to select which cells that shall affect the next cell in line for calculation:</string>
     <string name="settings_tutorial_step_4">Above is an example of how the next cell value would be calculated if you chose to take the sum in a particular pattern of previous cells. The above would result in ever increasing values, and won\'t make for a good fractal.</string>
-    <string name="settings_tutorial_step_5">That will conclude this brief tutorial. I hope this  points you in the right direction when trying to understand this app. You can find a list of all available operators in the settings.</string>
+    <string name="settings_tutorial_step_5">As can be noticed by experimenting in the demo the initial cell is always filled with a value of 1, this is not currently configurable in the app. \n\nThat will conclude this brief tutorial. I hope this points you in the right direction when trying to understand this app. You can find a list of all available operators in the settings.</string>
 
     <string name="settings_tutorial_step_4_demo_label">Interactive demo</string>
-    <string name="settings_tutorial_step_4_demo_label_sum">Take the sum(click to select/deselect):</string>
+    <string name="settings_tutorial_step_4_demo_label_sum">Below is a simplified example with a small 1x3 grid. Click to select/deselect which cells to take the sum of:</string>
     <string name="settings_tutorial_step_4_demo_a_sum">A = Σ( </string>
     <string name="settings_tutorial_step_4_demo_b">B = </string>
     <string name="settings_tutorial_step_4_demo_a_sum_end">)</string>

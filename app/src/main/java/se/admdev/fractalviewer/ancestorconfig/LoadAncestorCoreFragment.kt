@@ -41,7 +41,7 @@ class LoadAncestorCoreFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listAdapter = AncestorCoreAdapter(ITERATIONS_OF_THUMBNAIL ,this::onAncestorCoreClicked)
+        listAdapter = AncestorCoreAdapter(ITERATIONS_OF_THUMBNAIL, this::onAncestorCoreClicked)
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -78,7 +78,8 @@ class LoadAncestorCoreFragment : Fragment() {
         (list?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
         sync.action = { coreList ->
-            list.post { // WORKAROUND: This is needed for the animation show up properly on some devices
+            list.post {
+                // WORKAROUND: This is needed for the animation show up properly on some devices
                 switcher?.showList(coreList.isNotEmpty())
                 emptyText?.setText(R.string.start_load_configuration_no_saved)
                 listAdapter.setDataSet(coreList)
@@ -144,7 +145,7 @@ class LoadAncestorCoreFragment : Fragment() {
         activity: Activity,
         val listener: (List<AncestorCore>) -> Unit
     ) : AsyncTask<Void, Void, List<AncestorCore>>() {
-        val weakRefActivity = WeakReference<Activity>(activity)
+        val weakRefActivity = WeakReference(activity)
         override fun doInBackground(vararg params: Void) = weakRefActivity.get()?.loadAncestorCores()
         override fun onPostExecute(result: List<AncestorCore>?) {
             listener.invoke(result.orEmpty())
@@ -154,6 +155,6 @@ class LoadAncestorCoreFragment : Fragment() {
     companion object {
         const val AWAIT_ENTER_ANIMATION = "awaitAnimation"
         const val AWAIT_PREFS_LOADING = "awaitPrefsLoading"
-        const val ITERATIONS_OF_THUMBNAIL = 10
+        const val ITERATIONS_OF_THUMBNAIL = 11
     }
 }

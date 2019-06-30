@@ -144,6 +144,6 @@ class TutorialFragment : Fragment() {
     }
 
     companion object {
-        const val ITERATIONS_OF_THUMBNAIL = 42
+        const val ITERATIONS_OF_THUMBNAIL = 43
     }
 }

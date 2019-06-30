@@ -9,15 +9,16 @@ import kotlin.math.absoluteValue
 class FractalGenerator(private val core: AncestorCore) {
     private val frac = mutableMapOf<Int, List<Cell>>()
 
-    init {
-        //todo, get starting seed from core?
-        frac[0] = listOf(Cell(1, Coord(0, 0), listOf()))
-    }
-
     val iterationsCompleted
         get() = frac.size
 
     fun generateNextIteration(): Boolean {
+        if (iterationsCompleted == 0){
+            //todo, get starting seed from core for first iteration?
+            frac[0] = listOf(Cell(1, Coord(0, 0), listOf()))
+            return true
+        }
+
         val lastItr = frac[iterationsCompleted - 1] ?: return false
         val smallestWindow = core.midX + 1
         val largestWindow = core.width - 1

@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import se.admdev.fractalviewer.canvas.CellularFractalArtist.Companion.CELL_SIZE
+import kotlin.math.min
 
 /* Trimmed down version of the fractal view, slight case of duplicated code for the time being*/
 class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -41,13 +42,13 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
 
         val width = when (widthMode) {
             MeasureSpec.EXACTLY -> widthSize
-            MeasureSpec.AT_MOST -> Math.min(desiredWidth, widthSize)
+            MeasureSpec.AT_MOST -> min(desiredWidth, widthSize)
             else -> desiredWidth
         }
 
         val height = when (heightMode) {
             MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> Math.min(desiredHeight, heightSize)
+            MeasureSpec.AT_MOST -> min(desiredHeight, heightSize)
             else -> desiredHeight
         }
 
