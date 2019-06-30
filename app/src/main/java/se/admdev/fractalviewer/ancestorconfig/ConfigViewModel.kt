@@ -53,7 +53,7 @@ class ConfigViewModel : ViewModel() {
     fun isAncestorGridMinSize() = ancestorTileDimension == ANCESTOR_TILE_MIN_SIZE
     fun isAncestorGridMaxSize() = ancestorTileDimension == ANCESTOR_TILE_MAX_SIZE
 
-    fun clearNodeCreationData() {
+    fun clearGroupNodeCreationData() {
         // OK, lists wont be long
         ancestorTiles.value?.forEach {
             it.forEach { tile -> tile.selected = false }

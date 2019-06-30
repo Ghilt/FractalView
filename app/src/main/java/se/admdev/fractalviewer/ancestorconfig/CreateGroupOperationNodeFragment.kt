@@ -98,7 +98,7 @@ class CreateGroupOperationNodeFragment : Fragment() {
         accept_selection_button.setOnClickListener {
             val success = model.saveNewGroupOperationNode(creationData.newGroupOperator.value, creationData.newNodeOperator.value, creationData.newNodeOperand.value)
             if (success) {
-                fragmentManager?.popBackStack()
+                model.clearGroupNodeCreationData()
             } else {
                 Toast.makeText(context, R.string.general_not_enough_input_error, Toast.LENGTH_SHORT).show()
             }

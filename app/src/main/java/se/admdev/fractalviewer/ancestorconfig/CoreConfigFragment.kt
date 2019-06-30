@@ -3,6 +3,7 @@ package se.admdev.fractalviewer.ancestorconfig
 import android.animation.AnimatorInflater
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,7 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupInterceptBackButton(view)
 
         arguments?.let { arg ->
             CoreConfigFragmentArgs.fromBundle(arg).ancestorCore?.let { model.loadFromAncestorCore(it) }
@@ -87,15 +89,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                 .start()
         }
 
-        childFragmentManager.addOnBackStackChangedListener {
-            // Not the best/temp solution. Need to clear selection when user backs out from node creation
-            // and there is no good onBack intercept for Fragments. Alternative is to handle in activity
-            if (childFragmentManager.backStackEntryCount == 0) {
-                model.clearNodeCreationData()
-                uiState.hideDim()
-            }
-        }
-
         dimming_overlay.setOnClickListener { /*Prevent click through*/ }
         grid_background.setOnClickListener { /*Prevent click through*/ }
 
@@ -113,6 +106,35 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
 
         uiState = ConfigUiState(this)
         uiState.onViewCreated()
+    }
+
+    private fun setupInterceptBackButton(view: View) {
+        view.isFocusableInTouchMode = true // Needed to onBack intercept in fragment
+        view.requestFocus()
+        view.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
+                val isBackPress = keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP
+                if (isBackPress) {
+                    return onBack()
+                }
+                return false
+            }
+        })
+    }
+
+    fun onBack(): Boolean {
+        return when {
+            model.hasSelectedTile() -> {
+                model.clearGroupNodeCreationData()
+                uiState.hideDim()
+                true
+            }
+            model.hasSelectedConfigNode() -> {
+                model.clearConfigNodeSelection()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onDestroy() {
