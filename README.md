@@ -3,7 +3,7 @@
 Small TODO list for what is left until 1.0:
 
 1. Fix pinch to zoom
-2. Save button animated drawable in fractal canvas fragment
+2. do special treatment on landscape mode for config fragment
 3. Make sure there is no race condition in the thread handling
 4. Come up with name for app
 5. Improve the ancestor tile drawable
@@ -12,3 +12,4 @@ Small TODO list for what is left until 1.0:
 9. Get starting seed for pyramid from core/ user configurable
 9.b Do other shapes than triangle
 10. Credit https://shapeshifter.design/ for being a nice tool in third party credit
+11. unify save and load icons to use the style as in fractal canvas fragment

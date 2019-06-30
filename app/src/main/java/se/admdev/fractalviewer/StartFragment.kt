@@ -38,7 +38,7 @@ class StartFragment : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_settingsFragment)
         }
 
-        splash_image.playAnimatedDrawable(R.drawable.start_splash_anim)
+        splash_image.playAnimatedDrawable(R.drawable.anim_start_splash)
 
         val gridBackground = container.background as AnimationDrawable
         view.startBackgroundAnimation(gridBackground)

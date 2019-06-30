@@ -44,7 +44,7 @@
         android:background="@drawable/square_ripple"
         android:contentDescription="@string/accessibility_play_button"
         android:padding="10dp"
-        android:src="@drawable/play_fractal"
+        android:src="@drawable/anim_play_fractal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/delete_button"
         app:layout_constraintTop_toTopOf="parent" />

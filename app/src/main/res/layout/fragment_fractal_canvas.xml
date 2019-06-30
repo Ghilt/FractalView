@@ -12,20 +12,22 @@
         style="@style/BlueButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:elevation="@dimen/view_elevation_small"
+        app:layout_constraintDimensionRatio="1:1"
         android:contentDescription="@string/accessibility_play_button"
+        android:src="@drawable/anim_play_to_pause"
+        android:elevation="@dimen/view_elevation_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button_save"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_save"
         style="@style/BlueButton"
         android:layout_width="wrap_content"
-        android:drawableEnd="@drawable/icon_save"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/anim_save"
+        android:contentDescription="@string/canvas_save_configuration"
         android:elevation="@dimen/view_elevation_small"
-        android:text="@string/canvas_save_configuration"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_itr" />
 

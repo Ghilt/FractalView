@@ -46,10 +46,13 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_save.setOnClickListener {
-
+            button_save.playAnimatedDrawable(R.drawable.anim_save)
             context?.let {
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle(R.string.dialog_save_fractal_title)
+                builder.setOnCancelListener {
+                    button_save.playAnimatedDrawable(R.drawable.anim_cancel_save)
+                }
 
                 @SuppressLint("InflateParams") // Maybe deal with this later
                 val layout = layoutInflater.inflate(R.layout.alert_dialog_edit_text, null)
@@ -61,7 +64,9 @@ class FractalCanvasFragment : Fragment() {
                         .show()
                     button_save.setGone()
                 }
-                builder.setNegativeButton(R.string.general_cancel) { dialog, _ -> dialog.cancel() }
+                builder.setNegativeButton(R.string.general_cancel) { dialog, _ ->
+                    dialog.cancel()
+                }
                 builder.show()
             }
         }
@@ -73,9 +78,9 @@ class FractalCanvasFragment : Fragment() {
     private fun toggleFractalGeneration() {
         workManager.toggleGenerationThread()
         if (workManager.isRunning()) {
-            button_itr.playAnimatedDrawable(R.drawable.play_to_pause)
+            button_itr.playAnimatedDrawable(R.drawable.anim_play_to_pause)
         } else {
-            button_itr.playAnimatedDrawable(R.drawable.pause_to_play)
+            button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
         }
     }
 
@@ -88,7 +93,7 @@ class FractalCanvasFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         workManager.stopWork()
-        button_itr.playAnimatedDrawable(R.drawable.pause_to_play)
+        button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
     }
 
     private fun onGeneratedIteration(pathUpdate: Path) {
@@ -109,7 +114,7 @@ class FractalCanvasFragment : Fragment() {
     private fun onGenerationPaused() {
         workManager.toggleGenerationThread()
         button_itr?.post {
-            button_itr?.playAnimatedDrawable(R.drawable.pause_to_play)
+            button_itr?.playAnimatedDrawable(R.drawable.anim_pause_to_play)
         }
     }
 
