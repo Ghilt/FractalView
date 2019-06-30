@@ -12,4 +12,3 @@ Small TODO list for what is left until 1.0:
 9. Get starting seed for pyramid from core/ user configurable
 9.b Do other shapes than triangle
 10. Credit https://shapeshifter.design/ for being a nice tool in third party credit
-11. unify save and load icons to use the style as in fractal canvas fragment
