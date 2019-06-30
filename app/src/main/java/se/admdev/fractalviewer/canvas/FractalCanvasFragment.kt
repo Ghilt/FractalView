@@ -35,12 +35,12 @@ class FractalCanvasFragment : Fragment() {
             ancestorCore = core ?: throw IllegalArgumentException("Error: No ancestor core for FractalCanvasFragment")
 
             generator = FractalGenerator(ancestorCore)
-            workManager = ThreadManager(generator, ::onGeneratedIteration)
+            workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
         }
 
         button_itr.setOnClickListener {
-            workManager.toggleGenerationThread()
-            button_itr.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+            workManager.clearGenerationPauseIteration()
+            toggleFractalGeneration()
         }
 
         button_save.setOnClickListener {
@@ -61,6 +61,14 @@ class FractalCanvasFragment : Fragment() {
                 builder.show()
             }
         }
+
+        workManager.pauseAfterReachingIteration = PAUSE_AUTO_START_FRACTAL_GENERATION
+        toggleFractalGeneration()
+    }
+
+    private fun toggleFractalGeneration() {
+        workManager.toggleGenerationThread()
+        button_itr?.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
     }
 
     override fun onStop() {
@@ -81,5 +89,18 @@ class FractalCanvasFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun onGenerationPaused() {
+        workManager.toggleGenerationThread()
+        button_itr?.post {
+            button_itr?.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+        }
+    }
+
+    companion object {
+
+        // Autostart fractal generation but pause it after #nbr of iterations
+        const val PAUSE_AUTO_START_FRACTAL_GENERATION = 51
     }
 }

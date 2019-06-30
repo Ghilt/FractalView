@@ -10,17 +10,26 @@ import java.util.concurrent.TimeUnit
 
 class ThreadManager(
     private val generator: FractalGenerator,
-    listener: (Path) -> Unit
+    listener: (Path) -> Unit,
+    pausedListener: () -> Unit
 ) {
 
+    var pauseAfterReachingIteration = -1
     private val artist = CellularFractalArtist()
     private val threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
 
     private val periodicTask = Runnable {
         try {
-            generator.generateNextIteration()
-            val update = artist.getIterationAsPaths(generator.iterationsCompleted - 1, generator.getLastIteration())
-            listener(update)
+            if (generator.iterationsCompleted == pauseAfterReachingIteration){
+                // Did have some race-condition bug here, it seem to have gone away #famous_last_words
+                pausedListener()
+                pauseAfterReachingIteration = -1
+            } else {
+                generator.generateNextIteration()
+                val update = artist.getIterationAsPaths(generator.iterationsCompleted - 1, generator.getLastIteration())
+                listener(update)
+            }
+
         } catch (e: Exception) {
             Log.d("ThreadManager", e.message)
         }
@@ -49,6 +58,10 @@ class ThreadManager(
     }
 
     fun isRunning() = future != null
+
+    fun clearGenerationPauseIteration() {
+        pauseAfterReachingIteration = -1
+    }
 
     companion object {
         private const val DELAY_GENERATION_MS = 10L
