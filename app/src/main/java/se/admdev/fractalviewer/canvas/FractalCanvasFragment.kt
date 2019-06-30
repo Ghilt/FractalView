@@ -17,6 +17,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
+import se.admdev.fractalviewer.playAnimatedDrawable
 import se.admdev.fractalviewer.setGone
 
 class FractalCanvasFragment : Fragment() {
@@ -56,7 +57,8 @@ class FractalCanvasFragment : Fragment() {
 
                 builder.setPositiveButton(R.string.general_save) { _, _ ->
                     activity.saveAncestorCore(ancestorCore, layout.dialog_name_input.text.toString())
-                    Snackbar.make(button_save, R.string.canvas_save_configuration_feedback, Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(button_save, R.string.canvas_save_configuration_feedback, Snackbar.LENGTH_SHORT)
+                        .show()
                     button_save.setGone()
                 }
                 builder.setNegativeButton(R.string.general_cancel) { dialog, _ -> dialog.cancel() }
@@ -70,7 +72,11 @@ class FractalCanvasFragment : Fragment() {
 
     private fun toggleFractalGeneration() {
         workManager.toggleGenerationThread()
-        button_itr?.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+        if (workManager.isRunning()) {
+            button_itr.playAnimatedDrawable(R.drawable.play_to_pause)
+        } else {
+            button_itr.playAnimatedDrawable(R.drawable.pause_to_play)
+        }
     }
 
     override fun onResume() {
@@ -78,10 +84,11 @@ class FractalCanvasFragment : Fragment() {
         workManager.refreshThreadPoolIfNeeded()
 
     }
+
     override fun onStop() {
         super.onStop()
         workManager.stopWork()
-        button_itr?.setText(R.string.canvas_start_iteration)
+        button_itr.playAnimatedDrawable(R.drawable.pause_to_play)
     }
 
     private fun onGeneratedIteration(pathUpdate: Path) {
@@ -102,13 +109,13 @@ class FractalCanvasFragment : Fragment() {
     private fun onGenerationPaused() {
         workManager.toggleGenerationThread()
         button_itr?.post {
-            button_itr?.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
+            button_itr?.playAnimatedDrawable(R.drawable.pause_to_play)
         }
     }
 
     companion object {
 
         // Autostart fractal generation but pause it after #nbr of iterations
-        const val PAUSE_AUTO_START_FRACTAL_GENERATION = 51
+        const val PAUSE_AUTO_START_FRACTAL_GENERATION = 251
     }
 }

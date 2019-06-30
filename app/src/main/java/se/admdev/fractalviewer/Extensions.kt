@@ -3,13 +3,13 @@ package se.admdev.fractalviewer
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.util.TypedValue
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.ViewSwitcher
+import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import se.admdev.fractalviewer.ancestorconfig.model.Operand
@@ -93,4 +93,10 @@ fun View.startBackgroundAnimation(animDrawable: AnimationDrawable) {
     animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_enter_fade))
     animDrawable.setExitFadeDuration(resources.getInteger(R.integer.animation_ms_gradient_exit_fade))
     animDrawable.start()
+}
+
+fun ImageView?.playAnimatedDrawable(animRes: Int) = this?.let {
+    val d = ResourcesCompat.getDrawable(resources, animRes, null) as AnimatedVectorDrawable
+    this.setImageDrawable(d)
+    d.start()
 }

@@ -1,12 +1,10 @@
 package se.admdev.fractalviewer
 
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_start.*
@@ -40,9 +38,7 @@ class StartFragment : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_startFragment_to_settingsFragment)
         }
 
-        val d = ResourcesCompat.getDrawable(resources, R.drawable.start_splash_anim, null) as AnimatedVectorDrawable
-        splash_image.setImageDrawable(d)
-        d.start()
+        splash_image.playAnimatedDrawable(R.drawable.start_splash_anim)
 
         val gridBackground = container.background as AnimationDrawable
         view.startBackgroundAnimation(gridBackground)
