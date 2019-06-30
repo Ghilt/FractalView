@@ -16,7 +16,7 @@ class ThreadManager(
 
     var pauseAfterReachingIteration = -1
     private val artist = CellularFractalArtist()
-    private val threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
+    private var threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
 
     private val periodicTask = Runnable {
         try {
@@ -55,12 +55,19 @@ class ThreadManager(
         future?.cancel(false)
         future = null
         threadPool.shutdown()
+        Log.d("ThreadManager", "Shutting down fractal thread manager: $this, $threadPool")
     }
 
     fun isRunning() = future != null
 
     fun clearGenerationPauseIteration() {
         pauseAfterReachingIteration = -1
+    }
+
+    fun refreshThreadPoolIfNeeded() {
+        if (threadPool.isTerminated) {
+            threadPool = Executors.newScheduledThreadPool(5) as ScheduledThreadPoolExecutor
+        }
     }
 
     companion object {

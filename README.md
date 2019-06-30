@@ -12,4 +12,3 @@ Small TODO list for what is left until 1.0:
 9. Get starting seed for pyramid from core/ user configurable
 9.b Do other shapes than triangle
 10. Make back button in configuration back out of inline mode instead of backing to start
-11. Fix minimize crash in canvas fragment (minimize app and start the generation again)

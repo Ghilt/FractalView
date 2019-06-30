@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.canvas
 
+import android.annotation.SuppressLint
 import android.graphics.Path
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,7 @@ class FractalCanvasFragment : Fragment() {
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle(R.string.dialog_save_fractal_title)
 
+                @SuppressLint("InflateParams") // Maybe deal with this later
                 val layout = layoutInflater.inflate(R.layout.alert_dialog_edit_text, null)
                 builder.setView(layout)
 
@@ -71,9 +73,15 @@ class FractalCanvasFragment : Fragment() {
         button_itr?.setText(if (workManager.isRunning()) R.string.canvas_stop_iteration else R.string.canvas_start_iteration)
     }
 
+    override fun onResume() {
+        super.onResume()
+        workManager.refreshThreadPoolIfNeeded()
+
+    }
     override fun onStop() {
         super.onStop()
         workManager.stopWork()
+        button_itr?.setText(R.string.canvas_start_iteration)
     }
 
     private fun onGeneratedIteration(pathUpdate: Path) {
