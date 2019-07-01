@@ -31,7 +31,15 @@ class AncestorCoreAdapter(private val miniatureSize: Int, private val listener: 
     }
 
     fun removeItem(position: Int, core: AncestorCore) {
+        val sizeBefore = data.size
         data = data.filter { it.core.name != core.name }
-        notifyItemRemoved(position)
+        val nbrRemoved = sizeBefore - data.size
+        if (nbrRemoved == 1){
+            notifyItemRemoved(position)
+        } else {
+            // As deletion only looks at name it is possible to remove several items at once
+            // Todo make deletion look either at an id or implement equals
+            notifyDataSetChanged()
+        }
     }
 }
