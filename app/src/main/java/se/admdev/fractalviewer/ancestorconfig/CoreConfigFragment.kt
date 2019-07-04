@@ -137,11 +137,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        model.clearConfigData()
-    }
-
     override fun onTileClicked(position: Int) {
         model.ancestorTiles.triggerObserver()
     }

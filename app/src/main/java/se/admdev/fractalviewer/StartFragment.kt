@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_start.*
+import se.admdev.fractalviewer.ancestorconfig.ConfigViewModel
 import se.admdev.fractalviewer.ancestorconfig.isFirstTimeUser
 
 class StartFragment : Fragment() {
@@ -17,6 +19,11 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_start, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ViewModelProviders.of(requireActivity()).get(ConfigViewModel::class.java).clearConfigData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

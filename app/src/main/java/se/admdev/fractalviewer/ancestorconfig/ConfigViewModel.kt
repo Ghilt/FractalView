@@ -161,6 +161,7 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun clearConfigData() {
+        // TODO just create this viewmodel bound the the relevant fragment instead of activity
         loadedFromCore = false
         configNodes.value?.clear()
     }
