@@ -44,7 +44,6 @@ class ConfigUiState(
     private val constraintCreateConfigNode = ConstraintSet().apply {
         clone(fragment.fragment_layout)
         connect(R.id.grid_background, BOTTOM, PARENT_ID, TOP)
-        connect(R.id.list_empty_switcher, TOP, PARENT_ID, TOP)
         connect(R.id.list_empty_switcher, BOTTOM, R.id.inline_edit_controls_anchor, TOP)
         connect(R.id.ancestor_grid, BOTTOM, PARENT_ID, TOP, 10) // Otherwise slightly visible
         clear(R.id.ancestor_grid, TOP)

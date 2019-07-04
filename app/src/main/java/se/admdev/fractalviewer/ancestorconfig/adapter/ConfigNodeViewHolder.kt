@@ -34,7 +34,7 @@ abstract class ConfigNodeViewHolder(itemView: View) : RecyclerView.ViewHolder(it
                     itemView.isSelected = !itemView.isSelected
                     boundNode?.let {
                         it.selected = itemView.isSelected
-                        listener.invoke(it, true, itemView.isSelected, false)
+                        listener.invoke(it, false, itemView.isSelected, false)
                     }
                 }
                 itemView.findViewById<ImageButton>(R.id.play_fractal_button).setOnClickListener {

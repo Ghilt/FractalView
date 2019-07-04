@@ -3,7 +3,7 @@
 Small TODO list for what is left until 1.0:
 
 1. Fix pinch to zoom
-2. Improve landscape mode by putting a thumbnail preview when clicking a config node in free space!
+2. Investigate why inline mode doesn't look balanced when making an if-conditional-node
 3. Make sure there is no race condition in the thread handling
 4. Come up with name for app
 5. Improve the ancestor tile drawable

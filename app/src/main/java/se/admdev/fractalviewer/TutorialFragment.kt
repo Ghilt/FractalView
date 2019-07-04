@@ -17,9 +17,6 @@ import se.admdev.fractalviewer.ancestorconfig.saveIsFirstTimeUser
 
 class TutorialFragment : Fragment() {
 
-    private var exampleCoreListItem: AncestorCoreMiniature? = null
-    private var demoCoreListItem: AncestorCoreMiniature? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +37,7 @@ class TutorialFragment : Fragment() {
         demo_grid_2.isSelected = true
         example_1.iterations = ITERATIONS_OF_THUMBNAIL //Pre set size to prevent thumbnail fractal from blinking in
         val exampleCore = createExample1Fractal()
-        exampleCoreListItem =
-            AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, exampleCore, ::onFinishLoadingExampleFractal)
+        AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, exampleCore) { example_1.setFractalData(it) }
 
         setupInteractiveDemoControls()
 
@@ -120,7 +116,7 @@ class TutorialFragment : Fragment() {
 
         val core = AncestorCore(listOf(demoConfigNode))
 
-        demoCoreListItem = AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, core, ::onFinishLoadingDemoFractal)
+        AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, core) { demo_result.setFractalData(it) }
     }
 
     private fun createExample1Fractal(): AncestorCore {
@@ -133,14 +129,6 @@ class TutorialFragment : Fragment() {
         )
 
         return AncestorCore(listOf(exampleConfigNode))
-    }
-
-    private fun onFinishLoadingExampleFractal() {
-        example_1.setFractalData(exampleCoreListItem?.miniatureData)
-    }
-
-    private fun onFinishLoadingDemoFractal() {
-        demo_result.setFractalData(demoCoreListItem?.miniatureData)
     }
 
     companion object {

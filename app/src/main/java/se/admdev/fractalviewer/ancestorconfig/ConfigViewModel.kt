@@ -165,6 +165,13 @@ class ConfigViewModel : ViewModel() {
         loadedFromCore = false
         configNodes.value?.clear()
     }
+
+    fun createAncestorCoreForNode(node: ConfigNode): AncestorCore {
+        return AncestorCore(configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+    }
+
+    val firstSelectedConfigNode: ConfigNode?
+        get() = configNodes.value?.firstOrNull { it.selected }
 }
 
 fun <T> MutableLiveData<T>.triggerObserver() {

@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_core_config.*
 import se.admdev.fractalviewer.R
+import se.admdev.fractalviewer.TutorialFragment
+import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorCoreMiniature
 import se.admdev.fractalviewer.ancestorconfig.adapter.AncestorTileAdapter
 import se.admdev.fractalviewer.ancestorconfig.adapter.ConfigurationListAdapter
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
@@ -104,6 +106,11 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
             }
         }
 
+        // Just show something in preview af e.g screen rotation.
+        // TODO Possibly fix near the end times and everything else is accomplished in the entire world
+        val selectedNode = model.firstSelectedConfigNode
+        if (selectedNode != null) loadPreview(model.createAncestorCoreForNode(selectedNode))
+
         uiState = ConfigUiState(this)
         uiState.onViewCreated()
     }
@@ -141,24 +148,19 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
         model.ancestorTiles.triggerObserver()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun onConfigNodeClicked(node: ConfigNode, longClick: Boolean, selected: Boolean, buttonClick: Boolean) {
         when {
             buttonClick -> {
                 val action = CoreConfigFragmentDirections.showFractal().apply {
-                    ancestorCore =
-                        AncestorCore(model.configNodes.value?.dropLastWhile { it.label != node.label } ?: listOf())
+                    ancestorCore = model.createAncestorCoreForNode(node)
                 }
                 view?.let { Navigation.findNavController(it).navigate(action) }
-
-            }
-            longClick -> {
-                val operandToToggle = inline_create_operator_controls.updateOperand(Operand(node), selected)
-                model.changeConfigNodeSelection(operandToToggle)
-
             }
             else -> {
                 val operandToToggle = inline_create_operator_controls.updateOperand(Operand(node), selected)
                 model.changeConfigNodeSelection(operandToToggle)
+                if (selected) loadPreview(model.createAncestorCoreForNode(node))
             }
         }
     }
@@ -189,5 +191,9 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
                 model.changeConfigNodeSelection(it)
             }
         }
+    }
+
+    private fun loadPreview(core: AncestorCore) {
+        AncestorCoreMiniature(TutorialFragment.ITERATIONS_OF_THUMBNAIL, core) { fractal_preview?.setFractalData(it) }
     }
 }

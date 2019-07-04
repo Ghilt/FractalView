@@ -9,7 +9,7 @@ import se.admdev.fractalviewer.canvas.model.FractalGenerator
 class AncestorCoreMiniature(
     miniatureSize: Int,
     val core: AncestorCore,
-    notifyAdapterOnMiniatureDone: () -> Unit
+    notifyOnMiniatureDone: (List<Path>?) -> Unit
 ) {
 
     var miniatureData: List<Path>? = null
@@ -17,7 +17,7 @@ class AncestorCoreMiniature(
     init {
         val listener: (List<Path>) -> Unit = {
             miniatureData = it
-            notifyAdapterOnMiniatureDone.invoke()
+            notifyOnMiniatureDone.invoke(it)
         }
         CreateFractalMiniatureTask(miniatureSize, core, listener).execute()
     }
