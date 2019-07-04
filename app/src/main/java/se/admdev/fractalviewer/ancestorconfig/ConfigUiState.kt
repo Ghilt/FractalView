@@ -34,6 +34,9 @@ class ConfigUiState(
     private val constraintCreateGroupOperation = ConstraintSet().apply {
         clone(fragment.fragment_layout)
         connect(R.id.grid_background, BOTTOM, PARENT_ID, BOTTOM)
+
+        /*Below are constraints which doesn't mess up for portrait mode but fixes landscape mode */
+        connect(R.id.grid_background, END, PARENT_ID, END)
     }
 
     // TODO Cloning from layout inflates the layout, seems suboptimal,
@@ -42,7 +45,7 @@ class ConfigUiState(
         clone(fragment.fragment_layout)
         connect(R.id.grid_background, BOTTOM, PARENT_ID, TOP)
         connect(R.id.list_empty_switcher, TOP, PARENT_ID, TOP)
-        connect(R.id.list_empty_switcher, BOTTOM, R.id.inline_create_operator_controls, TOP)
+        connect(R.id.list_empty_switcher, BOTTOM, R.id.inline_edit_controls_anchor, TOP)
         connect(R.id.ancestor_grid, BOTTOM, PARENT_ID, TOP, 10) // Otherwise slightly visible
         clear(R.id.ancestor_grid, TOP)
         connect(R.id.inline_create_operator_controls, BOTTOM, PARENT_ID, BOTTOM)

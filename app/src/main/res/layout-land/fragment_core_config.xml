@@ -12,8 +12,8 @@
         android:layout_height="0dp"
         android:background="@drawable/ancestor_gradient_anim"
         android:elevation="@dimen/view_elevation_small"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/list_empty_switcher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/list_empty_switcher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="3"
@@ -69,8 +69,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline">
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/node_list"
@@ -106,31 +106,28 @@
         android:id="@+id/create_node_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="@dimen/view_elevation_large"
+        android:elevation="@dimen/view_elevation_dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ancestor_grid"
         app:layout_constraintTop_toTopOf="@+id/list_empty_switcher" />
-
 
     <!--View for structuring animations to look good in landscape mode and portrait-->
     <View
         android:id="@+id/inline_edit_controls_anchor"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/inline_create_operator_controls"
-        app:layout_constraintStart_toStartOf="@+id/list_empty_switcher"
-        app:layout_constraintEnd_toEndOf="@id/list_empty_switcher"
-        />
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/grid_background"
+        app:layout_constraintEnd_toEndOf="@id/grid_background" />
 
     <se.admdev.fractalviewer.ancestorconfig.CreateConfigNodeView
         android:id="@+id/inline_create_operator_controls"
         style="@style/InlineCreateConfigNodeView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/list_empty_switcher"
-        app:layout_constraintStart_toStartOf="@id/list_empty_switcher"
+        app:layout_constraintEnd_toEndOf="@id/inline_edit_controls_anchor"
+        app:layout_constraintStart_toStartOf="@id/inline_edit_controls_anchor"
         app:layout_constraintTop_toBottomOf="@id/list_empty_switcher" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
