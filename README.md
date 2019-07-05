@@ -14,3 +14,4 @@ Small TODO list for what is left until 1.0:
 10. Credit https://shapeshifter.design/ for being a nice tool in third party credit
 11. fix start layout to be anchored to top to work in landscape
 12. Reproduce bug which made inline edit controls disappear once after i implemented landscape mode animation
+13. fix tutorial miniature blink in

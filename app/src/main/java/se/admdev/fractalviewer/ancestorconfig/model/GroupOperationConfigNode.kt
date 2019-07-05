@@ -50,12 +50,5 @@ class GroupOperationConfigNode(
         val lowestIteration = coord.y - gridSize
         return targets.any { t -> c.position.x == lowestColumn + t.x && c.position.y == lowestIteration + t.y }
     }
-
-    companion object {
-        /** Deserialization currently requires one unique field to identify correct subclass
-         *  Cannot be obfuscated
-         */
-        const val ID_FIELD = "tileSnapshot"
-    }
 }
 

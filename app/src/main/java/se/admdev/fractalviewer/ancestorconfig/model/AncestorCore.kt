@@ -25,11 +25,7 @@ class AncestorCore(@Suppress("CanBeParameter") val configNodes: List<ConfigNode>
         return function?.invoke(currentCell, ancestors) ?: 0
     }
 
-    companion object {
-        /** Deserialization currently requires one unique field to identify correct subclass
-         *  Cannot be obfuscated
-         */
-        const val JSON_LIST_NAME = "configNodes"
-        const val JSON_NAME_NAME = "name"
+    fun recompileOnDeserialization(){
+        function = configNodes.last().compile(configNodes)
     }
 }

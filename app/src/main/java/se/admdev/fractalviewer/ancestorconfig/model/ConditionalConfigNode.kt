@@ -103,11 +103,4 @@ class ConditionalConfigNode(
             }
         }
     }
-
-    companion object {
-        /** Deserialization currently requires one unique field to identify correct subclass
-         *  Cannot be obfuscated
-         */
-        const val ID_FIELD = "operandCondition"
-    }
 }

@@ -2,13 +2,13 @@ package se.admdev.fractalviewer.ancestorconfig
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
-import com.google.gson.JsonParser
-import se.admdev.fractalviewer.ancestorconfig.model.*
-import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore.Companion.JSON_NAME_NAME
-import java.lang.reflect.Type
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
+import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
+import se.admdev.fractalviewer.ancestorconfig.model.ConfigNode
 
 private const val PREFS_NAME = "se.admdev.fractalviewer.canvas"
 private const val PREFS_KEY_CORES = "fractalAncestorCores.v1.0.0"
@@ -32,7 +32,7 @@ fun Activity?.saveAncestorCore(ancestorCore: AncestorCore, name: String) {
     list.addAll(loadAncestorCores())
 
     val prefs = this?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    val persistable = Gson().toJson(list)
+    val persistable = fractalGson.toJson(list)
     prefs?.apply {
         edit().putString(PREFS_KEY_CORES, persistable).apply()
     }
@@ -42,41 +42,33 @@ fun Activity?.deleteAncestorCore(ancestorCore: AncestorCore) {
     val list = loadAncestorCores().filter { it.name != ancestorCore.name }
 
     val prefs = this?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    val persistable = Gson().toJson(list)
+    val persistable = fractalGson.toJson(list)
     prefs?.apply {
         edit().putString(PREFS_KEY_CORES, persistable).apply()
     }
 }
 
 fun Activity?.loadAncestorCores(): List<AncestorCore> {
-    val gson = Gson()
     val prefs = this?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    val json = prefs?.getString(PREFS_KEY_CORES, "")
-    val parser = JsonParser()
-    val parsedCoreList = parser.parse(json)
+    val json: String = prefs?.getString(PREFS_KEY_CORES, "") ?: ""
 
-    return if (parsedCoreList.isJsonArray) {
-        parsedCoreList.asJsonArray.toList().map { c ->
-            val jsonCore = c.asJsonObject
-            val array = jsonCore.getAsJsonArray(AncestorCore.JSON_LIST_NAME)
-            val list: List<ConfigNode> = array.toList().map { gson.fromJson(it, determineType(it)) as ConfigNode }
-            val name = jsonCore.get(JSON_NAME_NAME)?.toString()?.trim { it == '"' } // TODO Wrestle with Gson nicely
-            AncestorCore(list, name)
-        }
-    } else {
-        emptyList()
+    try {
+        val savedCores = fractalGson.fromJson<List<AncestorCore>>(json) ?: emptyList()
+        savedCores.forEach { it.recompileOnDeserialization() }
+        return savedCores
+    } catch (e: JsonSyntaxException) {
+        Log.e("FractalSharedPreferences.loadAncestorCores():", "${e.message}")
     }
+
+    return emptyList()
 }
 
-/**
- * Gson do not play nice with sub classes
- * Seems a bit like bs to have to do it like this; I mean they landed on the moon, and they make me do this?
- */
-private fun determineType(elem: JsonElement): Type {
-    return when {
-        elem.asJsonObject.has(GroupOperationConfigNode.ID_FIELD) -> GroupOperationConfigNode::class.java
-        elem.asJsonObject.has(ConditionalConfigNode.ID_FIELD) -> ConditionalConfigNode::class.java
-        elem.asJsonObject.has(OperationConfigNode.ID_FIELD) -> OperationConfigNode::class.java
-        else -> throw JsonParseException("FractalSharedPreferences: Could not recognize as config node: $elem")
+// Courtesy: https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin§
+inline fun <reified T> Gson.fromJson(json: String): T? = this.fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+val fractalGson: Gson
+    get() {
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(ConfigNode::class.java, GsonInterfaceAdapter())
+        return builder.create()
     }
-}
