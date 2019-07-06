@@ -1,5 +1,6 @@
 package se.admdev.fractalviewer.canvas
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -48,8 +49,6 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             midPointX = (width / 2).toFloat()
             midPointY = (height / 2).toFloat()
             quarterPointY = midPointY / 2
-//            path.moveTo(midPointX, midPointY)
-//            path.addRect(50f, 50f, 100f, 100f, Path.Direction.CW)
         }
     }
 
@@ -57,26 +56,18 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         super.onDraw(canvas)
         canvas.save()
 
-//        Log.d("spx", "Scalefactor: $scaleFactor TouchX: ${touchData.posX} TouchY: ${touchData.posY} ")
-
         canvas.scale(scaleFactor, scaleFactor, midPointX, midPointY)
         canvas.translate(
             midPointX + touchData.posX / scaleFactor,
             quarterPointY + touchData.posY / scaleFactor
         ) // scale translation inversely to maintain reasonable panning distance
 
-//        path.addRect(100f, 100f, 300f, 300f, Path.Direction.CCW)
-
         paths.forEach { path -> canvas.drawPath(path, paint) }
-//        canvas.drawPath(path, paint)
-
-//        list.forEach { canvas.drawRect(it, paint) }
 
         canvas.restore()
-//        path.addRect(300f, 300f, 450f, 400f, Path.Direction.CCW)
-
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         scaleGestureDetector.onTouchEvent(ev)
         touchData.onTouchEvent(ev, scaleGestureDetector.isInProgress)
