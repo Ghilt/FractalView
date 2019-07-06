@@ -33,25 +33,18 @@
             android:textColor="@color/white_1"
             android:textSize="18sp" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <se.admdev.fractalviewer.canvas.FractalThumbnailView
+            android:id="@+id/example_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_card"
-            android:padding="10dp">
-
-            <se.admdev.fractalviewer.canvas.FractalThumbnailView
-                android:id="@+id/example_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </FrameLayout>
+            android:padding="15dp"
+            app:iterations="@integer/fractal_preview_iterations_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/step2"
@@ -306,6 +299,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/edge_padding"
+                app:iterations="@integer/fractal_preview_iterations_large"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

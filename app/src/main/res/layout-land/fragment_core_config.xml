@@ -7,6 +7,13 @@
     android:layout_height="match_parent">
 
     <View
+        android:id="@+id/preview_anchor_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="parent" />
+
+    <View
         android:id="@+id/grid_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -127,10 +134,20 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
+        app:iterations="@integer/fractal_preview_iterations_large"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/grid_background"
         app:layout_constraintBottom_toTopOf="@id/inline_create_operator_controls"/>
+
+    <TextView
+        android:id="@+id/preview_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fractal_preview"
+        app:layout_constraintStart_toStartOf="@id/fractal_preview"
+        android:text="@string/core_config_preview_label"
+        android:layout_margin="@dimen/edge_padding"/>
 
     <se.admdev.fractalviewer.ancestorconfig.CreateConfigNodeView
         android:id="@+id/inline_create_operator_controls"

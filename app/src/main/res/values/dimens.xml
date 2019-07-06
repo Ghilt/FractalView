@@ -33,4 +33,6 @@
 
     <dimen name="tutorial_demo_grid_margin">4dp</dimen>
 
+    <integer name="fractal_preview_iterations_large">43</integer>
+
 </resources>

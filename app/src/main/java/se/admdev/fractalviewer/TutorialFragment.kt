@@ -35,9 +35,8 @@ class TutorialFragment : Fragment() {
 
         demo_grid_0.isSelected = true
         demo_grid_2.isSelected = true
-        example_1.iterations = ITERATIONS_OF_THUMBNAIL //Pre set size to prevent thumbnail fractal from blinking in
         val exampleCore = createExample1Fractal()
-        AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, exampleCore) { example_1.setFractalData(it) }
+        AncestorCoreMiniature(example_1.iterations, exampleCore) { example_1.setFractalData(it) }
 
         setupInteractiveDemoControls()
 
@@ -116,7 +115,7 @@ class TutorialFragment : Fragment() {
 
         val core = AncestorCore(listOf(demoConfigNode))
 
-        AncestorCoreMiniature(ITERATIONS_OF_THUMBNAIL, core) { demo_result.setFractalData(it) }
+        AncestorCoreMiniature(demo_result.iterations, core) { demo_result.setFractalData(it) }
     }
 
     private fun createExample1Fractal(): AncestorCore {
@@ -129,9 +128,5 @@ class TutorialFragment : Fragment() {
         )
 
         return AncestorCore(listOf(exampleConfigNode))
-    }
-
-    companion object {
-        const val ITERATIONS_OF_THUMBNAIL = 43
     }
 }

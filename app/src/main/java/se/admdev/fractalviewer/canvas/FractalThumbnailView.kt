@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.canvas.CellularFractalArtist.Companion.CELL_SIZE
 import kotlin.math.min
 
@@ -28,12 +29,20 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         paint.alpha = 255
         paint.strokeWidth = strokeWidth.toFloat()
         paint.color = Color.BLACK
+
+        context.theme.obtainStyledAttributes(attrs, R.styleable.FractalThumbnailView, 0, 0).apply {
+            try {
+                iterations = getInteger(R.styleable.FractalThumbnailView_iterations, 0)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     // https://stackoverflow.com/questions/13273838/onmeasure-wrap-content-how-do-i-know-the-size-to-wrap
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = 2 * CELL_SIZE.toInt() * iterations
-        val desiredHeight = CELL_SIZE.toInt() * iterations
+        val desiredWidth = 2 * CELL_SIZE.toInt() * iterations + paddingStart + paddingEnd
+        val desiredHeight = CELL_SIZE.toInt() * iterations + paddingTop + paddingBottom
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -59,7 +68,7 @@ class FractalThumbnailView(context: Context, attrs: AttributeSet) : View(context
         super.onDraw(canvas)
         val midPointX = (width / 2).toFloat()
         canvas.save()
-        canvas.translate(midPointX, 0f)
+        canvas.translate(midPointX, paddingTop.toFloat())
         paths.forEach { path -> canvas.drawPath(path, paint) }
         canvas.restore()
     }

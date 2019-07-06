@@ -194,6 +194,6 @@ class CoreConfigFragment : Fragment(), AncestorTileAdapter.AncestorGridClickList
     }
 
     private fun loadPreview(core: AncestorCore) {
-        AncestorCoreMiniature(TutorialFragment.ITERATIONS_OF_THUMBNAIL, core) { fractal_preview?.setFractalData(it) }
+        AncestorCoreMiniature(fractal_preview.iterations, core) { fractal_preview?.setFractalData(it) }
     }
 }
