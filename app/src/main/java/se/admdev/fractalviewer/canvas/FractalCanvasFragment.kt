@@ -17,6 +17,7 @@ import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
 import se.admdev.fractalviewer.canvas.model.FractalPyramidGenerator
+import se.admdev.fractalviewer.canvas.model.FractalSpiralGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
 import se.admdev.fractalviewer.playAnimatedDrawable
 import se.admdev.fractalviewer.setGone
@@ -42,12 +43,20 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_itr.setOnClickListener {
+            shape_view.activate()
             workManager.clearGenerationPauseIteration()
             toggleFractalGeneration()
         }
 
         button_toggle_fractal_type.setOnClickListener {
-            //TODO reset fractal  and swap to spiral fractal generator
+            shape_view.resetAndDisable()
+            if (workManager.isRunning()) button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
+            workManager.stopWork()
+            generator = when (generator is FractalPyramidGenerator) {
+                true ->  FractalSpiralGenerator(ancestorCore)
+                false -> FractalPyramidGenerator(ancestorCore)
+            }
+            workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
         }
 
         button_save.setOnClickListener {

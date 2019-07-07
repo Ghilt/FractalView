@@ -14,6 +14,7 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 //    Rejected from experimentation on what is heaviest to draw
 //    val list: MutableList<RectF> = mutableListOf()
 
+    private var active = true
     private var paths: MutableList<Path> = mutableListOf()
 
     private val paint: Paint
@@ -84,7 +85,19 @@ class FractalView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 //    }
 
     fun addPaths(newIterationPath: Path) {
-        paths.add(newIterationPath)
+        if (active){
+            paths.add(newIterationPath)
+        }
+    }
+
+    fun resetAndDisable() {
+        paths = mutableListOf()
+        active = false
+        invalidate()
+    }
+
+    fun activate() {
+        active = true
     }
 
     private inner class PinchListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
