@@ -53,10 +53,18 @@ class FractalCanvasFragment : Fragment() {
             if (workManager.isRunning()) button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
             workManager.stopWork()
             generator = when (generator is FractalPyramidGenerator) {
-                true ->  FractalSpiralGenerator(ancestorCore)
+                true -> FractalSpiralGenerator(ancestorCore)
                 false -> FractalPyramidGenerator(ancestorCore)
             }
             workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
+            shape_view.postDelayed(
+                {
+                    shape_view.activate()
+                    toggleFractalGeneration()
+                },
+                100
+            ) // Todo maybe do something more clean here, currently no way of discerning when the last unwanted update has arrived
+
         }
 
         button_save.setOnClickListener {

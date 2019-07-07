@@ -18,16 +18,13 @@ class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator 
     private lateinit var lastIterationCoord: Coord
     private var lastIteration = mutableListOf<Cell>()
 
-    private val originCell
-        get() = Cell(frac[mid][mid], Coord(mid, mid), listOf())
-
     override fun generateNextIteration(): Boolean {
         lastIteration = mutableListOf()
         if (iterationsCompleted == 0) {
             frac[mid][mid] = 1
             iterationsCompleted++
             lastIterationCoord = Coord(mid, mid)
-            lastIteration.add(originCell)
+            lastIteration.add(Cell(frac[mid][mid], centerOnOrigin(Coord(mid, mid)), listOf()))
             return true
         } else if (lastIterationCoord.x >= DATA_STRUCTURE_SIZE - core.width || lastIterationCoord.y >= DATA_STRUCTURE_SIZE - core.width) {
             // Size limit reached
@@ -100,9 +97,11 @@ class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator 
 
     private fun calculateAndInsertValue(coord: Coord, normalizedAncestors: List<Cell>) {
         frac[coord.x][coord.y] = core.calculateValue(normalizedTargetCoord, normalizedAncestors)
-        lastIteration.add(Cell(frac[coord.x][coord.y], coord))
+        lastIteration.add(Cell(frac[coord.x][coord.y], centerOnOrigin(coord)))
 //        Log.d("spx", "${coord.x}, ${coord.y} = ${frac[coord.x][coord.y]}")
     }
+
+    private fun centerOnOrigin(c: Coord) = Coord(c.x - mid, c.y - mid)
 
     override fun getLastIteration(): List<Cell> = lastIteration
 
@@ -112,7 +111,7 @@ class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator 
     }
 
     companion object {
-        const val DATA_STRUCTURE_SIZE = 100
+        const val DATA_STRUCTURE_SIZE = 1500
     }
 }
 
