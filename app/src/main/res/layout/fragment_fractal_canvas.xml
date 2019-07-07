@@ -48,4 +48,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/canvas_iteration_count" />
 
+    <ImageButton
+        android:id="@+id/button_toggle_fractal_type"
+        style="@style/BlueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/anim_save"
+        android:contentDescription="@string/canvas_save_configuration"
+        android:elevation="@dimen/view_elevation_small"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

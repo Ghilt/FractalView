@@ -17,31 +17,33 @@ class CellularFractalArtist {
 
     //Adding to canvas as one big path - Pretty laggy (a bit less, maybe)
     @Deprecated("Should not be used unless investigating optimization again")
-    fun getIterationAsPathUpdate(iteration: Int, cells: List<Cell>): (Path) -> Unit {
-        val top = CELL_SIZE * iteration
-        val bottom = CELL_SIZE * (iteration + 1)
+    fun getIterationAsPathUpdate(cells: List<Cell>): (Path) -> Unit {
         val nonZero = cells.filter { it.value != 0 }
         return { path ->
             nonZero.forEach { c ->
-                addCellToPath(c, path, top, bottom)
+                addCellToPath(c, path)
             }
         }
     }
 
     //Adding to canvas as one path per iteration - Not as laggy!
-    fun getIterationAsPaths(iteration: Int, cells: List<Cell>): Path {
-        val top = CELL_SIZE * iteration
-        val bottom = CELL_SIZE * (iteration + 1)
+    fun getIterationAsPaths(cells: List<Cell>): Path {
         val nonZero = cells.filter { it.value != 0 }
         return nonZero.fold(Path()) { acc, c ->
             acc.apply {
-                addCellToPath(c, acc, top, bottom)
+                addCellToPath(c, acc)
             }
         }
     }
 
-    private fun addCellToPath(c: Cell, p: Path, top: Float, bottom: Float) {
-        p.addRect(c.position.x * CELL_SIZE, top, (c.position.x + 1) * CELL_SIZE, bottom, Path.Direction.CCW)
+    private fun addCellToPath(c: Cell, p: Path) {
+        p.addRect(
+            c.position.x * CELL_SIZE,
+            c.position.y * CELL_SIZE,
+            (c.position.x + 1) * CELL_SIZE,
+            (c.position.y + 1) * CELL_SIZE,
+            Path.Direction.CCW
+        )
     }
 
     companion object {

@@ -26,7 +26,7 @@ class ThreadManager(
                 pauseAfterReachingIteration = -1
             } else {
                 generator.generateNextIteration()
-                val update = artist.getIterationAsPaths(generator.iterationsCompleted - 1, generator.getLastIteration())
+                val update = artist.getIterationAsPaths(generator.getLastIteration())
                 listener(update)
             }
 

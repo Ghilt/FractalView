@@ -4,7 +4,7 @@ import android.graphics.Path
 import android.os.AsyncTask
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.canvas.CellularFractalArtist
-import se.admdev.fractalviewer.canvas.model.FractalGenerator
+import se.admdev.fractalviewer.canvas.model.FractalPyramidGenerator
 
 class AncestorCoreMiniature(
     miniatureSize: Int,
@@ -29,10 +29,10 @@ class AncestorCoreMiniature(
     ) : AsyncTask<Void, Void, List<Path>>() {
 
         override fun doInBackground(vararg params: Void): List<Path> {
-            val generator = FractalGenerator(core)
+            val generator = FractalPyramidGenerator(core)
             repeat(miniatureSize) { generator.generateNextIteration() }
             val artist = CellularFractalArtist()
-            return generator.iterateOver { itr, value -> artist.getIterationAsPaths(itr, value) }
+            return generator.iterateOver { value -> artist.getIterationAsPaths(value) }
         }
 
         override fun onPostExecute(result: List<Path>) {

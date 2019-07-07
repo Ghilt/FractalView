@@ -16,6 +16,7 @@ import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
 import se.admdev.fractalviewer.canvas.model.FractalGenerator
+import se.admdev.fractalviewer.canvas.model.FractalPyramidGenerator
 import se.admdev.fractalviewer.canvas.model.ThreadManager
 import se.admdev.fractalviewer.playAnimatedDrawable
 import se.admdev.fractalviewer.setGone
@@ -36,13 +37,17 @@ class FractalCanvasFragment : Fragment() {
             val core = FractalCanvasFragmentArgs.fromBundle(it).ancestorCore
             ancestorCore = core ?: throw IllegalArgumentException("Error: No ancestor core for FractalCanvasFragment")
 
-            generator = FractalGenerator(ancestorCore)
+            generator = FractalPyramidGenerator(ancestorCore)
             workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
         }
 
         button_itr.setOnClickListener {
             workManager.clearGenerationPauseIteration()
             toggleFractalGeneration()
+        }
+
+        button_toggle_fractal_type.setOnClickListener {
+            //TODO reset fractal  and swap to spiral fractal generator
         }
 
         button_save.setOnClickListener {
