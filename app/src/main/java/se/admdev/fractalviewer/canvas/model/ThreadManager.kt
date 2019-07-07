@@ -25,13 +25,17 @@ class ThreadManager(
                 pausedListener()
                 pauseAfterReachingIteration = -1
             } else {
-                generator.generateNextIteration()
-                val update = artist.getIterationAsPaths(generator.getLastIteration())
-                listener(update)
+                val success = generator.generateNextIteration()
+                if (success) {
+                    val update = artist.getIterationAsPaths(generator.getLastIteration())
+                    listener(update)
+                } else {
+                    pausedListener()
+                }
             }
 
         } catch (e: Exception) {
-            Log.d("ThreadManager", e.message)
+            Log.d("ThreadManager", "PeriodicTask: ${e.message}")
         }
     }
 

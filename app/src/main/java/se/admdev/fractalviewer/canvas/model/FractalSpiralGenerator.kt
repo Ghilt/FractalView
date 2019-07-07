@@ -10,8 +10,8 @@ import kotlin.math.abs
  */
 class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator {
 
-    private val frac = Array(1000) { IntArray(1000) } // TODO autoincrease size
-    private val normalizedTargetCoord = Coord(1, 3)
+    private val frac = Array(DATA_STRUCTURE_SIZE) { IntArray(DATA_STRUCTURE_SIZE) } // TODO autoincrease size
+    private val normalizedTargetCoord = Coord(core.width / 2, core.height)
 
     private val mid = frac.size / 2
     override var iterationsCompleted = 0
@@ -29,6 +29,9 @@ class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator 
             lastIterationCoord = Coord(mid, mid)
             lastIteration.add(originCell)
             return true
+        } else if (lastIterationCoord.x >= DATA_STRUCTURE_SIZE - core.width || lastIterationCoord.y >= DATA_STRUCTURE_SIZE - core.width) {
+            // Size limit reached
+            return false
         }
 
         val radialDirection = getDirectionOfIteration(iterationsCompleted)
@@ -106,6 +109,10 @@ class FractalSpiralGenerator(private val core: AncestorCore) : FractalGenerator 
     private fun getDirectionOfIteration(iteration: Int): Direction {
         val clockwise = values()
         return clockwise[iteration % clockwise.size]
+    }
+
+    companion object {
+        const val DATA_STRUCTURE_SIZE = 100
     }
 }
 
