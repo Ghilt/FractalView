@@ -53,7 +53,7 @@
         style="@style/BlueButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:src="@drawable/anim_save"
+        android:src="@drawable/anim_pyramid_to_square"
         android:contentDescription="@string/canvas_save_configuration"
         android:elevation="@dimen/view_elevation_small"
         app:layout_constraintDimensionRatio="1:1"

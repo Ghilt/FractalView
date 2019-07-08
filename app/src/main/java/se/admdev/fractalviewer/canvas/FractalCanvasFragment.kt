@@ -46,6 +46,8 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_toggle_fractal_type.setOnClickListener {
+            button_toggle_fractal_type.playAnimatedDrawable(R.drawable.anim_pyramid_to_square)
+
             shape_view.resetAndDisable()
             if (workManager.isRunning()) button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
             workManager.stopWork()
