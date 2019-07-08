@@ -15,10 +15,7 @@ import kotlinx.android.synthetic.main.fragment_fractal_canvas.*
 import se.admdev.fractalviewer.R
 import se.admdev.fractalviewer.ancestorconfig.model.AncestorCore
 import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
-import se.admdev.fractalviewer.canvas.model.FractalGenerator
-import se.admdev.fractalviewer.canvas.model.FractalPyramidGenerator
-import se.admdev.fractalviewer.canvas.model.FractalSpiralGenerator
-import se.admdev.fractalviewer.canvas.model.ThreadManager
+import se.admdev.fractalviewer.canvas.model.*
 import se.admdev.fractalviewer.playAnimatedDrawable
 import se.admdev.fractalviewer.setGone
 
@@ -52,9 +49,10 @@ class FractalCanvasFragment : Fragment() {
             shape_view.resetAndDisable()
             if (workManager.isRunning()) button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
             workManager.stopWork()
-            generator = when (generator is FractalPyramidGenerator) {
-                true -> FractalSpiralGenerator(ancestorCore)
-                false -> FractalPyramidGenerator(ancestorCore)
+            generator = when (generator) {
+                is FractalSquareGenerator -> FractalSpiralGenerator(ancestorCore)
+                is FractalSpiralGenerator -> FractalPyramidGenerator(ancestorCore)
+                else -> FractalSquareGenerator(ancestorCore)
             }
             workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
             shape_view.postDelayed(
@@ -64,7 +62,6 @@ class FractalCanvasFragment : Fragment() {
                 },
                 100
             ) // Todo maybe do something more clean here, currently no way of discerning when the last unwanted update has arrived
-
         }
 
         button_save.setOnClickListener {
