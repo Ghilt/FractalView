@@ -10,9 +10,6 @@ Small TODO list for what is left until 1.0:
 6. Update readme
 7. Maybe add a flourish animation to start page
 9. Get starting seed for pyramid from core/ user configurable
-9.b Do other shapes than triangle
 10. Credit https://shapeshifter.design/ for being a nice tool in third party credit
-11. fix start layout to be anchored to top to work in landscape
-12. Reproduce bug which made inline edit controls disappear once after i implemented landscape mode animation
-13. fix tutorial miniature blink in
-14. Do not allow user to do divide by zero errors
+11. Reproduce bug which made inline edit controls disappear once after i implemented landscape mode animation
+12. fix tutorial miniature blink in

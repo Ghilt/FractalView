@@ -18,6 +18,7 @@ import se.admdev.fractalviewer.ancestorconfig.saveAncestorCore
 import se.admdev.fractalviewer.canvas.model.*
 import se.admdev.fractalviewer.playAnimatedDrawable
 import se.admdev.fractalviewer.setGone
+import se.admdev.fractalviewer.setVisible
 
 class FractalCanvasFragment : Fragment() {
 
@@ -100,6 +101,11 @@ class FractalCanvasFragment : Fragment() {
             }
         }
 
+        arithmetic_error_text.setOnLongClickListener { v ->
+            v.setGone()
+            true
+        }
+
         workManager.pauseAfterReachingIteration = PAUSE_AUTO_START_FRACTAL_GENERATION
         toggleFractalGeneration()
     }
@@ -131,6 +137,11 @@ class FractalCanvasFragment : Fragment() {
                 iteration_counter_text.text = getString(R.string.canvas_iteration_count, shape_view.iterationCount)
                 shape_view?.addPaths(pathUpdate)
                 shape_view?.invalidate()
+                if (ancestorCore.userDivideByZeroError != null) {
+                    arithmetic_error_text.setVisible()
+                    arithmetic_error_text.text = ancestorCore.userDivideByZeroError?.capitalize()
+                }
+
             } else {
                 Log.d(
                     "Fractal",
