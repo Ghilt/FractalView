@@ -1,0 +1,123 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="91"
+            android:viewportHeight="91">
+            <path
+                android:name="spiral"
+                android:pathData="M 45.864 45.867 L 58.856 45.867 L 58.856 58.893 L 32.867 58.893 L 32.867 32.859 L 73.293 32.859 L 73.293 73.268 L 18.445 73.268 L 18.445 18.421 L 45.867 18.421"
+                android:strokeColor="#fff"
+                android:strokeWidth="10"
+                android:strokeLineCap="square"/>
+            <group android:name="group">
+                <path
+                    android:name="triangle_top"
+                    android:pathData="M 38.487 28.433 L 53.247 28.433 L 53.247 43.193 L 38.487 43.193 Z"
+                    android:fillColor="#fff"
+                    android:fillAlpha="0"/>
+                <path
+                    android:name="triangle_mid"
+                    android:pathData="M 11.312 25.811 L 80.195 25.811 L 80.195 51.917 L 11.312 51.917 Z"
+                    android:fillColor="#fff"
+                    android:fillAlpha="0"/>
+                <path
+                    android:name="triangle_bottom"
+                    android:pathData="M 11.688 83.634 L 80.046 83.634 L 80.046 68.991 L 11.688 68.991 Z"
+                    android:fillColor="#fff"
+                    android:fillAlpha="0"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="spiral">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="strokeWidth"
+                    android:duration="190"
+                    android:valueFrom="10"
+                    android:valueTo="15"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="strokeAlpha"
+                    android:startOffset="202"
+                    android:duration="40"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="triangle_top">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="190"
+                    android:duration="310"
+                    android:valueFrom="M 11.445 11.421 L 52.869 11.421 L 52.869 28.357 L 11.445 28.357 Z"
+                    android:valueTo="M 38.487 28.433 L 53.247 28.433 L 53.247 43.193 L 38.487 43.193 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="190"
+                    android:duration="10"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="triangle_mid">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="190"
+                    android:duration="310"
+                    android:valueFrom="M 11.312 25.811 L 80.195 25.811 L 80.195 51.917 L 11.312 51.917 Z"
+                    android:valueTo="M 24.688 47.634 L 66.046 47.634 L 66.046 62.991 L 24.688 62.991 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="190"
+                    android:duration="11"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="triangle_bottom">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="190"
+                    android:duration="310"
+                    android:valueFrom="M 13.312 51.917 L 78.075 51.917 L 78.075 78.062 L 13.312 78.062 Z"
+                    android:valueTo="M 11.688 68.991 L 80.046 68.991 L 80.046 83.634 L 11.688 83.634 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="190"
+                    android:duration="11"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

@@ -46,15 +46,23 @@ class FractalCanvasFragment : Fragment() {
         }
 
         button_toggle_fractal_type.setOnClickListener {
-            button_toggle_fractal_type.playAnimatedDrawable(R.drawable.anim_pyramid_to_square)
 
             shape_view.resetAndDisable()
             if (workManager.isRunning()) button_itr.playAnimatedDrawable(R.drawable.anim_pause_to_play)
             workManager.stopWork()
             generator = when (generator) {
-                is FractalSquareGenerator -> FractalSpiralGenerator(ancestorCore)
-                is FractalSpiralGenerator -> FractalPyramidGenerator(ancestorCore)
-                else -> FractalSquareGenerator(ancestorCore)
+                is FractalSquareGenerator -> {
+                    button_toggle_fractal_type.playAnimatedDrawable(R.drawable.anim_square_to_spiral)
+                    FractalSpiralGenerator(ancestorCore)
+                }
+                is FractalSpiralGenerator -> {
+                    button_toggle_fractal_type.playAnimatedDrawable(R.drawable.anim_spiral_to_pyramid)
+                    FractalPyramidGenerator(ancestorCore)
+                }
+                else -> {
+                    button_toggle_fractal_type.playAnimatedDrawable(R.drawable.anim_pyramid_to_square)
+                    FractalSquareGenerator(ancestorCore)
+                }
             }
             workManager = ThreadManager(generator, ::onGeneratedIteration, ::onGenerationPaused)
             shape_view.postDelayed(
