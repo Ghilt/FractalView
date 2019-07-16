@@ -5,6 +5,8 @@ App to facilitate fractal exploration urges.
 
 Imagine, create and explore fractals through mathematical formulas.
 
+Noew on google play: https://play.google.com/store/apps/details?id=se.admdev.fractalviewer
+
 ![create](images/github_showreel1.png)
 ![fractal examples](images/github_showreel2.png)
 ![tutorial](images/github_showreel3.png)
