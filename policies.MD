@@ -1,0 +1,1 @@
+The app does not save or handle sensitive data. It is imaginable that the user comes up with some scheme to encode personal information into their sequence of saved fractals, this would be hard, cumbersome, highly unadvisable and comes with no guarantees.
